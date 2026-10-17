@@ -1,156 +1,139 @@
-# Free Gemini backup for Claude Code (Windows)
+# Free OpenRouter backup for Claude Code (Windows)
 
-When your Claude usage limit runs out, keep coding in Claude Code with Google
-Gemini's free tier. Your normal `claude` command stays exactly as it is; the
-backup is a separate command you run only when you need it.
+When your Claude usage limit runs out, keep coding in Claude Code with a free
+model from [OpenRouter](https://openrouter.ai). Your normal `claude` command
+stays exactly as it is; `claude-free` is a separate command you run only when
+you need it.
 
 ## How it works
 
-Claude Code only speaks Anthropic's API format. Gemini speaks Google's format.
-[Claude Code Router](https://github.com/musistudio/claude-code-router) (CCR) sits
-on your PC and translates between them:
+OpenRouter offers an Anthropic-compatible endpoint, so Claude Code can talk to
+it directly. Nothing extra runs on your PC:
 
 ```
-Claude Code ──(Anthropic format)──> CCR on 127.0.0.1:3456 ──(Gemini format)──> Google
+claude-free ──(Anthropic format)──> https://openrouter.ai/api ──> a free model
 ```
 
-CCR launches Claude Code with its own settings pointed at the router, so your
-regular Claude Code setup is not touched.
+`claude-free.ps1` points Claude Code at OpenRouter for that one run and puts
+everything back when you exit.
 
 ## Before you start
 
-- **Region.** Gemini's free tier is not offered in the EU/EEA, the UK or
-  Switzerland. If you are there, this guide will fail at step 2. Groq is a good
-  alternative and CCR supports it the same way (choose it in step 4).
-- **Node.js 22 or newer.** Check with `node --version`. Install from
-  <https://nodejs.org> if needed.
-- **Expect small daily limits.** As of October 2026 Google only offers Flash and
-  Flash-Lite models for free. Third-party trackers report roughly 20 requests a
-  day for Flash and about 500 for Flash-Lite, and Google no longer publishes a
-  fixed table. Claude Code makes one request per step (every file read, edit or
-  command), so prefer **Flash-Lite**. Your real numbers are at
-  <https://aistudio.google.com/> under your project's rate limits.
-- **Privacy.** On the free tier Google may use your prompts and code to improve
-  its products. Don't use it on code you can't share.
+- **Small daily limits.** Free (`:free`) models allow 20 requests a minute and
+  **50 a day**. A one-time purchase of $10 in credits raises that to 1,000 a
+  day for good, and free models still cost nothing. Claude Code makes one request
+  per step (every file read, edit or command), so 50 a day is enough only for a
+  few small tasks.
+- **Busy models.** Free models are shared and sometimes return "429 rate
+  limited" even when you have quota left. Wait a minute or pick another model.
+- **Weaker models.** Free models are much weaker than Claude at multi-step
+  coding. Use them for small fixes, explanations and tests, and save big
+  changes for when your Claude limit resets. OpenRouter itself notes that
+  Claude Code works best with Anthropic models.
+- **Privacy.** Some free providers log or train on prompts. Don't use this on
+  code you can't share.
 
-## Step 1: Get a Gemini API key
+## Step 1: Get an OpenRouter key
 
-1. Go to <https://aistudio.google.com/app/apikey> and sign in with Google.
-2. Click **Create API key** and pick or create a project.
-3. Copy the key (it starts with `AIza`). Treat it like a password.
+1. Sign up at <https://openrouter.ai> (no card needed).
+2. Go to <https://openrouter.ai/keys>, click **Create Key**, and copy it (it
+   starts with `sk-or-`). Treat it like a password.
+3. Open <https://openrouter.ai/settings/privacy> and allow free model
+   endpoints. Without this, free models return "No endpoints found matching
+   your data policy".
 
-## Step 2: Test the key
+## Step 2: Allow PowerShell scripts (one time)
 
-Do this before installing anything else. CCR's own "Check Connection" button
-can report success even with a wrong key, so this is the test to trust.
-
-Open PowerShell in this folder and run:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\test-gemini-key.ps1
-```
-
-Paste the key when asked (it stays hidden and is not saved). You should see:
-
-```
-Key is valid. N text models available:
-  ...
-SUCCESS. gemini-…-flash-lite replied:
-  Hello! ...
-Use this model ID in CCR: gemini-…-flash-lite
-```
-
-Note the model ID on the last line; you need it in step 4. If it fails, the
-script prints a hint (wrong key, region blocked, or quota used up).
-
-## Step 3: Install Claude Code Router
+Put this folder somewhere permanent, e.g. `C:\Users\<you>\claude-free`. Then in
+PowerShell:
 
 ```powershell
-npm install -g @musistudio/claude-code-router
-ccr ui
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+cd $HOME\claude-free
+Get-ChildItem *.ps1 | Unblock-File
 ```
 
-`ccr ui` starts CCR in the background and opens its setup page in your browser.
-The page's address contains a private token, so don't share it.
-
-## Step 4: Run the setup wizard
-
-| Wizard step | What to do |
-|---|---|
-| **Choose provider** | Pick **Google Gemini** from the preset list. |
-| **Add credentials** | Choose **API key** and paste your Gemini key. |
-| **Pick models** | Tick the model ID from step 2. If the list is empty, click **Custom model** and type it. |
-| **Verify connection** | Optional. Ignore a green result here; step 2 is the real test. |
-| **Connect agent** | Agent: **Claude Code**. Profile name: **Gemini Backup**. Effect scope: **Only opened from CCR** (keeps your normal `claude` untouched). Entry mode: **CLI only**. Default model: your Gemini model. Also set Opus, Sonnet, Haiku and Fable to that model, so that every request goes to Gemini. |
-| **Let's start** | Click **Let's start**. |
-
-## Step 5: Test the whole chain
-
-1. In the CCR page, open **API Keys**, click **Add**, give it a name, and copy
-   the key it shows (it's only shown once).
-2. Run, with your model ID:
+## Step 3: Test the key and pick a model
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\test-ccr-gateway.ps1 -Model "Google Gemini/gemini-…-flash-lite"
+.\test-openrouter.ps1
 ```
 
-`SUCCESS. Reply through CCR:` means Claude Code's request format reaches Gemini
-and comes back. You can delete that test key in **API Keys** afterwards.
+Paste your key when asked (hidden). The script:
 
-## Step 6: Use it
+1. checks the key and shows your daily limit,
+2. lists today's free models that support **tool calling** (Claude Code needs
+   this to read and edit files),
+3. sends a test request to the same endpoint Claude Code uses, and checks the
+   model really calls a tool, trying up to 3 models if one is busy.
+
+Success looks like:
+
+```
+  SUCCESS. some/model:free called list_files with {"path":"src"}
+Use this model: some/model:free
+Save this key and model for claude-free? (y/n)
+```
+
+Answer `y`. The key and model are saved as your Windows user variables
+`OPENROUTER_API_KEY` and `OPENROUTER_MODEL`. Then **open a new PowerShell
+window**.
+
+Each test uses up to 3 of your 50 daily requests. To test one model you picked
+from the list: `.\test-openrouter.ps1 -Model <id>`.
+
+## Step 4: Add the `claude-free` command
+
+Open your PowerShell profile with `notepad $PROFILE` (click Yes if it asks to
+create the file), add this line, and save:
+
+```powershell
+function claude-free { & "$HOME\claude-free\claude-free.ps1" @args }
+```
+
+Open a new PowerShell window.
+
+## Step 5: Use it
 
 Normal day: run `claude` as usual.
 
-When you hit your limit:
+When you hit your limit, go to your project folder and run:
 
 ```powershell
-ccr start
-ccr "Gemini Backup"
+claude-free
 ```
 
-To make that one command, add this to your PowerShell profile (`notepad $PROFILE`):
+Inside, type `/status` to confirm it shows `https://openrouter.ai/api` as the
+base URL. Your requests also appear at <https://openrouter.ai/activity>.
+
+More ways to start it:
 
 ```powershell
-function claude-free {
-    ccr start | Out-Null
-    ccr "Gemini Backup" -- @args
-}
+claude-free --continue                  # pick up your last conversation
+claude-free -Model <model-id>           # use another model from the step 3 list
+claude-free -p "explain this error"     # one-off question, no chat
 ```
 
-Then open a new PowerShell window and type `claude-free`. To stop the router,
-run `ccr stop`.
-
-## What to expect
-
-- Gemini Flash-Lite is much weaker than Claude at multi-step coding and tool
-  use. It's fine for small edits, explanations and tests; big refactors are
-  better left until your Claude limit resets.
-- The backup runs with its own Claude Code settings folder, so your personal
-  Claude Code settings and memory are not loaded there. Your project's
-  `CLAUDE.md` still is.
-- CCR stores its data in `%APPDATA%\claude-code-router`, including your Gemini
-  key. It also adds a default Codex profile, which does nothing unless you use
-  Codex.
-- If Gemini's quota runs out too, you can add a second free provider (such as
-  Groq) under **Providers** and switch the profile's model to it.
+`--continue` sends your previous conversation to the free model. If it errors
+on the old history, start a fresh `claude-free` instead.
 
 ## Troubleshooting
 
 | Message | Fix |
 |---|---|
-| `API key not valid` | Copy the key again from AI Studio. In CCR, update it under **Providers**. |
-| `User location is not supported` | Region block. Use another provider such as Groq. |
-| HTTP `429` / `RESOURCE_EXHAUSTED` | Free quota used up. Wait, or switch to a Flash-Lite model. |
-| `Connection refused` | CCR isn't running: `ccr start`. |
-| `Invalid or expired API key` (from CCR) | Wrong CCR client key; create a new one under **API Keys**. |
-| `ccr` is not recognized | Reopen PowerShell; check `npm prefix -g` is on your PATH. |
-| Scripts are blocked | Run them with `powershell -ExecutionPolicy Bypass -File ...` as shown. |
+| `User not found` / HTTP 401 | Wrong or deleted key. Create a new one, rerun step 3. |
+| `No endpoints found matching your data policy` | Allow free endpoints at <https://openrouter.ai/settings/privacy>. |
+| HTTP 429 / `Rate limit exceeded` | Busy model or daily limit reached. Wait, try another model, or try tomorrow. |
+| `OPENROUTER_API_KEY is not set` | Rerun step 3 and answer `y`, then open a new window. |
+| `claude-free` is not recognized | Check the line in `$PROFILE` and the folder path, then open a new window. |
+| `running scripts is disabled` | Do step 2. |
+| Model replies but never edits files | It isn't using tools well. Pick another model from the step 3 list. |
 
-## Uninstall
+## Removing it
+
+Delete the `claude-free` line from `$PROFILE`, then:
 
 ```powershell
-ccr stop
-npm uninstall -g @musistudio/claude-code-router
+[Environment]::SetEnvironmentVariable('OPENROUTER_API_KEY', $null, 'User')
+[Environment]::SetEnvironmentVariable('OPENROUTER_MODEL', $null, 'User')
 ```
-
-Then delete `%APPDATA%\claude-code-router` if you want to remove the saved key.
