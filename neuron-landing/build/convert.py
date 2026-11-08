@@ -356,6 +356,8 @@ def convert_layout(layout, fname, schema):
                     role = 'بخش رنگی تیتر'
                 elif 'btn' in cls:
                     role = 'متن دکمه'
+                if re.fullmatch(r'[+\-]?[۰-۹0-9٬,.]+\+?', t):
+                    role = 'عدد / قیمت'
                 key = schema.field(layout, cur_gid(), 'text', t, next_occ('text', t), t, role, {'long': len(t) > 90})
                 lead = raw[:len(raw) - len(raw.lstrip())]
                 trail = raw[len(raw.rstrip()):]
@@ -470,6 +472,15 @@ def main():
         dst = os.path.join(PLUGIN, 'assets', rel)
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         shutil.copyfile(os.path.join(BLOBS, srcf), dst)
+    # WOFF2 copies of the fonts (about half the size of the design's TTF files)
+    try:
+        from fontTools.ttLib import TTFont
+        for w in (400, 500, 700):
+            f = TTFont(os.path.join(PLUGIN, 'assets', 'fonts', 'vazir-%d.ttf' % w))
+            f.flavor = 'woff2'
+            f.save(os.path.join(PLUGIN, 'assets', 'fonts', 'vazir-%d.woff2' % w))
+    except ImportError:
+        print('fontTools/brotli not installed: WOFF2 fonts not regenerated (pip install fonttools brotli)')
     # schema -> php
     write(os.path.join(PLUGIN, 'includes', 'schema-generated.php'), schema_php(schema))
     # report

@@ -131,7 +131,26 @@ class NRN_Content {
 	}
 
 	public function url( $key ) {
-		echo esc_url( $this->text( $key ) );
+		$v = $this->text( $key );
+		// "View all" of the magazine: follow the blog / chosen category while it is still the design's "#"
+		if ( '#' === $v && 0 === strpos( $key, 'mag.' ) ) {
+			$m = $this->mag();
+			if ( 'category' === $m['source'] && $m['cat'] ) {
+				$link = get_category_link( (int) $m['cat'] );
+				$v    = is_wp_error( $link ) ? $v : $link;
+			} elseif ( 'latest' === $m['source'] ) {
+				$pfp = (int) get_option( 'page_for_posts' );
+				$v   = $pfp ? get_permalink( $pfp ) : $v;
+			}
+		}
+		// the mobile header's cart button: WooCommerce cart page while still "#"
+		if ( '#' === $v && function_exists( 'wc_get_cart_url' ) ) {
+			$def = $this->field_def( $key );
+			if ( $def && isset( $def['label'] ) && 'سبد خرید' === $def['label'] ) {
+				$v = wc_get_cart_url();
+			}
+		}
+		echo esc_url( $v );
 	}
 
 	/* --------------------------------------------------------- sections */
