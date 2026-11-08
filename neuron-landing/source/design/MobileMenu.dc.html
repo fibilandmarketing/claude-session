@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>نورون · منوی موبایل</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Vazir";src:url(/_blob/6009fb0f6e957f89085c13d9d0f78e55);font-weight:400}
+@font-face{font-family:"Vazir";src:url(/_blob/6206b948e97b9cb2f6536f8e63677e93);font-weight:500}
+@font-face{font-family:"Vazir";src:url(/_blob/64b609195c9386e4922403669d2b279b);font-weight:700}
+body{margin:0;background:#0B0C0F}
+a{color:#17191C}a:hover{color:#A3490B}
+.dark{background:#0B0C0F url(/_blob/1db3b47a5640f0bac9aa2b87b0abf768) center top/900px repeat;color:#FFFFFF;position:relative;overflow:hidden}
+.pearl{background:#ECEEF2 url(/_blob/9bcdb209d42b0b1e2bd5ab0989c675c1) center top/900px repeat;color:#17191C;position:relative;overflow:hidden}
+.m-sec{padding:64px 16px;display:flex;flex-direction:column;gap:26px;position:relative}
+.m-sec > *{position:relative;z-index:1}
+.h2{position:relative;font-family:Vazir,Tahoma,sans-serif;font-weight:700;font-size:27px;line-height:1.5;margin:0}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-family:Vazir,Tahoma,sans-serif;font-weight:500;font-size:13px;line-height:1;padding:8px 14px;border-radius:999px;width:fit-content}
+.kicker-l{color:#A3490B;background:#ECEEF2;box-shadow:4px 4px 10px #C8CDD5,-4px -4px 10px #FFFFFF}
+.kicker-d{color:#FFC08A;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);backdrop-filter:blur(12px)}
+.kdot{width:7px;height:7px;border-radius:50%;background:#F48026;box-shadow:0 0 10px #F48026}
+.glass{background:linear-gradient(150deg,rgba(255,255,255,0.13),rgba(255,255,255,0.035) 60%);border:1px solid rgba(255,255,255,0.15);box-shadow:inset 0 1px 0 rgba(255,255,255,0.24),0 24px 50px rgba(0,0,0,0.38);backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px) saturate(150%);box-sizing:border-box}
+.glass-l{background:linear-gradient(150deg,rgba(255,255,255,0.82),rgba(255,255,255,0.42));border:1px solid rgba(255,255,255,0.95);box-shadow:inset 0 1px 0 #FFFFFF,0 18px 44px rgba(40,50,70,0.12);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-sizing:border-box}
+.neo{background:#ECEEF2;box-shadow:9px 9px 22px #C6CBD3,-9px -9px 22px #FFFFFF;box-sizing:border-box}
+.neo-sm{background:#ECEEF2;box-shadow:5px 5px 12px #C6CBD3,-5px -5px 12px #FFFFFF;box-sizing:border-box}
+.neo-in{background:#E7EAEE;box-shadow:inset 6px 6px 14px #C6CBD3,inset -6px -6px 14px #FFFFFF;box-sizing:border-box}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;min-height:54px;width:100%;padding:0 20px;border-radius:18px;font-family:Vazir,Tahoma,sans-serif;font-weight:500;font-size:16px;line-height:1;text-decoration:none;border:0;box-sizing:border-box;white-space:nowrap;cursor:pointer;transition:transform .3s}
+.btn:active{transform:scale(.97)}
+.btn-liquid{position:relative;overflow:hidden;background:linear-gradient(180deg,#FFB06E 0%,#F48026 50%,#E06A10 100%);color:#17191C;box-shadow:inset 0 1px 0 rgba(255,255,255,0.65),inset 0 -3px 8px rgba(140,50,0,0.35),0 12px 28px rgba(244,128,38,0.42)}
+.btn-liquid::after{content:"";position:absolute;top:-10%;bottom:-10%;width:36%;left:0;background:linear-gradient(100deg,transparent,rgba(255,255,255,0.6),transparent);transform:translateX(-140%) skewX(-18deg);animation:sheen 4.8s ease-in-out infinite;will-change:transform}
+.btn-liquid:hover{color:#17191C}
+.btn-glass{color:#FFFFFF;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.24);box-shadow:inset 0 1px 0 rgba(255,255,255,0.25);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.btn-glass:hover{color:#FFFFFF}
+.btn-neo{color:#17191C;background:#ECEEF2;box-shadow:5px 5px 12px #C6CBD3,-5px -5px 12px #FFFFFF}
+.btn-neo:hover{color:#17191C}
+.btn-ink{color:#FFFFFF;background:linear-gradient(180deg,#2A2D33,#121317);box-shadow:inset 0 1px 0 rgba(255,255,255,0.14),0 10px 22px rgba(23,25,28,0.28)}
+.btn-ink:hover{color:#FFFFFF}
+.tbd{display:inline-block;font-family:Vazir,Tahoma,sans-serif;font-weight:500;font-size:12px;line-height:1.7;color:#7A3E00;background:#FFF1DE;border:1px dashed #D9913F;border-radius:8px;padding:1px 8px}
+.phb{position:absolute;top:10px;right:10px;z-index:2;font-family:Vazir,Tahoma,sans-serif;font-size:11px;line-height:1.6;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,0.86);color:#3E434A;border:1px dashed #9AA0A9}
+.phb-d{position:absolute;top:10px;right:10px;z-index:2;font-family:Vazir,Tahoma,sans-serif;font-size:11px;line-height:1.6;padding:3px 10px;border-radius:999px;background:rgba(11,12,15,0.62);color:#D0D4DA;border:1px dashed #6A707A}
+.grad{background:linear-gradient(90deg,#FFC48F,#F48026 55%,#E2650C);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mul{mix-blend-mode:multiply}
+.orb{position:absolute;border-radius:50%;filter:blur(64px);pointer-events:none;z-index:0 !important}
+.pin{position:absolute;width:12px;height:12px;border-radius:50%;background:#F48026;box-shadow:0 0 0 4px rgba(244,128,38,0.22),0 0 18px #F48026;z-index:1}
+.pin::before,.pin::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid #F48026;animation:ping 2.6s cubic-bezier(0,.55,.45,1) infinite}
+.pin::after{animation-delay:1.3s}
+.floaty{animation:floaty 6.5s ease-in-out infinite}
+.floaty2{animation:floaty 7.5s ease-in-out -2.5s infinite}
+.flowv{overflow:hidden}.flowv::before{content:"";position:absolute;left:0;right:0;top:-36px;bottom:0;background:repeating-linear-gradient(180deg,#F48026 0 8px,transparent 8px 18px);animation:flowy 1.6s linear infinite;will-change:transform}
+.marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mtrack{display:flex;gap:12px;width:max-content;padding:14px 4px;animation:marquee 38s linear infinite;will-change:transform}
+.org{flex:0 0 auto;width:124px;box-sizing:border-box;padding:16px 10px 14px;border-radius:22px;background:#FFFFFF;border:1px solid rgba(23,25,28,0.07);display:flex;flex-direction:column;align-items:center;gap:12px;font-family:Vazir,Tahoma,sans-serif;transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s cubic-bezier(.2,.8,.2,1),border-color .5s}
+.org:hover{transform:translateY(-6px);box-shadow:0 18px 36px -12px rgba(23,25,28,0.18);border-color:rgba(244,128,38,0.35)}
+.org-logo{width:52px;height:52px;display:flex;align-items:center;justify-content:center}
+.org-logo img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.org:hover .org-logo img{transform:scale(1.08)}
+.org-name{font-size:12px;font-weight:500;line-height:1.5;color:#3E434A;text-align:center;white-space:nowrap}
+.org-badge{width:78%;height:78%;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#FFB06E,#F48026 55%,#E06A10);color:#17191C;font-size:26px}
+.hscroll{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 16px 24px;margin:0 -16px}
+.hscroll > *{scroll-snap-align:center}
+details summary{list-style:none;cursor:pointer}
+details summary::-webkit-details-marker{display:none}
+details[open] .chev{transform:rotate(180deg)}
+.chev{transition:transform .35s}
+.hero-map{position:absolute;inset:-25%;z-index:0;background:url(/_blob/6444e547422cd0c76e3ddb80f7591260) center/1000px repeat;opacity:.85;transform-origin:50% 75%;will-change:transform;pointer-events:none}
+.halo{position:absolute;border-radius:50%;background:conic-gradient(from 0deg,rgba(244,128,38,0) 0deg,rgba(244,128,38,.6) 70deg,rgba(255,200,150,.16) 140deg,rgba(244,128,38,0) 220deg,rgba(90,120,255,.22) 300deg,rgba(244,128,38,0) 360deg);filter:blur(36px);animation:spin 16s linear infinite;will-change:transform;pointer-events:none;z-index:0}
+.hero-in{animation:heroIn 1s cubic-bezier(.2,.8,.2,1) both}
+.h2::after{content:"";position:absolute;bottom:-12px;right:0;width:84px;height:4px;border-radius:4px;background:linear-gradient(90deg,#FFC48F,#F48026);transform:scaleX(0);transform-origin:100% 50%;transition:transform 1s cubic-bezier(.2,.8,.2,1) .15s}
+[data-stop].visited .h2::after,section:not([data-stop]) .h2::after{transform:scaleX(1)}
+[data-stop].visited .kicker-l{box-shadow:5px 5px 12px #C8CDD5,-5px -5px 12px #FFFFFF,0 0 0 1.5px rgba(244,128,38,.55),0 0 26px rgba(244,128,38,.3)}
+[data-stop].visited .kicker-d{border-color:rgba(244,128,38,.6);box-shadow:0 0 26px rgba(244,128,38,.35)}
+.leg{opacity:0;transition:opacity .9s ease;filter:drop-shadow(0 0 6px rgba(255,140,50,.95)) drop-shadow(0 0 14px rgba(244,128,38,.5))}
+.leg.next{opacity:.0}
+.leg.done{opacity:1}
+.drive{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.drive.surface{z-index:7}
+.drive-top{position:absolute;inset:0;z-index:7;pointer-events:none;overflow:hidden}
+.car{position:absolute;left:0;top:0;width:0;height:0;will-change:transform}
+.car-in{position:absolute;left:0;top:0;animation:carFade .6s ease-out both}
+.car-settle{position:absolute;left:-52px;top:-20px;width:104px;height:40px}
+.car.parked .car-settle{animation:settle .8s cubic-bezier(.3,1.7,.5,1)}
+.car-shadow{position:absolute;left:-10px;top:7px;width:124px;height:42px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.55),rgba(0,0,0,0))}
+.car-glow{position:absolute;left:-24px;top:-20px;width:152px;height:80px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,170,95,.42),rgba(255,170,95,0))}
+.car-beam{position:absolute;left:100px;top:-28px;width:210px;height:96px;background:radial-gradient(ellipse 100% 50% at 0% 50%,rgba(255,238,205,.62),rgba(255,238,205,0) 72%);clip-path:polygon(0 40%,100% 0,100% 100%,0 60%);transition:opacity .8s;animation:flick 1.6s .5s backwards}
+.car.parked .car-beam{opacity:.1}
+.car-tail{position:absolute;left:-158px;top:15px;width:166px;height:14px;background:linear-gradient(90deg,rgba(244,128,38,0),rgba(255,170,95,.85));clip-path:polygon(0 46%,100% 0,100% 100%,0 54%);transform-origin:100% 50%;transform:scaleX(.001);opacity:0;will-change:transform,opacity}
+.car-brake{position:absolute;left:-28px;top:-8px;width:46px;height:60px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,60,48,.6),rgba(255,60,48,0));opacity:0;transition:opacity .35s}
+.car.braking .car-brake{opacity:1}
+.bl{stroke:#7A1D17;transition:stroke .3s}
+.car.braking .bl{stroke:#FF4A3D}
+.car.reverse .bl{stroke:#F4F6FA}
+.car.reverse .car-brake{opacity:1;background:radial-gradient(closest-side,rgba(240,244,255,.5),rgba(240,244,255,0))}
+.stop{position:absolute;width:0;height:0}
+.stop .ring{position:absolute;left:-10px;top:-10px;width:20px;height:20px;border-radius:50%;border:2px solid rgba(244,128,38,.55);background:#1C1F25;box-sizing:border-box;transition:transform .6s cubic-bezier(.2,.9,.25,1.4),border-color .6s}
+.stop .dot{position:absolute;left:-5px;top:-5px;width:10px;height:10px;border-radius:50%;background:#F48026;box-shadow:0 0 14px #F48026;transform:scale(0);transition:transform .6s cubic-bezier(.2,.9,.25,1.5)}
+.stop.lit .ring{transform:scale(1.35);border-color:#F48026}
+.stop.lit .dot{transform:scale(1)}
+.stop.lit::after{content:"";position:absolute;left:-10px;top:-10px;width:20px;height:20px;border-radius:50%;border:2px solid #F48026;box-sizing:border-box;animation:ping 1.5s cubic-bezier(0,.55,.45,1) 2}
+.dest{position:absolute;width:0;height:0}
+.dest .pad{position:absolute;left:-46px;top:-46px;width:92px;height:92px;border-radius:50%;border:2px dashed rgba(244,128,38,.55);box-sizing:border-box;animation:spin 20s linear infinite;transition:border-color .6s,box-shadow .6s}
+.drive-top.parked .dest .pad{border-color:#F48026;box-shadow:0 0 34px rgba(244,128,38,.5),inset 0 0 28px rgba(244,128,38,.3)}
+.dest .burst{position:absolute;left:-46px;top:-46px;width:92px;height:92px;border-radius:50%;border:2px solid #F48026;box-sizing:border-box;opacity:0}
+.drive-top.parked .dest .burst{animation:burst 1.4s cubic-bezier(0,.55,.45,1) 2}
+.drive-top.parked .dest .burst.b2{animation-delay:.35s}
+.neo,.neo-sm,.neo-in,.glass,.glass-l,.btn,.kicker,[data-box],div.dark,article.dark{outline:1.5px solid transparent;outline-offset:-1.5px}
+.neo,.neo-sm,.neo-in,.glass-l,[data-box]{transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s,background-color .35s,outline-color .35s}
+.kicker{transition:box-shadow .6s,border-color .6s,background-color .35s,outline-color .35s}
+.tunnel{outline-color:rgba(244,128,38,.8) !important}
+.neo.tunnel,.neo-sm.tunnel,.neo-in.tunnel,.btn-neo.tunnel,.kicker-l.tunnel,[data-box].tunnel{background-color:rgba(236,238,242,.5) !important;backdrop-filter:blur(5px) saturate(140%);-webkit-backdrop-filter:blur(5px) saturate(140%)}
+.glass-l.tunnel{background:rgba(255,255,255,.42) !important;backdrop-filter:blur(5px) saturate(140%);-webkit-backdrop-filter:blur(5px) saturate(140%)}
+.glass.tunnel,.btn-glass.tunnel,.kicker-d.tunnel{background:rgba(255,255,255,.06) !important;backdrop-filter:blur(5px) saturate(140%);-webkit-backdrop-filter:blur(5px) saturate(140%)}
+.btn-ink.tunnel{background:rgba(23,25,28,.55) !important}
+.btn-liquid.tunnel{background:linear-gradient(180deg,rgba(255,176,110,.62),rgba(244,128,38,.55) 50%,rgba(224,106,16,.62)) !important}
+div.dark.tunnel,article.dark.tunnel{background-color:rgba(11,12,15,.5) !important}
+.hero{position:relative;overflow:hidden;background:#09090B;color:#FFFFFF}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;display:block}
+.hero-car{position:absolute;display:block;height:auto;pointer-events:none;z-index:0;filter:drop-shadow(0 26px 34px rgba(0,0,0,.7))}
+.road-core{opacity:.62}
+.hero-glow{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 46% 58% at 24% 58%,rgba(244,128,38,.17),rgba(244,128,38,0) 70%),radial-gradient(ellipse 40% 40% at 85% 10%,rgba(255,255,255,.035),rgba(255,255,255,0) 70%)}
+.hnav{color:#E9EBEE;text-decoration:none;font-weight:500;padding:8px 0;transition:color .25s}
+.hnav:hover{color:#FFB06E}
+.hero-outline{color:#FFFFFF;background:rgba(255,255,255,.02);border:1.5px solid rgba(255,255,255,.72)}
+.hero-outline:hover{color:#FFFFFF;border-color:#F48026;background:rgba(244,128,38,.08)}
+.hero-pill{margin:0;display:inline-flex;align-items:center;width:fit-content;font-weight:500;color:#FF9A45;border:1.5px solid #F48026;border-radius:14px;line-height:1.5;background:rgba(244,128,38,.05)}
+.hero-big{margin:0;font-weight:700;color:#FFFFFF}
+.hero-big span{color:#F48026}
+.stage{position:relative;width:100%;aspect-ratio:3 / 2;will-change:transform,opacity;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%),linear-gradient(180deg,transparent 0,#000 12%,#000 86%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%),linear-gradient(180deg,transparent 0,#000 12%,#000 86%,transparent 100%);mask-composite:intersect}
+.hero-map2{position:absolute;z-index:0;pointer-events:none;background:url(/_blob/d0ae9f47839110edd43798fd402c7a5b) center/620px repeat;opacity:.6;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 30%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 30%,transparent 100%)}
+.stage-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.stage-floor{position:absolute;inset:0;background:url(/_blob/d0ae9f47839110edd43798fd402c7a5b) center 78%/520px repeat;-webkit-mask-image:linear-gradient(180deg,transparent 58%,#000 80%);mask-image:linear-gradient(180deg,transparent 58%,#000 80%);pointer-events:none}
+.stage-route{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;filter:drop-shadow(0 0 6px rgba(244,128,38,.9)) drop-shadow(0 0 18px rgba(244,128,38,.45))}
+.route-draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.9s .45s cubic-bezier(.6,0,.2,1) forwards}
+.hpin{position:absolute;width:0;height:0;z-index:2}
+.hpin-ring{position:absolute;left:-26px;top:-9px;width:52px;height:18px;border-radius:50%;border:2px solid rgba(244,128,38,.85);box-sizing:border-box;animation:ringPulse 2.2s ease-out 2.2s infinite both}
+.hpin-ico{position:absolute;left:-17px;top:-46px;width:34px;height:46px;filter:drop-shadow(0 6px 14px rgba(244,128,38,.6));animation:pinPop .7s 2.15s cubic-bezier(.2,.9,.25,1.4) both;transform-origin:50% 100%}
+.hpin-label{position:absolute;left:30px;top:-48px;white-space:nowrap;padding:8px 14px;border-radius:12px;background:rgba(16,17,20,.72);border:1px solid rgba(255,255,255,.16);color:#FFFFFF;font-size:15px;line-height:1.5;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:pinPop .6s 2.4s cubic-bezier(.2,.9,.25,1.3) both}
+.hero-chip{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:18px;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.03);color:#E9EBEE;font-size:15px}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pinPop{from{opacity:0;transform:translateY(10px) scale(.4)}to{opacity:1;transform:none}}
+@keyframes ringPulse{0%{transform:scale(.6);opacity:1}100%{transform:scale(1.9);opacity:0}}
+@keyframes heroIn{from{opacity:0;transform:translateY(28px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes carFade{from{opacity:0}to{opacity:1}}
+.soc{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 8px 20px rgba(0,0,0,.25);transition:transform .4s cubic-bezier(.2,.8,.2,1),background .3s,border-color .3s,box-shadow .3s}
+.soc img{width:26px;height:26px;display:block;object-fit:contain;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.soc:hover{transform:translateY(-4px);background:rgba(255,255,255,.13);border-color:rgba(244,128,38,.55);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 12px 26px rgba(244,128,38,.25)}
+.soc:hover img{transform:scale(1.1)}
+.mdrawer{position:fixed;left:0;top:0;width:100%;height:min(100vh,844px);z-index:60;pointer-events:none;visibility:hidden;transition:visibility 0s linear .55s;font-family:Vazir,Tahoma,sans-serif}
+.mdrawer.open{pointer-events:auto;visibility:visible;transition:visibility 0s}
+.md-scrim{position:absolute;inset:0;background:rgba(6,7,9,.6);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);opacity:0;transition:opacity .45s ease}
+.mdrawer.open .md-scrim{opacity:1}
+.md-panel{position:absolute;top:0;right:0;bottom:0;width:86%;max-width:350px;box-sizing:border-box;padding:14px 14px 16px;display:flex;flex-direction:column;gap:12px;overflow-x:hidden;overflow-y:auto;color:#FFFFFF;background:#0D0F12 url(/_blob/1db3b47a5640f0bac9aa2b87b0abf768) center top/700px repeat;border-radius:28px 0 0 28px;border-left:1px solid rgba(255,255,255,.08);box-shadow:-28px 0 60px rgba(0,0,0,.5);transform:translateX(104%);transition:transform .55s cubic-bezier(.2,.85,.2,1)}
+.mdrawer.open .md-panel{transform:none}
+.md-glow{position:absolute;width:260px;height:260px;border-radius:50%;left:-90px;top:-110px;background:radial-gradient(closest-side,rgba(244,128,38,.32),rgba(244,128,38,0));pointer-events:none}
+.md-head{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:2px 2px 10px;border-bottom:1px solid rgba(255,255,255,.08)}
+.md-x{width:44px;height:44px;border-radius:14px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:background .3s,transform .4s cubic-bezier(.2,.8,.2,1)}
+.md-x:hover{background:rgba(244,128,38,.18);transform:rotate(90deg)}
+.md-nav{position:relative;display:flex;flex-direction:column;gap:2px}
+.md-link{display:flex;align-items:center;gap:12px;min-height:46px;padding:0 8px;border-radius:15px;color:#E6E8EB;text-decoration:none;font-size:15.5px;font-weight:500;opacity:0;transform:translateX(26px);transition:opacity .4s ease,transform .55s cubic-bezier(.2,.8,.2,1),background-color .25s,color .25s;transition-delay:calc(var(--i) * 45ms + .12s)}
+.mdrawer.open .md-link{opacity:1;transform:none}
+.md-link:hover{background-color:rgba(255,255,255,.06);color:#FFFFFF}
+.md-link.on{color:#FFFFFF;background:linear-gradient(270deg,rgba(244,128,38,.2),rgba(244,128,38,0));box-shadow:inset -3px 0 0 #F48026}
+.md-ic{width:36px;height:36px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09)}
+.md-link.on .md-ic{background:linear-gradient(180deg,#FFB06E,#F48026 55%,#E06A10);border-color:transparent;box-shadow:0 6px 16px rgba(244,128,38,.4)}
+.md-link.on .md-ic svg{stroke:#17191C}
+.md-t{flex:1}
+.md-chev{opacity:.35;transition:transform .3s,opacity .3s}
+.md-link:hover .md-chev{opacity:.8;transform:translateX(-3px)}
+.md-login{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border-radius:14px;border:1px dashed rgba(255,192,138,.45);color:#FFC08A;text-decoration:none;font-size:14px;font-weight:500;transition:background .3s}
+.md-login:hover{background:rgba(244,128,38,.1);color:#FFD7B3}
+.md-app{position:relative;overflow:hidden;flex-shrink:0;border-radius:22px;padding:14px;display:flex;align-items:center;gap:12px;color:#17191C;background:linear-gradient(135deg,#FFBD85 0%,#F48026 48%,#D45E0B 100%);box-shadow:0 14px 30px rgba(244,128,38,.3),inset 0 1px 0 rgba(255,255,255,.5)}
+.md-app::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.38) 45%,rgba(255,255,255,0) 60%);transform:translateX(-120%);animation:mdSheen 4.5s ease-in-out infinite 1s;pointer-events:none}
+@keyframes mdSheen{0%,60%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+.md-app-ic{width:52px;height:52px;border-radius:16px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(23,25,28,.88);box-shadow:0 8px 18px rgba(0,0,0,.25)}
+.md-app-dl{display:inline-flex;align-items:center;gap:6px;width:fit-content;margin-top:6px;min-height:36px;padding:0 14px;border-radius:999px;background:#17191C;color:#FFFFFF;text-decoration:none;font-size:13px;font-weight:700}
+.md-app-dl:hover{color:#FFC08A}
+.md-sup{display:flex;align-items:center;gap:12px;padding:12px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.md-call{width:46px;height:46px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#FFB06E,#F48026 55%,#E06A10);box-shadow:0 8px 18px rgba(244,128,38,.45);position:relative}
+.md-call::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(244,128,38,.6);animation:mdRing 2.2s cubic-bezier(0,.55,.45,1) infinite}
+@keyframes mdRing{0%{transform:scale(.85);opacity:1}100%{transform:scale(1.35);opacity:0}}
+.md-supl{min-height:36px;padding:0 12px;border-radius:999px;display:inline-flex;align-items:center;font-size:12.5px;font-weight:500;color:#E6E8EB;text-decoration:none;border:1px solid rgba(255,255,255,.18);white-space:nowrap}
+.md-supl:hover{border-color:rgba(244,128,38,.6);color:#FFC08A}
+.md-soc{display:flex;justify-content:space-between;gap:8px;padding:0 4px}
+.mapp{display:flex;flex-direction:column}
+.map-box{position:relative;z-index:1}
+.nmap{display:block;width:100%;height:auto;overflow:visible}
+.nmap .prv{stroke:#0D0F12;stroke-width:1.2;stroke-linejoin:round;vector-effect:non-scaling-stroke;cursor:pointer;outline:none;transition:filter .3s}
+.nmap .prv:hover,.nmap .prv:focus-visible{filter:brightness(1.4) saturate(1.1)}
+.nmap .m-hov{fill:none;stroke:#FFC08A;stroke-width:2;stroke-linejoin:round;vector-effect:non-scaling-stroke;pointer-events:none;opacity:0;transition:opacity .25s}
+.nmap .m-hov.on{opacity:1}
+.nmap .m-sel{stroke:#FFEBDA;stroke-width:2.2;stroke-linejoin:round;vector-effect:non-scaling-stroke;pointer-events:none;filter:drop-shadow(0 0 8px rgba(244,128,38,.9)) drop-shadow(0 0 22px rgba(244,128,38,.45))}
+.nmap .m-lab{fill:rgba(205,212,222,.42);font-family:Vazir,Tahoma,sans-serif;pointer-events:none}
+.map-ping{position:absolute;left:-999px;top:-999px;width:0;height:0;pointer-events:none;z-index:2}
+.map-ping i{position:absolute;left:-18px;top:-18px;width:36px;height:36px;border-radius:50%;border:2px solid #FFB06E;box-sizing:border-box;opacity:0}
+.arrived .map-ping i{animation:mping 2.4s cubic-bezier(0,.55,.45,1) infinite}
+.arrived .map-ping i+i{animation-delay:1.2s}
+@keyframes mping{0%{transform:scale(.6);opacity:.95}100%{transform:scale(2.8);opacity:0}}
+.map-legend{display:flex;flex-wrap:wrap;gap:8px 14px;color:#B9BEC7}
+.map-legend span{display:flex;align-items:center;gap:6px}
+.map-legend i{width:12px;height:12px;border-radius:4px;display:inline-block}
+.lg-has{background:linear-gradient(90deg,#3D3732,#C0662A)}
+.lg-no{background:#24272D;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.car-in{transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.car.parked .car-in{transform:scale(.62)}
+@keyframes settle{0%{transform:scale(1.08)}100%{transform:none}}
+@keyframes flick{0%{opacity:0}12%{opacity:.9}18%{opacity:.1}28%{opacity:1}100%{opacity:1}}
+@keyframes burst{0%{transform:scale(.5);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+@keyframes sheen{0%{transform:translateX(300%) skewX(-18deg)}55%,100%{transform:translateX(-140%) skewX(-18deg)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(-30px,30px) scale(1.15)}}
+@keyframes ping{0%{transform:scale(1);opacity:.85}100%{transform:scale(3.2);opacity:0}}
+@keyframes dash{to{stroke-dashoffset:-1290}}
+@keyframes flowy{to{transform:translateY(36px)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(50%)}}
+@keyframes rise{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@supports (animation-timeline: view()){.reveal{animation:rise both cubic-bezier(.2,.8,.2,1);animation-timeline:view();animation-range:entry 0% entry 30%}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div dir="rtl" style="position: relative; width: 390px; height: 844px; overflow: hidden; font-family: Vazir, Tahoma, sans-serif; background: #0B0C0F">
+<section class="hero" data-hero="1" style="padding-bottom: 44px">
+<header style="position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.10)">
+<div style="display: flex; align-items: center; gap: 8px">
+<button type="button" aria-label="باز کردن منو" data-menu-open="1" aria-controls="m-menu" aria-expanded="false" class="btn hero-outline" style="width: 48px; min-height: 48px; padding: 0; border-radius: 15px; border-color: rgba(255,255,255,0.35)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+<a href="#m-top" aria-label="نورون، صفحهٔ اصلی" style="display: flex; padding: 5px 10px; border-radius: 14px; background: #F3EEE6"><img src="/_blob/a4532d188099cfe9866d65efe1373476" alt="نورون" style="height: 34px; width: auto; display: block"></a>
+</div>
+<div style="display: flex; gap: 8px">
+<a href="tel:05152220010" aria-label="تماس با واحد فروش" class="btn hero-outline" style="width: 48px; min-height: 48px; padding: 0; border-radius: 15px; border-color: rgba(255,255,255,0.35)"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l1.6 4.2-2.2 1.4a11 11 0 0 0 6.5 6.5l1.4-2.2L20 15.5V19a1.5 1.5 0 0 1-1.6 1.5C10.6 20 4 13.4 3.5 5.6A1.5 1.5 0 0 1 5 4z"></path></svg></a>
+<a href="#" aria-label="سبد خرید" class="btn btn-liquid" style="width: 48px; min-height: 48px; padding: 0; border-radius: 15px"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"></path><circle cx="10" cy="20.5" r="1"></circle><circle cx="17" cy="20.5" r="1"></circle></svg></a>
+</div>
+</header>
+<div style="position: relative; z-index: 3; padding: 24px 18px 0; display: flex; flex-direction: column; gap: 16px; will-change: transform, opacity">
+<h1 class="hero-pill hero-in" style="font-size: 15px; padding: 6px 14px; border-radius: 11px">ردیاب و دزدگیر خودرو نورون</h1>
+<p class="hero-big hero-in" style="animation-delay: .1s; font-size: 44px; line-height: 1.4">خودرویت را<br><span>روی نقشه ببین</span></p>
+<p class="hero-in" style="animation-delay: .2s; margin: 0; font-size: 16px; line-height: 1.95; color: #C9CDD3">موقعیت خودرو را لحظه‌ای ببینید و هشدارهای امنیتی را روی موبایل دریافت کنید.</p>
+<div class="hero-in" style="animation-delay: .3s; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding-top: 4px">
+<a href="#m-choose" class="btn btn-liquid" style="min-height: 56px; padding: 0 10px; border-radius: 14px; font-size: 15px; gap: 12px">مشاهده ردیاب‌ها <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></a>
+<a href="#m-compare" class="btn hero-outline" style="min-height: 56px; padding: 0 10px; border-radius: 14px; font-size: 15px">مشاهده دزدگیرها</a>
+</div>
+</div>
+<div style="position: relative; z-index: 0; height: 420px; margin-top: 4px; overflow: hidden">
+<img class="hero-bg" data-heromap="1" data-ox="0" data-oy="0" src="/_blob/c58b6ae3c1b04d124085a15ef3701886" alt="" aria-hidden="true" style="inset: auto; left: -150px; top: -90px; width: 920px; height: auto; -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 14%, #000 84%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0, #000 14%, #000 84%, transparent 100%)">
+<img class="hero-car hero-in" data-x="255" data-y="200" data-w="727" src="/_blob/0b6e1aa4ba01d7b836dc31317dccf407" alt="خودرو با ردیاب و دزدگیر نورون و جعبهٔ محصول" style="animation-delay: .25s; left: -10px; top: 20px; width: 400px">
+</div>
+<div style="position: relative; z-index: 3; padding: 4px 18px 0; display: flex; flex-direction: column; align-items: center; gap: 18px">
+<a href="#m-fleet" style="color: #C9CDD3; font-size: 16px; font-weight: 500; text-decoration: none; border-bottom: 1.5px solid rgba(255,255,255,0.75); padding: 0 4px 10px; display: inline-flex; align-items: center; gap: 22px">راهکار ناوگان و سازمان‌ها <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></a>
+</div>
+</section>
+<!-- منوی کشویی موبایل -->
+<div class="mdrawer open" data-drawer="1" aria-hidden="false">
+<div class="md-scrim" data-menu-close="1"></div>
+<aside id="m-menu" class="md-panel" role="dialog" aria-modal="true" aria-label="منوی سایت">
+<span class="md-glow"></span>
+<div class="md-head"><a href="#m-top" aria-label="نورون، صفحهٔ اصلی" style="display: flex; padding: 5px 10px; border-radius: 14px; background: #F3EEE6"><img src="/_blob/a4532d188099cfe9866d65efe1373476" alt="نورون" style="height: 32px; width: auto; display: block"></a><button type="button" class="md-x" data-menu-close="1" aria-label="بستن منو"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+<nav class="md-nav" aria-label="منوی موبایل"><a href="#m-top" class="md-link on" style="--i: 0" aria-current="page"><span class="md-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFC08A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5L12 3l9 7.5"></path><path d="M5 9.5V20h5v-6h4v6h5V9.5"></path></svg></span><span class="md-t">صفحهٔ اصلی</span><span class="md-chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E6E8EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"></path></svg></span></a><a href="#m-choose" class="md-link" style="--i: 1"><span class="md-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFC08A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.6"></circle></svg></span><span class="md-t">ردیاب خودرو</span><span class="md-chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E6E8EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"></path></svg></span></a><a href="#m-compare" class="md-link" style="--i: 2"><span class="md-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFC08A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z"></path><path d="M9 12l2.2 2.2L15.5 10"></path></svg></span><span class="md-t">دزدگیر خودرو</span><span class="md-chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E6E8EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"></path></svg></span></a><a href="https://noroncar.ir/namayandegi/" class="md-link" style="--i: 3"><span class="md-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFC08A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5L5.5 4h13L20 9.5"></path><path d="M4 9.5a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0 2.7 2.7 0 0 0 5.3 0"></path><path d="M5.5 12v8h13v-8"></path><path d="M10 20v-4.5h4V20"></path></svg></span><span class="md-t">نمایندگی‌ها</span><span class="md-chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E6E8EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"></path></svg></span></a><a href="#m-fleet" class="md-link" style="--i: 4"><span class="md-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFC08A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6.5h11v9h-11z"></path><path d="M13.5 9.5h4l3.5 3.5v2.5h-7.5"></path><circle cx="6.5" cy="17.5" r="1.8"></circle><circle cx="17" cy="17.5" r="1.8"></circle></svg></span><span class="md-t">راهکار سازمانی</span><span class="md-chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E6E8EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"></path></svg></span></a><a href="#m-mag" class="md-link" style="--i: 5"><span class="md-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFC08A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"></path><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"></path><path d="M8.5 7.5h7"></path></svg></span><span class="md-t">مجلهٔ نورون</span><span class="md-chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E6E8EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"></path></svg></span></a><a href="https://noroncar.ir/contact-us/" class="md-link" style="--i: 6"><span class="md-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFC08A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M4 7l8 6 8-6"></path></svg></span><span class="md-t">تماس با ما</span><span class="md-chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E6E8EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"></path></svg></span></a></nav>
+<a href="#" class="md-login"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FFC08A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"></path></svg>ورود به سامانه</a>
+<div class="md-app"><span class="md-app-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFB06E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="2.6"></rect><path d="M10.5 18.5h3"></path></svg></span><div style="position: relative; z-index: 1; display: flex; flex-direction: column; min-width: 0"><b style="font-size: 16px; font-weight: 700">اپلیکیشن نورون</b><span style="font-size: 12.5px; line-height: 1.8; color: #2B1A0C">موقعیت خودرو و هشدارها روی موبایل شما</span><a href="https://noroncar.ir/download-app/" class="md-app-dl"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFC08A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"></path><path d="M7.5 10.5L12 15l4.5-4.5"></path><path d="M5 19.5h14"></path></svg>دانلود اپلیکیشن</a></div></div>
+<div style="margin-top: auto; display: flex; flex-direction: column; gap: 12px">
+<div class="md-sup"><a href="tel:09120468018" class="md-call" aria-label="تماس با پشتیبانی"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#17191C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg></a><div style="flex: 1; display: flex; flex-direction: column; min-width: 0"><b style="font-size: 14px; font-weight: 700">پشتیبانی</b><a href="tel:09120468018" dir="ltr" style="color: #C9CDD3; text-decoration: none; font-size: 13.5px; text-align: right">۰۹۱۲۰۴۶۸۰۱۸</a></div><a href="https://noroncar.ir/support/" class="md-supl">صفحهٔ پشتیبانی</a></div>
+<div class="md-soc"><a href="#" class="soc" aria-label="تلگرام نورون"><img src="/_blob/b5ad64751f2837140c0d9a1a797bbe20" alt="" aria-hidden="true"></a><a href="#" class="soc" aria-label="اینستاگرام نورون"><img src="/_blob/4526752296b8f5fc7b735fbb45e3919c" alt="" aria-hidden="true"></a><a href="#" class="soc" aria-label="واتس‌اپ نورون"><img src="/_blob/53b7d92f7560fb2d9ff36bc830a0f742" alt="" aria-hidden="true"></a><a href="#" class="soc" aria-label="ایتا نورون"><img src="/_blob/92eb0b827c9a73f6aa40b65b44bc520a" alt="" aria-hidden="true"></a></div>
+</div>
+</aside>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

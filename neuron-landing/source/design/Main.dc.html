@@ -1,0 +1,1347 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>نورون · صفحهٔ اصلی دسکتاپ</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:"Vazir";src:url(/_blob/6009fb0f6e957f89085c13d9d0f78e55);font-weight:400}
+@font-face{font-family:"Vazir";src:url(/_blob/6206b948e97b9cb2f6536f8e63677e93);font-weight:500}
+@font-face{font-family:"Vazir";src:url(/_blob/64b609195c9386e4922403669d2b279b);font-weight:700}
+body{margin:0;background:#0B0C0F}
+a{color:#17191C}a:hover{color:#A3490B}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px;box-sizing:border-box;position:relative;z-index:1}
+.dark{background:#0B0C0F url(/_blob/1db3b47a5640f0bac9aa2b87b0abf768) center top/1300px repeat;color:#FFFFFF;position:relative;overflow:hidden}
+.pearl{background:#ECEEF2 url(/_blob/9bcdb209d42b0b1e2bd5ab0989c675c1) center top/1300px repeat;color:#17191C;position:relative;overflow:hidden}
+.sec{padding:112px 0}
+.h2{position:relative;font-family:Vazir,Tahoma,sans-serif;font-weight:700;font-size:38px;line-height:1.45;margin:0}
+.lead{font-family:Vazir,Tahoma,sans-serif;font-size:17px;line-height:1.95;margin:0}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-family:Vazir,Tahoma,sans-serif;font-weight:500;font-size:14px;line-height:1;padding:9px 16px;border-radius:999px;width:fit-content}
+.kicker-l{color:#A3490B;background:#ECEEF2;box-shadow:5px 5px 12px #C8CDD5,-5px -5px 12px #FFFFFF}
+.kicker-d{color:#FFC08A;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);backdrop-filter:blur(12px)}
+.kdot{width:8px;height:8px;border-radius:50%;background:#F48026;box-shadow:0 0 10px #F48026}
+.glass{background:linear-gradient(150deg,rgba(255,255,255,0.13),rgba(255,255,255,0.035) 60%);border:1px solid rgba(255,255,255,0.15);box-shadow:inset 0 1px 0 rgba(255,255,255,0.24),0 30px 70px rgba(0,0,0,0.38);backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px) saturate(150%);box-sizing:border-box}
+.glass-l{background:linear-gradient(150deg,rgba(255,255,255,0.82),rgba(255,255,255,0.42));border:1px solid rgba(255,255,255,0.95);box-shadow:inset 0 1px 0 #FFFFFF,0 24px 60px rgba(40,50,70,0.12);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);box-sizing:border-box}
+.neo{background:#ECEEF2;box-shadow:14px 14px 32px #C6CBD3,-14px -14px 32px #FFFFFF;box-sizing:border-box}
+.neo-sm{background:#ECEEF2;box-shadow:6px 6px 14px #C6CBD3,-6px -6px 14px #FFFFFF;box-sizing:border-box}
+.neo-in{background:#E7EAEE;box-shadow:inset 7px 7px 16px #C6CBD3,inset -7px -7px 16px #FFFFFF;box-sizing:border-box}
+.lift{transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s}
+.lift:hover{transform:translateY(-10px)}
+.zoom img{transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.zoom:hover img{transform:scale(1.07) rotate(-1deg)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 28px;border-radius:18px;font-family:Vazir,Tahoma,sans-serif;font-weight:500;font-size:16px;line-height:1;text-decoration:none;border:0;box-sizing:border-box;white-space:nowrap;cursor:pointer;transition:transform .3s,box-shadow .3s,background .3s}
+.btn-liquid{position:relative;overflow:hidden;background:linear-gradient(180deg,#FFB06E 0%,#F48026 50%,#E06A10 100%);color:#17191C;box-shadow:inset 0 1px 0 rgba(255,255,255,0.65),inset 0 -3px 8px rgba(140,50,0,0.35),0 14px 34px rgba(244,128,38,0.42)}
+.btn-liquid::after{content:"";position:absolute;top:-10%;bottom:-10%;width:36%;left:0;background:linear-gradient(100deg,transparent,rgba(255,255,255,0.6),transparent);transform:translateX(-140%) skewX(-18deg);animation:sheen 4.8s ease-in-out infinite;will-change:transform}
+.btn-liquid:hover{color:#17191C;transform:translateY(-3px);box-shadow:inset 0 1px 0 rgba(255,255,255,0.65),inset 0 -3px 8px rgba(140,50,0,0.35),0 20px 44px rgba(244,128,38,0.55)}
+.btn-glass{color:#FFFFFF;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.24);box-shadow:inset 0 1px 0 rgba(255,255,255,0.25);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.btn-glass:hover{color:#FFFFFF;background:rgba(255,255,255,0.16);transform:translateY(-3px)}
+.btn-neo{color:#17191C;background:#ECEEF2;box-shadow:6px 6px 14px #C6CBD3,-6px -6px 14px #FFFFFF}
+.btn-neo:hover{color:#17191C;box-shadow:inset 5px 5px 12px #C6CBD3,inset -5px -5px 12px #FFFFFF}
+.btn-ink{color:#FFFFFF;background:linear-gradient(180deg,#2A2D33,#121317);box-shadow:inset 0 1px 0 rgba(255,255,255,0.14),0 12px 26px rgba(23,25,28,0.28)}
+.btn-ink:hover{color:#FFFFFF;transform:translateY(-3px)}
+.tbd{display:inline-block;font-family:Vazir,Tahoma,sans-serif;font-weight:500;font-size:12px;line-height:1.7;color:#7A3E00;background:#FFF1DE;border:1px dashed #D9913F;border-radius:8px;padding:1px 9px;white-space:nowrap}
+.phb{position:absolute;top:14px;right:14px;z-index:2;font-family:Vazir,Tahoma,sans-serif;font-size:12px;line-height:1.6;padding:4px 12px;border-radius:999px;background:rgba(255,255,255,0.86);color:#3E434A;border:1px dashed #9AA0A9;backdrop-filter:blur(6px)}
+.phb-d{position:absolute;top:14px;right:14px;z-index:2;font-family:Vazir,Tahoma,sans-serif;font-size:12px;line-height:1.6;padding:4px 12px;border-radius:999px;background:rgba(11,12,15,0.62);color:#D0D4DA;border:1px dashed #6A707A;backdrop-filter:blur(6px)}
+.grad{background:linear-gradient(90deg,#FFC48F,#F48026 55%,#E2650C);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mul{mix-blend-mode:multiply}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}
+.pin{position:absolute;width:14px;height:14px;border-radius:50%;background:#F48026;box-shadow:0 0 0 4px rgba(244,128,38,0.22),0 0 22px #F48026;z-index:1}
+.pin::before,.pin::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid #F48026;animation:ping 2.6s cubic-bezier(0,.55,.45,1) infinite}
+.pin::after{animation-delay:1.3s}
+.floaty{animation:floaty 6.5s ease-in-out infinite}
+.floaty2{animation:floaty 7.5s ease-in-out -2.5s infinite}
+.flow{overflow:hidden}.flow::before{content:"";position:absolute;top:0;bottom:0;left:-44px;right:0;background:repeating-linear-gradient(90deg,#F48026 0 10px,transparent 10px 22px);animation:flowx 1.6s linear infinite;will-change:transform}
+.marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.mtrack{display:flex;gap:18px;width:max-content;padding:18px 4px;animation:marquee 46s linear infinite;will-change:transform}
+.marquee:hover .mtrack{animation-play-state:paused}
+.org{flex:0 0 auto;width:168px;box-sizing:border-box;padding:22px 14px 18px;border-radius:22px;background:#FFFFFF;border:1px solid rgba(23,25,28,0.07);display:flex;flex-direction:column;align-items:center;gap:12px;font-family:Vazir,Tahoma,sans-serif;transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s cubic-bezier(.2,.8,.2,1),border-color .5s}
+.org:hover{transform:translateY(-6px);box-shadow:0 18px 36px -12px rgba(23,25,28,0.18);border-color:rgba(244,128,38,0.35)}
+.org-logo{width:72px;height:72px;display:flex;align-items:center;justify-content:center}
+.org-logo img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.org:hover .org-logo img{transform:scale(1.08)}
+.org-name{font-size:14px;font-weight:500;line-height:1.5;color:#3E434A;text-align:center;white-space:nowrap}
+.org-badge{width:78%;height:78%;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#FFB06E,#F48026 55%,#E06A10);color:#17191C;font-size:36px}
+.ico{width:60px;height:60px;border-radius:20px;display:flex;align-items:center;justify-content:center}
+.navlink{color:#E6E8EB;text-decoration:none;font-size:15px;font-weight:500;padding:8px 2px;position:relative}
+.navlink:hover{color:#FFC08A}
+.check-d{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;font-size:14px;color:#E6E8EB}
+details summary{list-style:none;cursor:pointer}
+details summary::-webkit-details-marker{display:none}
+details[open] .chev{transform:rotate(180deg)}
+.chev{transition:transform .35s}
+.hero-map{position:absolute;inset:-18%;z-index:0;background:url(/_blob/6444e547422cd0c76e3ddb80f7591260) center/1600px repeat;opacity:.85;transform-origin:50% 75%;will-change:transform;pointer-events:none}
+.halo{position:absolute;border-radius:50%;background:conic-gradient(from 0deg,rgba(244,128,38,0) 0deg,rgba(244,128,38,.6) 70deg,rgba(255,200,150,.16) 140deg,rgba(244,128,38,0) 220deg,rgba(90,120,255,.22) 300deg,rgba(244,128,38,0) 360deg);filter:blur(36px);animation:spin 16s linear infinite;will-change:transform;pointer-events:none;z-index:0}
+.hero-in{animation:heroIn 1s cubic-bezier(.2,.8,.2,1) both}
+.h2::after{content:"";position:absolute;bottom:-12px;right:0;width:84px;height:4px;border-radius:4px;background:linear-gradient(90deg,#FFC48F,#F48026);transform:scaleX(0);transform-origin:100% 50%;transition:transform 1s cubic-bezier(.2,.8,.2,1) .15s}
+[data-stop].visited .h2::after,section:not([data-stop]) .h2::after{transform:scaleX(1)}
+[data-stop].visited .kicker-l{box-shadow:5px 5px 12px #C8CDD5,-5px -5px 12px #FFFFFF,0 0 0 1.5px rgba(244,128,38,.55),0 0 26px rgba(244,128,38,.3)}
+[data-stop].visited .kicker-d{border-color:rgba(244,128,38,.6);box-shadow:0 0 26px rgba(244,128,38,.35)}
+.leg{opacity:0;transition:opacity .9s ease;filter:drop-shadow(0 0 6px rgba(255,140,50,.95)) drop-shadow(0 0 14px rgba(244,128,38,.5))}
+.leg.next{opacity:.0}
+.leg.done{opacity:1}
+.drive{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.drive.surface{z-index:7}
+.drive-top{position:absolute;inset:0;z-index:7;pointer-events:none;overflow:hidden}
+.car{position:absolute;left:0;top:0;width:0;height:0;will-change:transform}
+.car-in{position:absolute;left:0;top:0;animation:carFade .6s ease-out both}
+.car-settle{position:absolute;left:-52px;top:-20px;width:104px;height:40px}
+.car.parked .car-settle{animation:settle .8s cubic-bezier(.3,1.7,.5,1)}
+.car-shadow{position:absolute;left:-10px;top:7px;width:124px;height:42px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.55),rgba(0,0,0,0))}
+.car-glow{position:absolute;left:-24px;top:-20px;width:152px;height:80px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,170,95,.42),rgba(255,170,95,0))}
+.car-beam{position:absolute;left:100px;top:-28px;width:210px;height:96px;background:radial-gradient(ellipse 100% 50% at 0% 50%,rgba(255,238,205,.62),rgba(255,238,205,0) 72%);clip-path:polygon(0 40%,100% 0,100% 100%,0 60%);transition:opacity .8s;animation:flick 1.6s .5s backwards}
+.car.parked .car-beam{opacity:.1}
+.car-tail{position:absolute;left:-158px;top:15px;width:166px;height:14px;background:linear-gradient(90deg,rgba(244,128,38,0),rgba(255,170,95,.85));clip-path:polygon(0 46%,100% 0,100% 100%,0 54%);transform-origin:100% 50%;transform:scaleX(.001);opacity:0;will-change:transform,opacity}
+.car-brake{position:absolute;left:-28px;top:-8px;width:46px;height:60px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,60,48,.6),rgba(255,60,48,0));opacity:0;transition:opacity .35s}
+.car.braking .car-brake{opacity:1}
+.bl{stroke:#7A1D17;transition:stroke .3s}
+.car.braking .bl{stroke:#FF4A3D}
+.car.reverse .bl{stroke:#F4F6FA}
+.car.reverse .car-brake{opacity:1;background:radial-gradient(closest-side,rgba(240,244,255,.5),rgba(240,244,255,0))}
+.stop{position:absolute;width:0;height:0}
+.stop .ring{position:absolute;left:-10px;top:-10px;width:20px;height:20px;border-radius:50%;border:2px solid rgba(244,128,38,.55);background:#1C1F25;box-sizing:border-box;transition:transform .6s cubic-bezier(.2,.9,.25,1.4),border-color .6s}
+.stop .dot{position:absolute;left:-5px;top:-5px;width:10px;height:10px;border-radius:50%;background:#F48026;box-shadow:0 0 14px #F48026;transform:scale(0);transition:transform .6s cubic-bezier(.2,.9,.25,1.5)}
+.stop.lit .ring{transform:scale(1.35);border-color:#F48026}
+.stop.lit .dot{transform:scale(1)}
+.stop.lit::after{content:"";position:absolute;left:-10px;top:-10px;width:20px;height:20px;border-radius:50%;border:2px solid #F48026;box-sizing:border-box;animation:ping 1.5s cubic-bezier(0,.55,.45,1) 2}
+.dest{position:absolute;width:0;height:0}
+.dest .pad{position:absolute;left:-62px;top:-62px;width:124px;height:124px;border-radius:50%;border:2px dashed rgba(244,128,38,.55);box-sizing:border-box;animation:spin 20s linear infinite;transition:border-color .6s,box-shadow .6s}
+.drive-top.parked .dest .pad{border-color:#F48026;box-shadow:0 0 34px rgba(244,128,38,.5),inset 0 0 28px rgba(244,128,38,.3)}
+.dest .burst{position:absolute;left:-62px;top:-62px;width:124px;height:124px;border-radius:50%;border:2px solid #F48026;box-sizing:border-box;opacity:0}
+.drive-top.parked .dest .burst{animation:burst 1.4s cubic-bezier(0,.55,.45,1) 2}
+.drive-top.parked .dest .burst.b2{animation-delay:.35s}
+.neo,.neo-sm,.neo-in,.glass,.glass-l,.btn,.kicker,[data-box],div.dark,article.dark{outline:1.5px solid transparent;outline-offset:-1.5px}
+.neo,.neo-sm,.neo-in,.glass-l,[data-box]{transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s,background-color .35s,outline-color .35s}
+.kicker{transition:box-shadow .6s,border-color .6s,background-color .35s,outline-color .35s}
+.tunnel{outline-color:rgba(244,128,38,.8) !important}
+.neo.tunnel,.neo-sm.tunnel,.neo-in.tunnel,.btn-neo.tunnel,.kicker-l.tunnel,[data-box].tunnel{background-color:rgba(236,238,242,.5) !important;backdrop-filter:blur(5px) saturate(140%);-webkit-backdrop-filter:blur(5px) saturate(140%)}
+.glass-l.tunnel{background:rgba(255,255,255,.42) !important;backdrop-filter:blur(5px) saturate(140%);-webkit-backdrop-filter:blur(5px) saturate(140%)}
+.glass.tunnel,.btn-glass.tunnel,.kicker-d.tunnel{background:rgba(255,255,255,.06) !important;backdrop-filter:blur(5px) saturate(140%);-webkit-backdrop-filter:blur(5px) saturate(140%)}
+.btn-ink.tunnel{background:rgba(23,25,28,.55) !important}
+.btn-liquid.tunnel{background:linear-gradient(180deg,rgba(255,176,110,.62),rgba(244,128,38,.55) 50%,rgba(224,106,16,.62)) !important}
+div.dark.tunnel,article.dark.tunnel{background-color:rgba(11,12,15,.5) !important}
+.hero{position:relative;overflow:hidden;background:#09090B;color:#FFFFFF}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;display:block}
+.hero-car{position:absolute;display:block;height:auto;pointer-events:none;z-index:0;filter:drop-shadow(0 26px 34px rgba(0,0,0,.7))}
+.road-core{opacity:.62}
+.hero-glow{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 46% 58% at 24% 58%,rgba(244,128,38,.17),rgba(244,128,38,0) 70%),radial-gradient(ellipse 40% 40% at 85% 10%,rgba(255,255,255,.035),rgba(255,255,255,0) 70%)}
+.hnav{color:#E9EBEE;text-decoration:none;font-weight:500;padding:8px 0;transition:color .25s}
+.hnav:hover{color:#FFB06E}
+.hero-outline{color:#FFFFFF;background:rgba(255,255,255,.02);border:1.5px solid rgba(255,255,255,.72)}
+.hero-outline:hover{color:#FFFFFF;border-color:#F48026;background:rgba(244,128,38,.08)}
+.hero-pill{margin:0;display:inline-flex;align-items:center;width:fit-content;font-weight:500;color:#FF9A45;border:1.5px solid #F48026;border-radius:14px;line-height:1.5;background:rgba(244,128,38,.05)}
+.hero-big{margin:0;font-weight:700;color:#FFFFFF}
+.hero-big span{color:#F48026}
+.stage{position:relative;width:100%;aspect-ratio:3 / 2;will-change:transform,opacity;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%),linear-gradient(180deg,transparent 0,#000 12%,#000 86%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%),linear-gradient(180deg,transparent 0,#000 12%,#000 86%,transparent 100%);mask-composite:intersect}
+.hero-map2{position:absolute;z-index:0;pointer-events:none;background:url(/_blob/d0ae9f47839110edd43798fd402c7a5b) center/1000px repeat;opacity:.6;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 30%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 30%,transparent 100%)}
+.stage-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.stage-floor{position:absolute;inset:0;background:url(/_blob/d0ae9f47839110edd43798fd402c7a5b) center 78%/900px repeat;-webkit-mask-image:linear-gradient(180deg,transparent 58%,#000 80%);mask-image:linear-gradient(180deg,transparent 58%,#000 80%);pointer-events:none}
+.stage-route{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;filter:drop-shadow(0 0 6px rgba(244,128,38,.9)) drop-shadow(0 0 18px rgba(244,128,38,.45))}
+.route-draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.9s .45s cubic-bezier(.6,0,.2,1) forwards}
+.hpin{position:absolute;width:0;height:0;z-index:2}
+.hpin-ring{position:absolute;left:-26px;top:-9px;width:52px;height:18px;border-radius:50%;border:2px solid rgba(244,128,38,.85);box-sizing:border-box;animation:ringPulse 2.2s ease-out 2.2s infinite both}
+.hpin-ico{position:absolute;left:-17px;top:-46px;width:34px;height:46px;filter:drop-shadow(0 6px 14px rgba(244,128,38,.6));animation:pinPop .7s 2.15s cubic-bezier(.2,.9,.25,1.4) both;transform-origin:50% 100%}
+.hpin-label{position:absolute;left:30px;top:-48px;white-space:nowrap;padding:8px 14px;border-radius:12px;background:rgba(16,17,20,.72);border:1px solid rgba(255,255,255,.16);color:#FFFFFF;font-size:15px;line-height:1.5;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:pinPop .6s 2.4s cubic-bezier(.2,.9,.25,1.3) both}
+.hero-chip{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:18px;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.03);color:#E9EBEE;font-size:15px}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pinPop{from{opacity:0;transform:translateY(10px) scale(.4)}to{opacity:1;transform:none}}
+@keyframes ringPulse{0%{transform:scale(.6);opacity:1}100%{transform:scale(1.9);opacity:0}}
+@keyframes heroIn{from{opacity:0;transform:translateY(28px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes carFade{from{opacity:0}to{opacity:1}}
+.am{position:absolute;inset:0;box-sizing:border-box;padding:16px 14px;display:flex;flex-direction:column;justify-content:center;gap:12px;color:#FFFFFF;text-align:right;font-family:Vazir,Tahoma,sans-serif;background:radial-gradient(circle at 50% -10%,rgba(244,128,38,.38),rgba(244,128,38,0) 62%),linear-gradient(180deg,#1A1D22,#0D0F12)}
+.am-card{border-radius:20px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);box-shadow:0 12px 28px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08)}
+.am-call{padding:13px;display:flex;flex-direction:column;gap:11px;animation:amBuzz 3.4s ease-in-out infinite}
+@keyframes amBuzz{0%,68%,100%{transform:none}70%,74%,78%{transform:translateX(-2px) rotate(-.4deg)}72%,76%,80%{transform:translateX(2px) rotate(.4deg)}}
+.am-av{position:relative;width:42px;height:42px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#FFB06E,#F48026 55%,#E06A10);box-shadow:0 6px 16px rgba(244,128,38,.45)}
+.am-av::before,.am-av::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid rgba(244,128,38,.75);animation:amPing 2s cubic-bezier(0,.55,.45,1) infinite}
+.am-av::after{animation-delay:1s}
+@keyframes amPing{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.75);opacity:0}}
+.am-voice{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:14px;background:rgba(244,128,38,.14);border:1px solid rgba(244,128,38,.32);font-size:12.5px;line-height:1.7;color:#FFE3CC}
+.am-eq{display:flex;align-items:center;gap:3px;height:18px;flex-shrink:0}
+.am-eq i{display:block;width:3px;height:100%;border-radius:2px;background:#FFB06E;transform:scaleY(.3);animation:amEq 1s ease-in-out infinite}
+.am-eq i:nth-child(2){animation-delay:.18s}.am-eq i:nth-child(3){animation-delay:.36s}.am-eq i:nth-child(4){animation-delay:.12s}.am-eq i:nth-child(5){animation-delay:.28s}
+@keyframes amEq{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+.am-btns{display:flex;justify-content:space-between;padding:0 6px}
+.am-b{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.am-ok{background:#2EB872;box-shadow:0 6px 14px rgba(46,184,114,.4);animation:amNod 1.6s ease-in-out infinite}
+@keyframes amNod{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.am-no{background:#E5484D;box-shadow:0 6px 14px rgba(229,72,77,.35)}
+.am-sms{padding:11px 13px;display:flex;flex-direction:column;gap:5px;animation:amIn 6s cubic-bezier(.2,.8,.2,1) infinite}
+@keyframes amIn{0%{transform:translateY(14px);opacity:0}10%,92%{transform:none;opacity:1}100%{transform:none;opacity:0}}
+.am-meta{display:flex;align-items:center;gap:6px;font-size:11.5px;color:#9EA4AE}
+.soc{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 8px 20px rgba(0,0,0,.25);transition:transform .4s cubic-bezier(.2,.8,.2,1),background .3s,border-color .3s,box-shadow .3s}
+.soc img{width:26px;height:26px;display:block;object-fit:contain;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.soc:hover{transform:translateY(-4px);background:rgba(255,255,255,.13);border-color:rgba(244,128,38,.55);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 12px 26px rgba(244,128,38,.25)}
+.soc:hover img{transform:scale(1.1)}
+.mapp{display:flex;flex-direction:column}
+.map-box{position:relative;z-index:1}
+.nmap{display:block;width:100%;height:auto;overflow:visible}
+.nmap .prv{stroke:#0D0F12;stroke-width:1.2;stroke-linejoin:round;vector-effect:non-scaling-stroke;cursor:pointer;outline:none;transition:filter .3s}
+.nmap .prv:hover,.nmap .prv:focus-visible{filter:brightness(1.4) saturate(1.1)}
+.nmap .m-hov{fill:none;stroke:#FFC08A;stroke-width:2;stroke-linejoin:round;vector-effect:non-scaling-stroke;pointer-events:none;opacity:0;transition:opacity .25s}
+.nmap .m-hov.on{opacity:1}
+.nmap .m-sel{stroke:#FFEBDA;stroke-width:2.2;stroke-linejoin:round;vector-effect:non-scaling-stroke;pointer-events:none;filter:drop-shadow(0 0 8px rgba(244,128,38,.9)) drop-shadow(0 0 22px rgba(244,128,38,.45))}
+.nmap .m-lab{fill:rgba(205,212,222,.42);font-family:Vazir,Tahoma,sans-serif;pointer-events:none}
+.map-ping{position:absolute;left:-999px;top:-999px;width:0;height:0;pointer-events:none;z-index:2}
+.map-ping i{position:absolute;left:-18px;top:-18px;width:36px;height:36px;border-radius:50%;border:2px solid #FFB06E;box-sizing:border-box;opacity:0}
+.arrived .map-ping i{animation:mping 2.4s cubic-bezier(0,.55,.45,1) infinite}
+.arrived .map-ping i+i{animation-delay:1.2s}
+@keyframes mping{0%{transform:scale(.6);opacity:.95}100%{transform:scale(2.8);opacity:0}}
+.map-legend{display:flex;flex-wrap:wrap;gap:8px 14px;color:#B9BEC7}
+.map-legend span{display:flex;align-items:center;gap:6px}
+.map-legend i{width:12px;height:12px;border-radius:4px;display:inline-block}
+.lg-has{background:linear-gradient(90deg,#3D3732,#C0662A)}
+.lg-no{background:#24272D;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.car-in{transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.car.parked .car-in{transform:scale(.78)}
+@keyframes settle{0%{transform:scale(1.08)}100%{transform:none}}
+@keyframes flick{0%{opacity:0}12%{opacity:.9}18%{opacity:.1}28%{opacity:1}100%{opacity:1}}
+@keyframes burst{0%{transform:scale(.5);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+@keyframes sheen{0%{transform:translateX(300%) skewX(-18deg)}55%,100%{transform:translateX(-140%) skewX(-18deg)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(-60px,40px) scale(1.15)}}
+@keyframes ping{0%{transform:scale(1);opacity:.85}100%{transform:scale(3.4);opacity:0}}
+@keyframes dash{to{stroke-dashoffset:-1740}}
+@keyframes flowx{to{transform:translateX(44px)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(50%)}}
+@keyframes rise{from{opacity:0;transform:translateY(56px) scale(.97)}to{opacity:1;transform:none}}
+@supports (animation-timeline: view()){.reveal{animation:rise both cubic-bezier(.2,.8,.2,1);animation-timeline:view();animation-range:entry 0% entry 38%}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
+@media (max-width:760px){.sec{padding:72px 0}.wrap{padding:0 16px}.h2{position:relative;font-size:28px}.hero-h1{font-size:38px !important}.hide-sm{display:none !important}.btn{width:100%}}
+</style>
+</helmet>
+<div id="top" ref="{{rootRef}}" dir="rtl" style="position: relative; font-family: Vazir, Tahoma, sans-serif; width: 100%; background: #0B0C0F">
+
+<!-- لایهٔ جاده (زیر محتوا) -->
+<svg aria-hidden="true" viewBox="{{vb}}" preserveAspectRatio="none" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none">
+<defs><clipPath id="roadclipd"><rect x="-1000" y="{{clipY}}" width="100000" height="1000000"></rect></clipPath></defs>
+<g clip-path="url(#roadclipd)">
+<path d="{{dr}}" fill="none" stroke="rgba(10,11,14,0.18)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="{{dr}}" fill="none" stroke="rgba(244,128,38,0.24)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"></path>
+<path class="road-core" d="{{dr}}" fill="none" stroke="#F48026" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+<path class="leg" data-leg="0" d="{{leg0}}" fill="none" stroke="#FF9A3D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+<path class="leg" data-leg="1" d="{{leg1}}" fill="none" stroke="#FF9A3D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+<path class="leg" data-leg="2" d="{{leg2}}" fill="none" stroke="#FF9A3D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+<path class="leg" data-leg="3" d="{{leg3}}" fill="none" stroke="#FF9A3D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+<path class="leg" data-leg="4" d="{{leg4}}" fill="none" stroke="#FF9A3D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+<path class="leg" data-leg="5" d="{{leg5}}" fill="none" stroke="#FF9A3D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+<path class="leg" data-leg="6" d="{{leg6}}" fill="none" stroke="#FF9A3D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+<path class="leg" data-leg="7" d="{{leg7}}" fill="none" stroke="#FF9A3D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+</g>
+<path ref="{{pathRef}}" d="{{d}}" fill="none" stroke="none"></path>
+</svg>
+<!-- لایهٔ ماشین (زیر محتوا؛ باکس‌ها روی آن شیشه‌ای می‌شوند) -->
+<div class="drive" ref="{{driveRef}}" aria-hidden="true">
+<sc-for list="{{stops}}" as="s" hint-placeholder-count="0"><div class="stop" data-stopi="{{s.i}}" style="left: {{s.x}}px; top: {{s.y}}px"><span class="ring"></span><span class="dot"></span></div></sc-for>
+<div class="car" ref="{{carRef}}">
+<div class="car-in" ref="{{carInRef}}">
+<div class="car-settle">
+<span class="car-tail" ref="{{tailRef}}"></span>
+<span class="car-shadow"></span>
+<span class="car-glow"></span>
+<span class="car-brake"></span>
+<span class="car-beam"></span>
+<svg width="104" height="40" viewBox="0 0 220 84" style="position: absolute; left: 0; top: 0; display: block; overflow: visible">
+<defs>
+<linearGradient id="ndP" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#8E3A08"></stop><stop offset="0.06" stop-color="#D2621A"></stop><stop offset="0.16" stop-color="#FFAE6A"></stop><stop offset="0.26" stop-color="#F9893A"></stop><stop offset="0.5" stop-color="#E8721E"></stop><stop offset="0.74" stop-color="#F9893A"></stop><stop offset="0.85" stop-color="#FFA35C"></stop><stop offset="0.94" stop-color="#D2621A"></stop><stop offset="1" stop-color="#8E3A08"></stop>
+</linearGradient>
+<linearGradient id="ndPL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity="0.22"></stop><stop offset="0.1" stop-color="#000" stop-opacity="0"></stop><stop offset="0.9" stop-color="#000" stop-opacity="0"></stop><stop offset="1" stop-color="#000" stop-opacity="0.2"></stop></linearGradient>
+<linearGradient id="ndGW" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0A1018"></stop><stop offset="0.55" stop-color="#1A2E42"></stop><stop offset="1" stop-color="#5A82A6"></stop></linearGradient>
+<linearGradient id="ndGB" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#0A1018"></stop><stop offset="0.7" stop-color="#1A2E42"></stop><stop offset="1" stop-color="#46698A"></stop></linearGradient>
+<linearGradient id="ndRF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0C1016"></stop><stop offset="0.45" stop-color="#1E2C3B"></stop><stop offset="0.55" stop-color="#1A2633"></stop><stop offset="1" stop-color="#0C1016"></stop></linearGradient>
+<linearGradient id="ndSH" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"></stop><stop offset="0.45" stop-color="#fff" stop-opacity="0.6"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></linearGradient>
+<radialGradient id="ndHD" cx="0.55" cy="0.5" r="0.55"><stop offset="0" stop-color="#fff" stop-opacity="0.32"></stop><stop offset="1" stop-color="#fff" stop-opacity="0"></stop></radialGradient>
+</defs>
+<rect x="36" y="1" width="30" height="5" rx="3.5" fill="#09090B"></rect><rect x="36" y="78" width="30" height="5" rx="3.5" fill="#09090B"></rect>
+<rect x="160" y="1" width="30" height="5" rx="3.5" fill="#09090B"></rect><rect x="160" y="78" width="30" height="5" rx="3.5" fill="#09090B"></rect>
+<path d="M30 5 L 182 5 C 204 5, 215.5 14, 217 30 L 217 54 C 215.5 70, 204 79, 182 79 L 30 79 C 12 79, 4 70, 3.5 57 L 3.5 27 C 4 14, 12 5, 30 5 Z" fill="url(#ndP)"></path>
+<path d="M30 5 L 182 5 C 204 5, 215.5 14, 217 30 L 217 54 C 215.5 70, 204 79, 182 79 L 30 79 C 12 79, 4 70, 3.5 57 L 3.5 27 C 4 14, 12 5, 30 5 Z" fill="url(#ndPL)" stroke="#6E2D05" stroke-width="0.8"></path>
+<path d="M160 16 C 185 18, 208 28, 211 42 C 208 56, 185 66, 160 68 Z" fill="url(#ndHD)"></path>
+<path d="M157 25 L 207 31" stroke="#B4520E" stroke-width="0.9" opacity="0.75"></path>
+<path d="M157 59 L 207 53" stroke="#B4520E" stroke-width="0.9" opacity="0.75"></path>
+<rect x="50" y="12.5" width="106" height="59" rx="14" fill="#0D131B"></rect>
+<path d="M128 18 C 140 15.5, 148 14.5, 154 15.5 C 158.5 30, 158.5 54, 154 68.5 C 148 69.5, 140 68.5, 128 66 C 130.5 52, 130.5 32, 128 18 Z" fill="url(#ndGW)"></path>
+<path d="M139 21 C 145 30, 146 40, 144.5 47" fill="none" stroke="#fff" stroke-opacity="0.38" stroke-width="1.8" stroke-linecap="round"></path>
+<path d="M74 17.5 L 128 18 C 130.5 32, 130.5 52, 128 66 L 74 66.5 C 72 52, 72 32, 74 17.5 Z" fill="url(#ndRF)"></path>
+<path d="M98 18 L 114 18 L 100 66 L 84 66 Z" fill="#fff" opacity="0.07"></path>
+<path d="M117 18 L 122 18 L 108 66 L 103 66 Z" fill="#fff" opacity="0.05"></path>
+<path d="M80 24 L 120 24" stroke="#A9D1F2" stroke-opacity="0.28" stroke-width="2" stroke-linecap="round"></path>
+<path d="M128 18 C 130.5 32, 130.5 52, 128 66" fill="none" stroke="#D2621A" stroke-width="2"></path>
+<path d="M74 17.5 C 72 32, 72 52, 74 66.5" fill="none" stroke="#D2621A" stroke-width="2"></path>
+<path d="M74 17.5 C 66 18, 58 19.5, 52 21.5 C 49.5 34, 49.5 50, 52 62.5 C 58 64.5, 66 66, 74 66.5 C 72 52, 72 32, 74 17.5 Z" fill="url(#ndGB)"></path>
+<path d="M41 18 C 38 32, 38 52, 41 66" fill="none" stroke="#B4520E" stroke-width="0.9" opacity="0.75"></path>
+<path d="M14 10.5 C 60 8, 140 8, 196 10.5" fill="none" stroke="url(#ndSH)" stroke-width="2.2" stroke-linecap="round"></path>
+<path d="M14 73.5 C 60 76, 140 76, 196 73.5" fill="none" stroke="url(#ndSH)" stroke-width="1.4" stroke-linecap="round" opacity="0.55"></path>
+<path d="M142 5.5 L 147 -1.5 L 155 -1.5 L 153 5.5 Z" fill="#E8721E" stroke="#6E2D05" stroke-width="0.6"></path>
+<path d="M142 78.5 L 147 85.5 L 155 85.5 L 153 78.5 Z" fill="#E8721E" stroke="#6E2D05" stroke-width="0.6"></path>
+<path d="M102 5.2 L 102 9.5" stroke="#8A3807" stroke-width="0.8"></path><path d="M102 74.5 L 102 78.8" stroke="#8A3807" stroke-width="0.8"></path>
+<path d="M216.5 33 L 216.5 51" stroke="#16181C" stroke-width="2.6" stroke-linecap="round"></path>
+<path d="M192 7.5 C 203 9, 210.5 13.5, 214 21" fill="none" stroke="#FFF8E8" stroke-width="2.8" stroke-linecap="round"></path>
+<path d="M192 76.5 C 203 75, 210.5 70.5, 214 63" fill="none" stroke="#FFF8E8" stroke-width="2.8" stroke-linecap="round"></path>
+<path d="M196 11.5 C 204 13.5, 209 17, 211.5 21" fill="none" stroke="#9FD4FF" stroke-opacity="0.6" stroke-width="1" stroke-linecap="round"></path>
+<path d="M196 72.5 C 204 70.5, 209 67, 211.5 63" fill="none" stroke="#9FD4FF" stroke-opacity="0.6" stroke-width="1" stroke-linecap="round"></path>
+<path class="bl" d="M5.2 20 C 4.3 32, 4.3 52, 5.2 64" fill="none" stroke="#7A1D17" stroke-width="2.8" stroke-linecap="round"></path>
+<path class="bl" d="M15 7.5 C 10 9.5, 7 13, 5.6 19" fill="none" stroke="#7A1D17" stroke-width="2.8" stroke-linecap="round"></path>
+<path class="bl" d="M15 76.5 C 10 74.5, 7 71, 5.6 65" fill="none" stroke="#7A1D17" stroke-width="2.8" stroke-linecap="round"></path>
+<circle cx="200" cy="42" r="2.4" fill="#16181C" stroke="#FFD5AE" stroke-width="0.6"></circle>
+</svg>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ═══ ۱+۲. هدر و هیرو (سه‌بعدی) ═══ -->
+<section class="hero" data-hero="1">
+<img class="hero-bg" data-heromap="1" data-ox="0" data-oy="0.5" src="/_blob/c58b6ae3c1b04d124085a15ef3701886" alt="" aria-hidden="true" style="object-position: 0% 50%">
+<img class="hero-car hero-in" ref="{{heroCarRef}}" data-x="35" data-y="263" data-w="800" src="/_blob/0b6e1aa4ba01d7b836dc31317dccf407" alt="خودرو با ردیاب و دزدگیر نورون و جعبهٔ محصول" style="animation-delay: .25s; left: 2%; top: 26%; width: 49%">
+<header class="wrap" style="max-width: 1440px; padding: 0 64px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 104px; border-bottom: 1px solid rgba(255,255,255,0.10); flex-wrap: wrap">
+<div style="display: flex; align-items: center; gap: 72px; flex-wrap: wrap">
+<a href="#top" aria-label="نورون، صفحهٔ اصلی" style="display: flex; padding: 8px 16px; border-radius: 16px; background: #F3EEE6"><img src="/_blob/a4532d188099cfe9866d65efe1373476" alt="نورون" style="height: 46px; width: auto; display: block"></a>
+<nav aria-label="منوی اصلی" style="display: flex; gap: 64px; font-size: 19px; flex-wrap: wrap">
+<a class="hnav" href="#choose">ردیاب خودرو</a>
+<a class="hnav" href="https://noroncar.ir/namayandegi/">نمایندگی‌ها</a>
+<a class="hnav" href="https://noroncar.ir/support/">پشتیبانی</a>
+</nav>
+</div>
+<div style="display: flex; align-items: center; gap: 18px">
+<a href="https://noroncar.ir/download-app/" class="btn btn-liquid" style="min-height: 54px; padding: 0 30px; border-radius: 14px; font-size: 17px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"></path></svg>دانلود نرم‌افزار</a>
+<a href="#" class="btn hero-outline" style="min-height: 54px; padding: 0 36px; border-radius: 14px; font-size: 17px">ورود به سامانه</a>
+</div>
+</div>
+</header>
+<div class="wrap" style="max-width: 1440px; padding: 0 64px; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 16px; min-height: 720px; padding-bottom: 40px">
+<div ref="{{heroTextRef}}" style="flex: 0 1 660px; min-width: 0; position: relative; z-index: 3; display: flex; flex-direction: column; gap: 30px; padding: 48px 0; will-change: transform, opacity">
+<h1 class="hero-pill hero-in" style="font-size: 22px; padding: 8px 22px">ردیاب و دزدگیر خودرو نورون</h1>
+<p class="hero-big hero-in" style="animation-delay: .1s; font-size: 87px; line-height: 1.38; font-family: &quot;Vazir&quot;">خودرویت را<br><span>روی نقشه ببین</span></p>
+<p class="hero-in" style="animation-delay: .2s; margin: 0; font-size: 21px; line-height: 1.9; color: #C9CDD3; max-width: 560px">موقعیت خودرو را لحظه‌ای ببینید و هشدارهای امنیتی را روی موبایل دریافت کنید.</p>
+<div class="hero-in" style="animation-delay: .3s; display: flex; gap: 22px; flex-wrap: wrap; padding-top: 6px">
+<a href="#choose" class="btn btn-liquid" style="min-height: 74px; padding: 0 44px; border-radius: 16px; font-size: 21px; gap: 28px">مشاهده ردیاب‌ها <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></a>
+<a href="#compare" class="btn hero-outline" style="min-height: 74px; padding: 0 40px; border-radius: 16px; font-size: 21px">مشاهده دزدگیرها</a>
+</div>
+<a href="#fleet" class="hero-in" style="animation-delay: .4s; color: #B9BEC7; font-size: 19px; text-decoration: none; border-bottom: 1.5px solid rgba(255,255,255,0.75); padding-bottom: 10px; width: fit-content">راهکار ناوگان و سازمان‌ها</a>
+</div>
+</div>
+</section>
+
+<!-- ═══ ۳. چرا نورون ═══ -->
+<section class="pearl sec" data-stop="ضمانت‌های نورون">
+<div class="orb" style="width: 460px; height: 460px; background: rgba(244,128,38,0.16); right: -160px; top: 60px"></div>
+<div class="wrap" style="display: flex; flex-direction: column; gap: 56px">
+<div class="reveal" style="display: flex; flex-direction: column; gap: 16px; max-width: 680px">
+<span class="kicker kicker-l"><span class="kdot"></span>چرا نورون</span>
+<h2 class="h2">خیالتان از <span class="grad">بعد از خرید</span> راحت باشد</h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 28px">
+<div class="neo lift reveal" style="border-radius: 32px; padding: 32px; display: flex; flex-direction: column; gap: 16px">
+<div class="ico neo-in"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.4-3 8.2-7 9.5-4-1.3-7-5.1-7-9.5V6l7-3z"></path><path d="M8.8 12.2l2.2 2.2 4.2-4.4"></path></svg></div>
+<h3 style="margin: 0; font-size: 21px; font-weight: 700">۲ سال گارانتی</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.85; color: #4A4F57">برای تمام ردیاب‌های نورون</p>
+</div>
+<div class="neo lift reveal" style="border-radius: 32px; padding: 32px; display: flex; flex-direction: column; gap: 16px">
+<div class="ico neo-in"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 16l1.6-5.2A2 2 0 0 1 8.5 9.4h7a2 2 0 0 1 1.9 1.4L19 16"></path><rect x="3.5" y="16" width="17" height="4" rx="1.5"></rect><path d="M12 2.8l3.2 1.4v2.4c0 1.8-1.3 3.3-3.2 3.9-1.9-.6-3.2-2.1-3.2-3.9V4.2L12 2.8z"></path></svg></div>
+<h3 style="margin: 0; font-size: 21px; font-weight: 700">بیمهٔ سرقت رایگان</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.85; color: #4A4F57">بیمهٔ سرقت خودرو همراه با خرید دستگاه</p>
+</div>
+<div class="neo lift reveal" style="border-radius: 32px; padding: 32px; display: flex; flex-direction: column; gap: 16px">
+<div class="ico neo-in"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path><rect x="8.5" y="11" width="7" height="6.5" rx="1"></rect><path d="M12 11v6.5M8.5 14.2h7"></path></svg></div>
+<h3 style="margin: 0; font-size: 21px; font-weight: 700">سیم‌کارت رایگان</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.85; color: #4A4F57">سیم‌کارت آماده، بدون خرید جداگانه</p>
+</div>
+<div class="neo lift reveal" style="border-radius: 32px; padding: 32px; display: flex; flex-direction: column; gap: 16px">
+<div class="ico neo-in"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"></path><rect x="3" y="13.5" width="4" height="6" rx="1.5"></rect><rect x="17" y="13.5" width="4" height="6" rx="1.5"></rect><path d="M19 19.5c0 1.2-1.5 2-4 2h-2"></path></svg></div>
+<h3 style="margin: 0; font-size: 21px; font-weight: 700">پشتیبانی ۲۴ ساعته</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.85; color: #4A4F57">هر روز هفته، حتی روزهای تعطیل</p>
+</div>
+</div>
+
+<div class="glass-l reveal" style="border-radius: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); overflow: hidden">
+<div style="padding: 32px; display: flex; flex-direction: column; gap: 6px; border-left: 1px solid rgba(23,25,28,0.07)">
+<span class="grad" style="font-size: 44px; font-weight: 700; line-height: 1.25">+۲۱۰٬۰۰۰</span>
+<span style="font-size: 15px; color: #4A4F57">مشتری راضی</span>
+</div>
+<div style="padding: 32px; display: flex; flex-direction: column; gap: 6px; border-left: 1px solid rgba(23,25,28,0.07)">
+<span class="grad" style="font-size: 44px; font-weight: 700; line-height: 1.25">۶۰۰</span>
+<span style="font-size: 15px; color: #4A4F57">نمایندگی فعال</span>
+</div>
+<div style="padding: 32px; display: flex; flex-direction: column; gap: 6px; border-left: 1px solid rgba(23,25,28,0.07)">
+<span class="grad" style="font-size: 44px; font-weight: 700; line-height: 1.25">۱۳۸۸</span>
+<span style="font-size: 15px; color: #4A4F57">سال شروع فعالیت</span>
+</div>
+<div style="padding: 32px; display: flex; flex-direction: column; gap: 6px">
+<span class="grad" style="font-size: 44px; font-weight: 700; line-height: 1.25">۲۶۳٬۱۰۰</span>
+<span style="font-size: 15px; color: #4A4F57">نصب اپلیکیشن</span>
+</div>
+</div>
+
+<div class="reveal" style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+<h3 style="margin: 0; font-size: 20px; font-weight: 700">مورد اعتماد سازمان‌ها</h3>
+</div>
+<div class="marquee" style="margin: 0 calc(50% - 50vw)">
+<div class="mtrack">
+<div class="org"><span class="org-logo"><img src="/_blob/bf8e7bca0f66ad292ab53b7ff3fb2a41" alt="لوگوی پارک علم و فناوری"></span><span class="org-name">پارک علم و فناوری</span></div><div class="org"><span class="org-logo"><img src="/_blob/6833ae3bed8c7ca44fe79d238875fbde" alt="لوگوی تأمین اجتماعی"></span><span class="org-name">تأمین اجتماعی</span></div><div class="org"><span class="org-logo"><img src="/_blob/e1437dbcee16565e07884dbb21fc810f" alt="لوگوی شهرداری"></span><span class="org-name">شهرداری</span></div><div class="org"><span class="org-logo"><img src="/_blob/ad91d793e50e7ec521edce111400b149" alt="لوگوی علوم پزشکی"></span><span class="org-name">علوم پزشکی</span></div><div class="org"><span class="org-logo"><img src="/_blob/070f28c98cfc1a03f155b5de38b6e1f0" alt="لوگوی ادارهٔ صمت"></span><span class="org-name">ادارهٔ صمت</span></div><div class="org"><span class="org-logo"><img src="/_blob/e6b27a8e8dae6963c29dff50cae1d7d4" alt="لوگوی جهاد کشاورزی"></span><span class="org-name">جهاد کشاورزی</span></div><div class="org"><span class="org-logo"><img src="/_blob/1e7962d25dcd2b48c212822ac23b209c" alt="لوگوی دانشگاه فردوسی"></span><span class="org-name">دانشگاه فردوسی</span></div><div class="org"><span class="org-logo"><img src="/_blob/f970619ba0eb442a7eebff0905d7c860" alt="لوگوی دانشگاه آزاد"></span><span class="org-name">دانشگاه آزاد</span></div><div class="org"><span class="org-logo"><img src="/_blob/464f2fb38c11b8026be847858e4c4b40" alt="لوگوی شرکت ملی نفت"></span><span class="org-name">شرکت ملی نفت</span></div><div class="org"><span class="org-logo"><span class="org-badge">★</span></span><span class="org-name">نشان دانش‌بنیان</span></div>
+<div class="org" aria-hidden="true"><span class="org-logo"><img src="/_blob/bf8e7bca0f66ad292ab53b7ff3fb2a41" alt=""></span><span class="org-name">پارک علم و فناوری</span></div><div class="org" aria-hidden="true"><span class="org-logo"><img src="/_blob/6833ae3bed8c7ca44fe79d238875fbde" alt=""></span><span class="org-name">تأمین اجتماعی</span></div><div class="org" aria-hidden="true"><span class="org-logo"><img src="/_blob/e1437dbcee16565e07884dbb21fc810f" alt=""></span><span class="org-name">شهرداری</span></div><div class="org" aria-hidden="true"><span class="org-logo"><img src="/_blob/ad91d793e50e7ec521edce111400b149" alt=""></span><span class="org-name">علوم پزشکی</span></div><div class="org" aria-hidden="true"><span class="org-logo"><img src="/_blob/070f28c98cfc1a03f155b5de38b6e1f0" alt=""></span><span class="org-name">ادارهٔ صمت</span></div><div class="org" aria-hidden="true"><span class="org-logo"><img src="/_blob/e6b27a8e8dae6963c29dff50cae1d7d4" alt=""></span><span class="org-name">جهاد کشاورزی</span></div><div class="org" aria-hidden="true"><span class="org-logo"><img src="/_blob/1e7962d25dcd2b48c212822ac23b209c" alt=""></span><span class="org-name">دانشگاه فردوسی</span></div><div class="org" aria-hidden="true"><span class="org-logo"><img src="/_blob/f970619ba0eb442a7eebff0905d7c860" alt=""></span><span class="org-name">دانشگاه آزاد</span></div><div class="org" aria-hidden="true"><span class="org-logo"><img src="/_blob/464f2fb38c11b8026be847858e4c4b40" alt=""></span><span class="org-name">شرکت ملی نفت</span></div><div class="org" aria-hidden="true"><span class="org-logo"><span class="org-badge">★</span></span><span class="org-name">نشان دانش‌بنیان</span></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ═══ ۴. انتخاب بر اساس نیاز ═══ -->
+<section id="choose" class="pearl sec" data-stop="انتخاب ردیاب" style="padding-top: 24px">
+<div class="orb" style="width: 420px; height: 420px; background: rgba(244,128,38,0.14); left: -140px; top: 280px; animation-delay: -4s"></div>
+<div class="wrap" style="display: flex; flex-direction: column; gap: 48px">
+<div class="reveal" style="display: flex; flex-direction: column; gap: 16px; max-width: 680px">
+<span class="kicker kicker-l"><span class="kdot"></span>انتخاب بر اساس نیاز</span>
+<h2 class="h2">دنبال چه چیزی هستید؟</h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px">
+<article class="neo lift zoom reveal" style="border-radius: 36px; padding: 16px; display: flex; flex-direction: column">
+<div class="neo-in" style="position: relative; border-radius: 28px; height: 270px; display: flex; align-items: center; justify-content: center; overflow: hidden">
+<span class="kicker" style="position: absolute; top: 14px; right: 14px; z-index: 1; background: rgba(255,255,255,0.8); color: #17191C; font-size: 13px; padding: 7px 12px">ردیاب</span>
+<img class="mul" src="/_blob/e4d332c3cffa50d40f65c8f0e0fa2e3e" alt="ردیاب S350" style="height: 250px; width: auto; display: block">
+</div>
+<div style="padding: 24px 16px 12px; display: flex; flex-direction: column; gap: 12px; flex-grow: 1">
+<h3 style="margin: 0; font-size: 22px; font-weight: 700">ردیابی خودروی شخصی</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.85; color: #4A4F57">«می‌خواهم همیشه بدانم خودرویم کجاست.»</p>
+<p style="margin: 0; font-size: 14px; color: #5E636C">مدل پیشنهادی: <b style="color: #17191C; font-weight: 700">S350</b> · ردیاب بدون دزدگیر</p>
+<div style="margin-top: auto; padding-top: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+<p style="margin: 0; font-size: 14px; color: #4A4F57">از <b style="font-size: 24px; color: #17191C">۱۲٬۲۴۰٬۰۰۰</b> تومان</p>
+<a href="#" class="btn btn-ink" style="min-height: 50px; padding: 0 22px">مشاهده و خرید</a>
+</div>
+</div>
+</article>
+<article class="neo lift zoom reveal" style="border-radius: 36px; padding: 16px; display: flex; flex-direction: column; box-shadow: 14px 14px 32px #C6CBD3, -14px -14px 32px #FFFFFF, 0 0 0 2px rgba(244,128,38,0.45)">
+<div class="neo-in" style="position: relative; border-radius: 28px; height: 270px; display: flex; align-items: center; justify-content: center; overflow: hidden">
+<span class="kicker" style="position: absolute; top: 14px; right: 14px; z-index: 1; background: #F48026; color: #17191C; font-size: 13px; padding: 7px 12px">دزدگیر + ردیاب</span>
+<img class="mul" src="/_blob/d0f192c8cf4b68ad11e7827f1a2f7118" alt="دزدگیر و ردیاب S600 با ریموت و آژیر" style="height: 250px; width: auto; display: block">
+</div>
+<div style="padding: 24px 16px 12px; display: flex; flex-direction: column; gap: 12px; flex-grow: 1">
+<h3 style="margin: 0; font-size: 22px; font-weight: 700">دزدگیر و ردیاب در یک دستگاه</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.85; color: #4A4F57">«می‌خواهم هم از سرقت جلوگیری کنم هم خودرو را پیدا کنم.»</p>
+<p style="margin: 0; font-size: 14px; color: #5E636C">مدل پیشنهادی: <b style="color: #17191C; font-weight: 700">S600</b> · دزدگیر و ردیاب</p>
+<div style="margin-top: auto; padding-top: 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+<p style="margin: 0; font-size: 14px; color: #4A4F57">از <b style="font-size: 24px; color: #17191C">۱۸٬۷۰۰٬۰۰۰</b> تومان</p>
+<a href="#" class="btn btn-ink" style="min-height: 50px; padding: 0 22px">مشاهده و خرید</a>
+</div>
+</div>
+</article>
+<article class="lift zoom reveal dark" style="border-radius: 36px; padding: 16px; display: flex; flex-direction: column; box-shadow: 14px 14px 32px #C6CBD3, -14px -14px 32px #FFFFFF">
+<div style="position: relative; border-radius: 28px; height: 270px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #ECEEF2">
+<span class="kicker" style="position: absolute; top: 14px; right: 14px; z-index: 1; background: #17191C; color: #FFFFFF; font-size: 13px; padding: 7px 12px">ناوگان</span>
+<img class="mul" src="/_blob/d18e61e8c28625b82c766051d6e531d8" alt="ردیاب خودروی سنگین نورون" style="height: 250px; width: auto; display: block">
+</div>
+<div style="padding: 24px 16px 12px; display: flex; flex-direction: column; gap: 12px; flex-grow: 1; position: relative; z-index: 1">
+<h3 style="margin: 0; font-size: 22px; font-weight: 700; color: #FFFFFF">مدیریت خودروهای کاری و ناوگان</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.85; color: #B9BEC7">«چند خودرو یا ماشین‌آلات دارم.»</p>
+<p style="margin: 0; font-size: 14px; color: #9EA4AE">خودروی سنگین، پایش سوخت، بار یخچالی و ناوگان شهری</p>
+<div style="margin-top: auto; padding-top: 18px; display: flex; justify-content: flex-end">
+<a href="#fleet" class="btn btn-glass" style="min-height: 50px; padding: 0 22px">راهکارهای سازمانی ←</a>
+</div>
+</div>
+</article>
+</div>
+
+<div class="glass-l reveal" style="border-radius: 30px; padding: 26px 30px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap">
+<div style="display: flex; align-items: center; gap: 20px">
+<div class="neo-sm" style="width: 64px; height: 64px; border-radius: 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding: 14px; flex-shrink: 0">
+<span style="border-radius: 50%; background: #F48026"></span><span style="border-radius: 50%; background: #F48026"></span><span style="border-radius: 50%; background: #FFB06E"></span><span style="border-radius: 50%; background: #C6CBD3"></span><span style="border-radius: 50%; background: #C6CBD3"></span><span style="border-radius: 50%; background: #C6CBD3"></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<p style="margin: 0; font-size: 19px; font-weight: 700">مطمئن نیستید کدام مناسب شماست؟</p>
+<p style="margin: 0; font-size: 15px; color: #4A4F57">با ۶ سؤال کوتاه، دستگاه مناسب خودروی خودتان را پیدا کنید.</p>
+</div>
+</div>
+<a href="#" class="btn btn-liquid">شروع انتخاب‌گر هوشمند</a>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 14px; color: #4A4F57">
+<span>سایر محصولات:</span>
+<a href="#heavy" class="btn btn-neo" style="min-height: 42px; padding: 0 18px; font-size: 14px; border-radius: 999px">خودروی سنگین</a>
+<a href="#personal" class="btn btn-neo" style="min-height: 42px; padding: 0 18px; font-size: 14px; border-radius: 999px">برچسب هوشمند</a>
+<a href="#personal" class="btn btn-neo" style="min-height: 42px; padding: 0 18px; font-size: 14px; border-radius: 999px">پک ردیابی وسایل شخصی</a>
+<a href="#cold" class="btn btn-neo" style="min-height: 42px; padding: 0 18px; font-size: 14px; border-radius: 999px">خودروی یخچال‌دار</a>
+</div>
+</div>
+</section>
+
+<!-- ═══ ۵. مقایسه ═══ -->
+<section id="compare" class="pearl sec" data-stop="مقایسهٔ مدل‌ها" style="padding-top: 24px">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 44px">
+<div class="reveal" style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<span class="kicker kicker-l"><span class="kdot"></span>مقایسهٔ سریع</span>
+<h2 class="h2">ردیاب <span class="grad">S350</span> یا دزدگیر و ردیاب <span class="grad">S600</span>؟</h2>
+</div>
+<span class="tbd">نیازمند تأیید: تیک‌ها از روی مشخصات فنی</span>
+</div>
+<div style="position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 40px">
+<div class="hide-sm" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2; width: 76px; height: 76px; border-radius: 50%; background: linear-gradient(180deg,#FFB06E,#F48026 55%,#E06A10); box-shadow: inset 0 2px 0 rgba(255,255,255,0.6), 0 16px 36px rgba(244,128,38,0.5); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; color: #17191C">VS</div>
+<div class="neo reveal" style="border-radius: 36px; padding: 36px; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 18px; margin-bottom: 14px">
+<div class="neo-in" style="width: 92px; height: 92px; border-radius: 26px; display: flex; align-items: center; justify-content: center; overflow: hidden"><img class="mul" src="/_blob/e4d332c3cffa50d40f65c8f0e0fa2e3e" alt="" style="width: 110%; height: auto"></div>
+<div><h3 style="margin: 0; font-size: 34px; font-weight: 700; line-height: 1.2">S350</h3><p style="margin: 4px 0 0; font-size: 15px; color: #4A4F57">ردیاب</p></div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(23,25,28,0.08); font-size: 16px"><span>ردیابی لحظه‌ای و تاریخچهٔ مسیر</span><span style="width: 32px; height: 32px; border-radius: 50%; background: #DDF5E8; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="دارد"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(23,25,28,0.08); font-size: 16px"><span>دزدگیر و آژیر</span><span style="width: 32px; height: 32px; border-radius: 50%; background: #E1E4E9; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7079" stroke-width="2.6" stroke-linecap="round" role="img" aria-label="ندارد"><path d="M6 12h12"></path></svg></span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(23,25,28,0.08); font-size: 16px"><span>قفل و بازکردن درب</span><span class="tbd">نیازمند تأیید</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(23,25,28,0.08); font-size: 16px"><span>خاموش‌کردن خودرو از راه دور</span><span class="tbd">نیازمند تأیید</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(23,25,28,0.08); font-size: 16px"><span>مناسب برای</span><span style="color: #4A4F57; font-size: 15px; text-align: left">کسی که می‌خواهد همیشه بداند خودرو کجاست</span></div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 22px; flex-wrap: wrap">
+<p style="margin: 0; font-size: 14px; color: #4A4F57"><b style="font-size: 26px; color: #17191C">۱۲٬۲۴۰٬۰۰۰</b> تومان</p>
+<a href="#" class="btn btn-neo">خرید S350</a>
+</div>
+</div>
+<div class="neo reveal" style="border-radius: 36px; padding: 36px; display: flex; flex-direction: column; gap: 6px; box-shadow: 14px 14px 32px #C6CBD3, -14px -14px 32px #FFFFFF, 0 0 0 2px rgba(244,128,38,0.5), 0 0 60px rgba(244,128,38,0.18)">
+<div style="display: flex; align-items: center; gap: 18px; margin-bottom: 14px">
+<div class="neo-in" style="width: 92px; height: 92px; border-radius: 26px; display: flex; align-items: center; justify-content: center; overflow: hidden"><img class="mul" src="/_blob/d0f192c8cf4b68ad11e7827f1a2f7118" alt="" style="width: 110%; height: auto"></div>
+<div><h3 style="margin: 0; font-size: 34px; font-weight: 700; line-height: 1.2">S600</h3><p style="margin: 4px 0 0; font-size: 15px; color: #4A4F57">دزدگیر و ردیاب</p></div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(23,25,28,0.08); font-size: 16px"><span>ردیابی لحظه‌ای و تاریخچهٔ مسیر</span><span style="width: 32px; height: 32px; border-radius: 50%; background: #DDF5E8; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="دارد"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(23,25,28,0.08); font-size: 16px"><span>دزدگیر و آژیر</span><span style="width: 32px; height: 32px; border-radius: 50%; background: #DDF5E8; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="دارد"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(23,25,28,0.08); font-size: 16px"><span>قفل و بازکردن درب</span><span class="tbd">نیازمند تأیید</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(23,25,28,0.08); font-size: 16px"><span>خاموش‌کردن خودرو از راه دور</span><span class="tbd">نیازمند تأیید</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(23,25,28,0.08); font-size: 16px"><span>مناسب برای</span><span style="color: #4A4F57; font-size: 15px; text-align: left">کسی که هم جلوگیری از سرقت می‌خواهد هم ردیابی</span></div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 22px; flex-wrap: wrap">
+<p style="margin: 0; font-size: 14px; color: #4A4F57"><b style="font-size: 26px; color: #17191C">۱۸٬۷۰۰٬۰۰۰</b> تومان</p>
+<a href="#" class="btn btn-liquid">خرید S600</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ═══ ۵-الف. ردیابی وسایل شخصی ═══ -->
+<section id="personal" class="pearl sec" style="padding-top: 24px">
+<div class="orb" style="width: 440px; height: 440px; background: rgba(244,128,38,0.15); left: -160px; top: 140px"></div>
+<div class="wrap" style="display: flex; flex-wrap: wrap; gap: 56px; align-items: center">
+<div class="reveal" style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 22px">
+<span class="kicker kicker-l"><span class="kdot"></span>وسایل شخصی</span>
+<h2 class="h2">ردیابی <span class="grad">وسایل شخصی</span> با برچسب‌های هوشمند نورون</h2>
+<p class="lead" style="color: #4A4F57">نورون فقط برای خودرو نیست؛ با برچسب‌های هوشمند و پک ردیابی وسایل شخصی، وسایل مهمتان را هم زیر نظر داشته باشید.</p>
+<span class="tbd" style="width: fit-content">نیازمند تأیید: نحوهٔ کار، برد و اتصال برچسب‌ها به اپلیکیشن</span>
+<div class="neo lift" style="border-radius: 28px; padding: 14px; display: flex; align-items: center; gap: 18px; margin-top: 6px">
+<div class="neo-in" style="width: 112px; height: 112px; border-radius: 22px; flex-shrink: 0; overflow: hidden; display: flex; align-items: center; justify-content: center"><img class="mul" src="/_blob/e361c1a8f412f5f7c56c22a5fe0a2c84" alt="برچسب‌های هوشمند نورون" style="width: 118%; height: auto"></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<h3 style="margin: 0; font-size: 19px; font-weight: 700">برچسب‌های هوشمند نورون</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.8; color: #5E636C">برچسب پارک خودرو · جاسوئیچی هوشمند · ۸ برچسب ضد آب</p>
+<p style="margin: 0; font-size: 14px; color: #4A4F57"><b style="font-size: 21px; color: #17191C">۱۹۰٬۰۰۰</b> تومان</p>
+</div>
+<a href="#" class="btn btn-ink" style="min-height: 48px; padding: 0 20px">خرید</a>
+</div>
+<div class="neo lift" style="border-radius: 28px; padding: 14px; display: flex; align-items: center; gap: 18px; box-shadow: 14px 14px 32px #C6CBD3, -14px -14px 32px #FFFFFF, 0 0 0 2px rgba(244,128,38,0.45)">
+<div style="position: relative; width: 112px; height: 112px; border-radius: 22px; flex-shrink: 0; overflow: hidden"><img src="/_blob/1e67ec5bbf2e0e8c4cc5b69ad1045043" alt="جایگاه تصویر پک ردیابی وسایل شخصی" style="width: 100%; height: 100%; object-fit: cover; display: block"><span style="position: absolute; bottom: 6px; inset-inline: 0; text-align: center; font-size: 10px; color: #3E434A">جایگاه تصویر</span></div>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<h3 style="margin: 0; font-size: 19px; font-weight: 700">پک کامل ردیابی وسایل شخصی</h3>
+<span class="tbd" style="width: fit-content">نیازمند تأیید: محتویات پک</span>
+<p style="margin: 0; font-size: 14px; color: #4A4F57"><b style="font-size: 21px; color: #17191C">۵۹۰٬۰۰۰</b> تومان</p>
+</div>
+<a href="#" class="btn btn-liquid" style="min-height: 48px; padding: 0 20px">خرید پک</a>
+</div>
+</div>
+<div class="reveal" style="flex: 1 1 440px; min-width: 0; position: relative; min-height: 520px">
+<div class="neo floaty" style="position: absolute; inset: 30px 40px 30px 30px; border-radius: 44px; display: flex; align-items: center; justify-content: center; overflow: hidden">
+<div class="neo-in" style="position: absolute; inset: 22px; border-radius: 32px"></div>
+<img class="mul" src="/_blob/e361c1a8f412f5f7c56c22a5fe0a2c84" alt="بستهٔ برچسب‌های هوشمند نورون" style="position: relative; width: 82%; height: auto; display: block">
+</div>
+<div class="glass-l floaty2" style="position: absolute; top: 40px; left: 0; border-radius: 18px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"></rect><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3"></path></svg>برچسب پارک خودرو</div>
+<div class="glass-l floaty" style="position: absolute; top: 48%; right: 0; border-radius: 18px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l9-9M17 6l3 3M15 8l2 2"></path></svg>جاسوئیچی هوشمند</div>
+<div class="glass-l floaty2" style="position: absolute; bottom: 30px; left: 30px; border-radius: 18px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3D7BE0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"></path></svg>ضد آب</div>
+</div>
+</div>
+</section>
+
+<!-- ═══ ۵-ب. ردیاب خودروهای سنگین ═══ -->
+<section id="heavy" class="dark sec">
+<div class="orb" style="width: 560px; height: 560px; background: rgba(244,128,38,0.22); left: 18%; top: -160px"></div>
+<div class="wrap" style="display: flex; flex-wrap: wrap; gap: 56px; align-items: center">
+<div class="reveal" style="flex: 1 1 480px; min-width: 0; position: relative; padding-bottom: 24px">
+<div class="glass" style="border-radius: 40px; padding: 14px">
+<div style="position: relative; aspect-ratio: 4 / 3; border-radius: 30px; overflow: hidden; background: #ECEEF2; display: flex; align-items: center; justify-content: center">
+<img class="mul" src="/_blob/d18e61e8c28625b82c766051d6e531d8" alt="ردیاب خودروهای سنگین نورون مدل +S400" style="width: 88%; height: auto; display: block">
+</div>
+</div>
+<div class="glass floaty" style="position: absolute; bottom: 0; right: 32px; border-radius: 20px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; color: #FFFFFF; font-size: 15px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFA45A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"></path><circle cx="7" cy="17.5" r="1.8"></circle><circle cx="17" cy="17.5" r="1.8"></circle></svg>مخصوص خودروهای سنگین</div>
+</div>
+<div class="reveal" style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 22px">
+<span class="kicker kicker-d"><span class="kdot"></span>خودروی سنگین</span>
+<h2 class="h2" style="color: #FFFFFF">ردیاب خودروهای <span class="grad">سنگین</span> +S400</h2>
+<p class="lead" style="color: #B9BEC7">برای کامیون، اتوبوس و ماشین‌آلات سنگین؛ موقعیت و مسیر خودروهای سنگین را لحظه‌ای روی اپلیکیشن نورون ببینید.</p>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px">
+<li class="glass" style="border-radius: 999px; padding: 10px 16px; display: flex; align-items: center; gap: 8px; font-size: 14px; color: #E6E8EB"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFA45A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.4-3 8.2-7 9.5-4-1.3-7-5.1-7-9.5V6l7-3z"></path><path d="M8.8 12.2l2.2 2.2 4.2-4.4"></path></svg>۲ سال گارانتی</li>
+<li class="glass" style="border-radius: 999px; padding: 10px 16px; display: flex; align-items: center; gap: 8px; font-size: 14px; color: #E6E8EB"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFA45A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2"></rect><rect x="9" y="11" width="6" height="6" rx="1"></rect></svg>سیم‌کارت رایگان</li>
+<li class="glass" style="border-radius: 999px; padding: 10px 16px; display: flex; align-items: center; gap: 8px; font-size: 14px; color: #E6E8EB"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFA45A" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"></path><rect x="3" y="13.5" width="4" height="6" rx="1.5"></rect><rect x="17" y="13.5" width="4" height="6" rx="1.5"></rect></svg>پشتیبانی شبانه‌روزی</li>
+</ul>
+<div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; padding: 18px 0; border-top: 1px solid rgba(255,255,255,0.1)"><span class="grad" style="font-size: 34px; font-weight: 700; line-height: 1.2">۱۴٬۳۹۰٬۰۰۰</span><span style="font-size: 15px; color: #B9BEC7">تومان</span></div>
+<div style="display: flex; gap: 14px; flex-wrap: wrap">
+<a href="#" class="btn btn-liquid">مشاهده و خرید +S400</a>
+<a href="#fleet" class="btn btn-glass">مشاورهٔ سازمانی</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ═══ ۵-ج. ردیاب خودروی یخچال‌دار ═══ -->
+<section id="cold" class="pearl sec">
+<div class="orb" style="width: 420px; height: 420px; background: rgba(90,150,255,0.14); right: -120px; top: 80px"></div>
+<div class="wrap" style="display: flex; flex-wrap: wrap; gap: 56px; align-items: center">
+<div class="reveal" style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 22px">
+<span class="kicker kicker-l"><span class="kdot"></span>بار یخچالی</span>
+<h2 class="h2">ردیاب خودروهای <span class="grad">یخچال‌دار</span> S400T</h2>
+<p class="lead" style="color: #4A4F57">ردیابی خودرو همراه با سنسور دما؛ برای پایش بار یخچالی در طول مسیر.</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px">
+<div class="neo-sm" style="border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 10px"><span class="neo-in" style="width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14.5V5a2 2 0 0 1 4 0v9.5a4 4 0 1 1-4 0z"></path><path d="M12 9v6"></path></svg></span><span style="font-size: 15px; font-weight: 700">سنسور دما</span></div>
+<div class="neo-sm" style="border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 10px"><span class="neo-in" style="width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg></span><span style="font-size: 15px; font-weight: 700">ردیابی خودرو</span></div>
+<div class="neo-sm" style="border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 10px"><span class="neo-in" style="width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.4-3 8.2-7 9.5-4-1.3-7-5.1-7-9.5V6l7-3z"></path><path d="M8.8 12.2l2.2 2.2 4.2-4.4"></path></svg></span><span style="font-size: 15px; font-weight: 700">۲ سال گارانتی</span></div>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 8px">
+<p style="margin: 0; font-size: 15px; color: #4A4F57"><b style="font-size: 28px; color: #17191C">۱۷٬۴۷۲٬۰۰۰</b> تومان</p>
+<div style="display: flex; gap: 12px; flex-wrap: wrap">
+<a href="#" class="btn btn-liquid">مشاهده و خرید S400T</a>
+<a href="#fleet" class="btn btn-neo">مشاورهٔ سازمانی</a>
+</div>
+</div>
+</div>
+<div class="reveal" style="flex: 1 1 440px; min-width: 0; position: relative; min-height: 500px">
+<div class="neo" style="position: absolute; inset: 20px 20px 40px 40px; border-radius: 44px; overflow: hidden; display: flex; align-items: center; justify-content: center">
+<div class="neo-in" style="position: absolute; inset: 22px; border-radius: 32px"></div>
+<img class="mul" src="/_blob/fa974e1a7a1b60c6098b473c79772b03" alt="ردیاب خودروی یخچال‌دار S400T" style="position: relative; width: 78%; height: auto; display: block">
+</div>
+<div class="glass-l floaty" style="position: absolute; bottom: 0; left: 0; width: 250px; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 10px"><span style="width: 40px; height: 40px; border-radius: 13px; background: linear-gradient(180deg,#7FB6FF,#3D7BE0); display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M4.5 6.5l15 11M19.5 6.5l-15 11"></path><path d="M9.5 3.5L12 6l2.5-2.5M9.5 20.5L12 18l2.5 2.5"></path></svg></span><div style="display: flex; flex-direction: column"><b style="font-size: 15px">دمای بار</b><span style="font-size: 12px; color: #5E636C">نمونهٔ نمایش در اپلیکیشن</span></div></div>
+<div style="position: relative; height: 10px; border-radius: 999px; background: linear-gradient(90deg,#3D7BE0,#7FB6FF 45%,#FFB06E 75%,#E2650C)"><span style="position: absolute; top: -5px; right: 62%; width: 20px; height: 20px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 2px 8px rgba(0,0,0,0.25); border: 3px solid #3D7BE0; box-sizing: border-box"></span></div>
+<span class="tbd" style="width: fit-content">جایگاه: اسکرین‌شات واقعی دما</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ═══ ۶. اگر خودرو دزدیده شود ═══ -->
+<section class="dark sec" data-stop="سناریوی سرقت">
+<div class="orb" style="width: 620px; height: 620px; background: rgba(244,128,38,0.20); right: 30%; top: -200px"></div>
+<div class="wrap" style="display: flex; flex-direction: column; gap: 56px">
+<div class="reveal" style="display: flex; flex-direction: column; gap: 16px; max-width: 720px">
+<span class="kicker kicker-d"><span class="kdot"></span>اپلیکیشن نورون</span>
+<h2 class="h2" style="color: #FFFFFF">اگر خودرو <span class="grad">دزدیده شود</span> چه می‌شود؟</h2>
+<p class="lead" style="color: #B9BEC7">از لحظهٔ هشدار تا پیدا کردن خودرو، این چهار قدم روی موبایل شما اتفاق می‌افتد.</p>
+</div>
+<div style="position: relative">
+<div class="flow hide-sm" style="position: absolute; top: 26px; right: 12%; left: 12%; height: 2px; opacity: 0.7; border-radius: 2px"></div>
+<ol style="list-style: none; margin: 0; padding: 0; position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px">
+<li class="reveal" style="display: flex; flex-direction: column; align-items: center; gap: 22px">
+<span style="width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(180deg,#FFB06E,#F48026 55%,#E06A10); box-shadow: inset 0 2px 0 rgba(255,255,255,0.55), 0 0 0 8px rgba(244,128,38,0.14), 0 0 30px rgba(244,128,38,0.5); color: #17191C; font-weight: 700; font-size: 20px; display: flex; align-items: center; justify-content: center">۱</span>
+<div class="glass lift" style="border-radius: 32px; padding: 14px; width: 100%; display: flex; flex-direction: column; gap: 18px">
+<div style="position: relative; border-radius: 24px; overflow: hidden; height: 320px"><div class="am" role="img" aria-label="نمونهٔ هشدار سرقت نورون: تماس تلفنی با اعلام صوتی و پیامک هشدار"><div class="am-card am-call"><div style="display: flex; align-items: center; gap: 11px"><span class="am-av"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#17191C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg></span><div style="display: flex; flex-direction: column; min-width: 0"><b style="font-size: 14px; font-weight: 700">نورون · تماس هشدار</b><span style="font-size: 12px; color: #9EA4AE">تماس ورودی…</span></div></div><div class="am-voice"><span class="am-eq"><i></i><i></i><i></i><i></i><i></i></span><span>«توجه! هشدار سرقت خودروی شما»</span></div><div class="am-btns"><span class="am-b am-no"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform: rotate(135deg)"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg></span><span class="am-b am-ok"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg></span></div></div><div class="am-card am-sms"><div class="am-meta"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFB06E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12z"></path><path d="M8.5 11h7M8.5 14h4.5"></path></svg><b style="color: #E6E8EB; font-weight: 700">پیامک · نورون</b><span style="margin-right: auto">اکنون</span></div><span style="font-size: 12.5px; line-height: 1.8; color: #D0D4DA">هشدار سرقت: خودروی شما در خطر است. موقعیت را در اپلیکیشن ببینید.</span></div></div></div>
+<div style="margin: 0 8px 8px"><h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #FFFFFF">هشدار فوری با پیامک و تماس صوتی</h3><p style="margin: 4px 0 0; font-size: 14px; color: #9EA4AE">پیامک هشدار و تماسی که سرقت را با صدا اعلام می‌کند</p></div>
+</div>
+</li>
+<li class="reveal" style="display: flex; flex-direction: column; align-items: center; gap: 22px">
+<span style="width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(180deg,#FFB06E,#F48026 55%,#E06A10); box-shadow: inset 0 2px 0 rgba(255,255,255,0.55), 0 0 0 8px rgba(244,128,38,0.14), 0 0 30px rgba(244,128,38,0.5); color: #17191C; font-weight: 700; font-size: 20px; display: flex; align-items: center; justify-content: center">۲</span>
+<div class="glass lift" style="border-radius: 32px; padding: 14px; width: 100%; display: flex; flex-direction: column; gap: 18px">
+<div style="position: relative; border-radius: 24px; overflow: hidden; height: 320px; background: #DFDFDF"><img src="/_blob/4687006c887023383b30398287e9a8af" alt="موقعیت لحظه‌ای خودرو روی نقشه در اپلیکیشن نورون" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 32%; display: block"><span aria-hidden="true" style="position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08), inset 0 -40px 40px -20px rgba(11,12,15,0.35); pointer-events: none"></span></div>
+<h3 style="margin: 0 8px 8px; font-size: 19px; font-weight: 700; color: #FFFFFF">دیدن موقعیت لحظه‌ای و مسیر</h3>
+</div>
+</li>
+<li class="reveal" style="display: flex; flex-direction: column; align-items: center; gap: 22px">
+<span style="width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(180deg,#FFB06E,#F48026 55%,#E06A10); box-shadow: inset 0 2px 0 rgba(255,255,255,0.55), 0 0 0 8px rgba(244,128,38,0.14), 0 0 30px rgba(244,128,38,0.5); color: #17191C; font-weight: 700; font-size: 20px; display: flex; align-items: center; justify-content: center">۳</span>
+<div class="glass lift" style="border-radius: 32px; padding: 14px; width: 100%; display: flex; flex-direction: column; gap: 18px">
+<div style="border-radius: 24px; overflow: hidden; height: 320px; background: #FFFFFF"><img src="/_blob/c699cd6f44941e83f5c34360c52090a1" alt="صفحهٔ توقف خودرو در اپلیکیشن نورون با گزینهٔ خاموش کردن موتور" style="width: 100%; height: 100%; object-fit: cover; object-position: top; display: block"></div>
+<div style="margin: 0 8px 8px"><h3 style="margin: 0; font-size: 19px; font-weight: 700; color: #FFFFFF">خاموش‌کردن خودرو از راه دور</h3><p style="margin: 4px 0 0; font-size: 14px; color: #9EA4AE">بسته به مدل دستگاه</p></div>
+</div>
+</li>
+<li class="reveal" style="display: flex; flex-direction: column; align-items: center; gap: 22px">
+<span style="width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(180deg,#FFB06E,#F48026 55%,#E06A10); box-shadow: inset 0 2px 0 rgba(255,255,255,0.55), 0 0 0 8px rgba(244,128,38,0.14), 0 0 30px rgba(244,128,38,0.5); color: #17191C; font-weight: 700; font-size: 20px; display: flex; align-items: center; justify-content: center">۴</span>
+<div class="glass lift" style="border-radius: 32px; padding: 14px; width: 100%; display: flex; flex-direction: column; gap: 18px">
+<div style="border-radius: 24px; height: 320px; background: radial-gradient(circle at 50% 35%, rgba(244,128,38,0.28), rgba(255,255,255,0.03) 65%); border: 1px solid rgba(255,255,255,0.08); display: flex; flex-direction: column; justify-content: center; gap: 16px; padding: 24px; box-sizing: border-box">
+<div class="glass" style="border-radius: 20px; padding: 16px; display: flex; align-items: center; gap: 14px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFA45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"></path><rect x="3" y="13.5" width="4" height="6" rx="1.5"></rect><rect x="17" y="13.5" width="4" height="6" rx="1.5"></rect></svg><span style="font-size: 15px; color: #E6E8EB">کارشناس پشتیبانی شبانه‌روزی</span></div>
+<div class="glass" style="border-radius: 20px; padding: 16px; display: flex; align-items: center; gap: 14px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFA45A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.4-3 8.2-7 9.5-4-1.3-7-5.1-7-9.5V6l7-3z"></path><path d="M8.8 12.2l2.2 2.2 4.2-4.4"></path></svg><span style="font-size: 15px; color: #E6E8EB">بیمهٔ سرقت رایگان خودرو</span></div>
+</div>
+<h3 style="margin: 0 8px 8px; font-size: 19px; font-weight: 700; color: #FFFFFF">پشتیبانی ۲۴ ساعته و بیمهٔ سرقت</h3>
+</div>
+</li>
+</ol>
+</div>
+<div class="glass reveal" style="border-radius: 30px; padding: 24px 30px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap">
+<p style="margin: 0; font-size: 16px; line-height: 1.9; color: #D0D4DA">استفاده از سامانه در <b style="color: #FFFFFF">سال اول رایگان</b> است؛ تمدید از سال دوم شامل هزینه می‌شود.</p>
+<a href="https://noroncar.ir/download-app/" class="btn btn-liquid"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"></path></svg>دانلود اپلیکیشن نورون</a>
+</div>
+</div>
+</section>
+
+<!-- ═══ ۷. ویدئوهای مشتریان ═══ -->
+<section class="pearl sec" data-stop="تجربهٔ مشتریان">
+<div class="orb" style="width: 380px; height: 380px; background: rgba(244,128,38,0.14); left: 10%; bottom: -120px"></div>
+<div class="wrap" style="display: flex; flex-direction: column; gap: 48px">
+<div class="reveal" style="display: flex; flex-direction: column; gap: 16px; max-width: 720px">
+<span class="kicker kicker-l"><span class="kdot"></span>ویدئوی مشتریان</span>
+<h2 class="h2">تجربهٔ مشتریان نورون <span class="grad">بعد از خرید و نصب</span></h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px">
+<article class="neo lift reveal" style="border-radius: 34px; padding: 14px; display: flex; flex-direction: column; gap: 16px">
+<button type="button" aria-label="پخش ویدئوی مشتری ۱" style="position: relative; aspect-ratio: 16 / 10; border-radius: 26px; border: 0; padding: 0; overflow: hidden; cursor: pointer; background: #E2E5EA; font-family: Vazir, Tahoma, sans-serif">
+<span class="phb">جایگاه: کاور ویدئوی ۱</span>
+<img src="/_blob/1e67ec5bbf2e0e8c4cc5b69ad1045043" alt="جایگاه کاور ویدئو" style="width: 100%; height: 100%; object-fit: cover; display: block">
+<span class="glass" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 76px; height: 76px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(23,25,28,0.55)"><span class="pin" style="position: absolute; inset: 0; width: auto; height: auto; background: transparent; box-shadow: none"></span><svg width="26" height="26" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M17 12L8 6.5v11z"></path></svg></span>
+</button>
+<div style="padding: 0 10px 10px; display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-size: 18px; font-weight: 700">[جایگاه: عنوان کوتاه ویدئو]</h3><p style="margin: 0; font-size: 14px; color: #5E636C">مدل دستگاه و شهر، فقط اگر مشخص است</p></div>
+</article>
+<article class="neo lift reveal" style="border-radius: 34px; padding: 14px; display: flex; flex-direction: column; gap: 16px">
+<button type="button" aria-label="پخش ویدئوی مشتری ۲" style="position: relative; aspect-ratio: 16 / 10; border-radius: 26px; border: 0; padding: 0; overflow: hidden; cursor: pointer; background: #E2E5EA; font-family: Vazir, Tahoma, sans-serif">
+<span class="phb">جایگاه: کاور ویدئوی ۲</span>
+<img src="/_blob/1e67ec5bbf2e0e8c4cc5b69ad1045043" alt="جایگاه کاور ویدئو" style="width: 100%; height: 100%; object-fit: cover; display: block">
+<span class="glass" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 76px; height: 76px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(23,25,28,0.55)"><span class="pin" style="position: absolute; inset: 0; width: auto; height: auto; background: transparent; box-shadow: none"></span><svg width="26" height="26" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M17 12L8 6.5v11z"></path></svg></span>
+</button>
+<div style="padding: 0 10px 10px; display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-size: 18px; font-weight: 700">[جایگاه: عنوان کوتاه ویدئو]</h3><p style="margin: 0; font-size: 14px; color: #5E636C">مدل دستگاه و شهر، فقط اگر مشخص است</p></div>
+</article>
+<article class="neo lift reveal" style="border-radius: 34px; padding: 14px; display: flex; flex-direction: column; gap: 16px">
+<button type="button" aria-label="پخش ویدئوی مشتری ۳" style="position: relative; aspect-ratio: 16 / 10; border-radius: 26px; border: 0; padding: 0; overflow: hidden; cursor: pointer; background: #E2E5EA; font-family: Vazir, Tahoma, sans-serif">
+<span class="phb">جایگاه: کاور ویدئوی ۳</span>
+<img src="/_blob/1e67ec5bbf2e0e8c4cc5b69ad1045043" alt="جایگاه کاور ویدئو" style="width: 100%; height: 100%; object-fit: cover; display: block">
+<span class="glass" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 76px; height: 76px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(23,25,28,0.55)"><span class="pin" style="position: absolute; inset: 0; width: auto; height: auto; background: transparent; box-shadow: none"></span><svg width="26" height="26" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M17 12L8 6.5v11z"></path></svg></span>
+</button>
+<div style="padding: 0 10px 10px; display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-size: 18px; font-weight: 700">[جایگاه: عنوان کوتاه ویدئو]</h3><p style="margin: 0; font-size: 14px; color: #5E636C">مدل دستگاه و شهر، فقط اگر مشخص است</p></div>
+</article>
+</div>
+<div class="reveal" style="display: flex; justify-content: center"><a href="#city" class="btn btn-liquid">نمایندهٔ نورون در شهر من</a></div>
+</div>
+</section>
+
+<!-- ═══ ۸. خرید و نصب در شهر شما ═══ -->
+<section id="city" class="pearl sec" data-stop="خرید و نصب" style="padding-top: 24px">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 52px">
+<div class="reveal" style="display: flex; flex-direction: column; gap: 16px; max-width: 720px">
+<span class="kicker kicker-l"><span class="kdot"></span>خرید و نصب</span>
+<h2 class="h2">آنلاین بخرید، <span class="grad">نمایندهٔ شهرتان</span> نصب می‌کند</h2>
+</div>
+<div class="reveal" style="position: relative">
+<div class="flow hide-sm" style="position: absolute; top: 34px; right: 16%; left: 16%; height: 2px; opacity: 0.6"></div>
+<ol style="list-style: none; margin: 0; padding: 0; position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; text-align: center">
+<li style="display: flex; flex-direction: column; align-items: center; gap: 14px"><span class="neo-sm" style="width: 68px; height: 68px; border-radius: 24px; font-size: 24px; font-weight: 700; color: #E2650C; display: flex; align-items: center; justify-content: center">۱</span><h3 style="margin: 0; font-size: 19px; font-weight: 700">انتخاب محصول</h3><p style="margin: 0; font-size: 15px; line-height: 1.8; color: #4A4F57">ردیاب یا دزدگیر و ردیاب، بر اساس نیازتان</p></li>
+<li style="display: flex; flex-direction: column; align-items: center; gap: 14px"><span class="neo-sm" style="width: 68px; height: 68px; border-radius: 24px; font-size: 24px; font-weight: 700; color: #E2650C; display: flex; align-items: center; justify-content: center">۲</span><h3 style="margin: 0; font-size: 19px; font-weight: 700">خرید آنلاین یا تماس با نماینده</h3><p style="margin: 0; font-size: 15px; line-height: 1.8; color: #4A4F57">پرداخت روی سایت، یا سفارش از نمایندهٔ شهر</p></li>
+<li style="display: flex; flex-direction: column; align-items: center; gap: 14px"><span class="neo-sm" style="width: 68px; height: 68px; border-radius: 24px; font-size: 24px; font-weight: 700; color: #E2650C; display: flex; align-items: center; justify-content: center">۳</span><h3 style="margin: 0; font-size: 19px; font-weight: 700">تحویل و نصب در شهر شما</h3><p style="margin: 0; font-size: 15px; line-height: 1.8; color: #4A4F57">نمایندهٔ شهر برای تحویل و نصب هماهنگ می‌کند</p></li>
+</ol>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 32px; align-items: stretch">
+<div style="display: flex; flex-direction: column; gap: 26px">
+<div class="neo reveal" style="border-radius: 32px; padding: 30px; display: flex; flex-direction: column; gap: 18px">
+<label for="prov" style="font-size: 18px; font-weight: 700">نمایندهٔ استان خود را پیدا کنید</label>
+<div style="display: flex; gap: 14px; flex-wrap: wrap">
+<select id="prov" data-mselect="1" class="neo-in" style="flex: 1 1 200px; min-height: 54px; border-radius: 18px; border: 0; padding: 0 18px; font-family: Vazir, Tahoma, sans-serif; font-size: 15px; color: #17191C">
+<option value="">انتخاب استان</option><option value="east-azerbaijan">آذربایجان شرقی</option><option value="west-azerbaijan">آذربایجان غربی</option><option value="ardabil">اردبیل</option><option value="isfahan">اصفهان</option><option value="alborz">البرز</option><option value="ilam">ایلام</option><option value="bushehr">بوشهر</option><option value="tehran">تهران</option><option value="chaharmahal-bakhtiari">چهارمحال و بختیاری</option><option value="south-khorasan">خراسان جنوبی</option><option value="razavi-khorasan">خراسان رضوی</option><option value="north-khorasan">خراسان شمالی</option><option value="khuzestan">خوزستان</option><option value="zanjan">زنجان</option><option value="semnan">سمنان</option><option value="sistan-baluchestan">سیستان و بلوچستان</option><option value="fars">فارس</option><option value="qazvin">قزوین</option><option value="qom">قم</option><option value="kurdistan">کردستان</option><option value="kerman">کرمان</option><option value="kermanshah">کرمانشاه</option><option value="kohgiluyeh-boyerahmad">کهگیلویه و بویراحمد</option><option value="golestan">گلستان</option><option value="gilan">گیلان</option><option value="lorestan">لرستان</option><option value="mazandaran">مازندران</option><option value="markazi">مرکزی</option><option value="hormozgan">هرمزگان</option><option value="hamadan">همدان</option><option value="yazd">یزد</option>
+</select>
+<a href="https://noroncar.ir/namayandegi/" class="btn btn-ink">مشاهدهٔ نمایندگی‌ها</a>
+</div>
+<p style="margin: 0; font-size: 13px; color: #5E636C">روی نقشه یا از همین فهرست، استان خود را انتخاب کنید.</p>
+</div>
+<div class="neo reveal" style="border-radius: 32px; padding: 30px; display: flex; flex-direction: column; gap: 14px">
+<h3 style="margin: 0; font-size: 18px; font-weight: 700">پشتیبانی با نورون</h3>
+<div class="neo-in" style="border-radius: 22px; padding: 4px 20px">
+<div style="display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid rgba(23,25,28,0.07)"><span class="neo-sm" style="flex-shrink: 0; width: 48px; height: 48px; border-radius: 15px; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"></path><rect x="3" y="14" width="4" height="6" rx="1.5"></rect><rect x="17" y="14" width="4" height="6" rx="1.5"></rect><path d="M19 20a3 3 0 0 1-3 2h-3"></path></svg></span><div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><b style="font-size: 15px; font-weight: 700">پشتیبانی شبانه‌روزی</b><span style="font-size: 14px; color: #5E636C">در هر ساعت از شبانه‌روز پاسخ‌گوی شما هستیم.</span></div></div>
+<div style="display: flex; align-items: center; gap: 14px; padding: 14px 0"><span class="neo-sm" style="flex-shrink: 0; width: 48px; height: 48px; border-radius: 15px; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg></span><div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><b style="font-size: 15px; font-weight: 700">تماس با نورون</b><span dir="ltr" style="font-size: 14px; color: #5E636C; text-align: right">۰۵۱-۵۲۲۲۰۰۱۰</span></div></div>
+</div>
+<a href="tel:05152220010" class="btn btn-ink">تماس با پشتیبانی</a>
+</div>
+<div class="glass-l reveal" style="border-radius: 26px; padding: 22px 24px; display: flex; gap: 16px; align-items: center">
+<div style="width: 50px; height: 50px; border-radius: 16px; flex-shrink: 0; background: linear-gradient(180deg,#FFB06E,#F48026 55%,#E06A10); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 10px 22px rgba(244,128,38,0.35); display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17191C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.4-3 8.2-7 9.5-4-1.3-7-5.1-7-9.5V6l7-3z"></path><path d="M8.8 12.2l2.2 2.2 4.2-4.4"></path></svg></div>
+<p style="margin: 0; font-size: 15px; line-height: 1.9; color: #2B2F35"><b style="font-weight: 700">چرا از سایت رسمی بخرید؟</b> گارانتی اصلی، بیمهٔ سرقت رایگان و نصب توسط نصاب مجاز نورون.</p>
+</div>
+</div>
+<div class="dark mapp" data-park="1" data-mapwrap="1" style="border-radius: 36px; padding: 26px; gap: 16px; box-shadow: 14px 14px 32px #C6CBD3, -14px -14px 32px #FFFFFF; background-size: 900px">
+<div class="orb" style="width: 320px; height: 320px; background: rgba(244,128,38,0.2); left: 22%; top: 18%"></div>
+<div style="position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap"><span class="kicker kicker-d"><span class="kdot"></span>نقشهٔ نمایندگی‌ها</span><div class="map-legend" style="font-size: 13px"><span><i class="lg-has"></i>دارای نمایندگی</span><span><i class="lg-no"></i>بدون نمایندگی</span></div></div>
+<div class="map-box" data-mapbox="1" style="padding: 0 6px"><svg class="nmap" viewBox="0 65 1080 965" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="نقشهٔ نمایندگی‌های نورون در استان‌های ایران"><defs><linearGradient id="mgradD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFB574"></stop><stop offset="1" stop-color="#EE7418"></stop></linearGradient></defs><text class="m-lab" x="434" y="212" text-anchor="middle" style="font-size: 20px">دریای خزر</text><text class="m-lab" x="425" y="959" text-anchor="middle" transform="rotate(25 425 959)" style="font-size: 20px">خلیج فارس</text><text class="m-lab" x="850" y="1021" text-anchor="middle" style="font-size: 20px">دریای عمان</text><path class="prv has" data-province="razavi-khorasan" data-name="خراسان رضوی" data-n="4" fill="#84502E" d="M649.84,397.97h15.03l6.59-3.69l7.38-7.91l5.27-3.96l7.91-3.69l8.44-1.85h6.86h8.18l7.91,5.54l3.96,2.9 l1.05,2.11l-3.43,3.43l-4.48,7.12l5.01,9.49l2.9,5.27c0,0,2.37,1.58,7.65,4.75s8.7,3.96,10.55,4.75c1.85,0.79,7.12,0,7.12,0 s4.48-5.01,4.75-2.37s3.43,7.91,5.8,9.49c2.37,1.58,9.23,8.44,9.23,8.44l2.11-4.75l13.19-0.26l28.48-1.05l6.07,6.07l20.57,2.64 l5.8,8.97l3.69-2.11l3.96-4.75l11.87-1.05v-5.01l5.27-4.48l7.65-1.85l6.86-1.85l-8.44-13.45l8.44-4.22l3.69-6.33l1.85-3.96 l2.64-5.01l2.9-12.92l3.16-3.69l-3.16-9.49l5.01-2.64l4.75-16.88l-1.85-9.49l1.85-10.81l-5.8-3.43l3.43-10.55l-2.9-15.56l0.79-7.38 l0.53-8.18h-45.1l-2.9-5.27l-12.4-16.62l-2.9-3.43h-9.49l-5.27-3.96l-7.12-3.69l-8.97-7.65l-3.16-12.92h-3.69 c0,0-4.75-3.43-5.8-3.69c-1.05-0.26-8.44-4.22-8.44-4.22l-6.86-3.16h-3.96L775.9,221l-4.75-1.32l-4.48-1.85c0,0-2.11,1.32-2.9,1.58 c-0.79,0.26-5.8,0.26-5.8,0.26l-2.37,29.54l-4.75,4.22l-2.11,1.58l4.48,4.75c0,0,2.37,3.69,2.11,4.75 c-0.26,1.05-3.43,4.22-5.01,4.75c-1.58,0.53-4.48,0.26-5.27,2.37s-1.05,3.96-1.05,6.59s-0.26,8.18-0.26,8.18s0.26,0.53-1.32,1.32 c-1.58,0.79-5.8,0.79-6.59,0.79s-10.55-4.75-10.55-4.75l-12.13-6.86l-9.76-0.53l-8.7-2.9l-5.01-2.37l-12.4,5.27 c0,0-3.13,1.45-5.53,2.68c-1.29,0.66-2.37,1.26-2.65,1.54c-0.79,0.79-3.16,3.69-3.16,3.69l10.55,0.53c0,0,1.58,5.8,1.85,6.59 c0.26,0.79-0.26,3.69-0.79,4.75c-0.53,1.05-1.85,3.96-2.9,4.48c-1.05,0.53-2.64,1.32-2.11,2.64c0.53,1.32,5.01,8.7,5.01,8.7 s-2.9,5.54-2.9,6.59c0,1.05,0.26,8.18,0.26,8.97c0,0.79,1.32,6.07,1.32,6.07l13.71,13.71c0,0,0.53,6.59,0.53,7.65 c0,1.05,0,4.22,0,6.33c0,2.11-0.53,5.8-1.85,6.86c-1.32,1.05-3.96,0.79-4.75,1.32c-0.79,0.53-4.48,2.11-5.8,2.9 s-4.48,3.43-4.48,3.43s-3.16,1.85-5.8,2.9c-2.64,1.05-6.33,5.01-6.33,5.01L649.84,397.97z" tabindex="0" role="button" aria-pressed="false" aria-label="خراسان رضوی، ۴ نمایندگی"></path><path class="prv" data-province="north-khorasan" data-name="خراسان شمالی" data-n="0" fill="#24272D" d="M649.84,189.88l2.9,6.07v7.38v6.07l-4.75,5.54v6.86l-7.38,6.07c0,0-2.9,5.54-2.9,6.86c0,1.32,0,7.38,0,7.38 h-4.48v6.59c0,0,5.8,0.53,6.07,2.64c0.26,2.11,0.26,6.59-1.05,9.23c-1.32,2.64-2.37,5.54-2.37,6.86c0,1.32,2.11,5.8,2.9,5.8 s11.08-6.07,11.08-6.07l2.9,8.7l4.48,4.22l8.7,4.22l3.16-3.69l20.57-9.49l13.71,5.27l9.76,0.53l22.68,11.6l6.59-0.79l1.32-1.32 l0.32-10.02l1-4.75l5.27-2.37l5.01-4.75l-2.11-4.75l-4.48-4.75l6.86-5.8l2.37-29.54l-5.54,2.37l-0.53-8.18l-15.82-1.85l-13.98-7.65 l-8.97-1.32l-6.86-1.32l-3.96-13.45l-1.85-2.64h-8.7l-7.65,3.16l-12.92-3.16l-6.86,1.32c0,0-5.01-2.9-6.33-1.32 c-1.32,1.58-8.18,2.11-8.18,2.11V189.88z" tabindex="0" role="button" aria-pressed="false" aria-label="خراسان شمالی، بدون نمایندگی"></path><path class="prv" data-province="golestan" data-name="گلستان" data-n="0" fill="#24272D" d="M523.77,275.86l1.85,6.07l8.18,2.64l2.11,3.96v3.43l4.1,1.85h11.99l13.71-5.27l2.11-1.32l5.54-1.05l6.07-8.7 l9.49-3.16l12.13,2.37l8.44-3.43l6.07-7.12v-3.69v-5.54l6.86-5.54v-5.54l7.12-3.43l3.69-0.26h4.48v-7.38l2.9-6.86l7.38-6.07v-6.86 l4.75-5.54v-13.45h-5.8l-16.35-1.32l-8.7-2.64c0,0-9.23,1.05-11.87,2.37s-12.13,4.75-12.13,4.75l-11.34,5.54l-15.3,12.13l-0.26,5.8 v5.01c0,0-2.37,5.27-3.43,6.07c-1.05,0.79-8.44,3.48-10.29,3.19s-13.98,2.61-13.98,2.61l-5.54,1.05l-9.49,0.26 c0,0-1.05,6.59-0.79,7.38c0.26,0.79,3.16,13.71,3.16,13.71l1.58,6.07l-0.26,2.64l-5.01,1.85L523.77,275.86z" tabindex="0" role="button" aria-pressed="false" aria-label="گلستان، بدون نمایندگی"></path><path class="prv has" data-province="gilan" data-name="گیلان" data-n="1" fill="#3D3732" d="M347.59,285.62l-4.22-0.53l-7.91-1.85l-7.12-1.32l-6.07,5.27l-13.98,0.26l-11.6-2.11l-10.02-6.86l-2.11-4.48 l-3.96-9.23l-12.4-14.51c0,0-4.48-11.6-4.75-12.66s-8.97-16.88-8.97-16.88l-3.96-13.71l1.85-4.22l3.16-6.86l0.53-10.55l-1.58-10.29 l2.37-2.9h5.01l4.48,2.11l2.64,27.96l3.96,15.82c0,0,6.59,7.12,9.23,8.97c2.64,1.85,8.18,5.54,8.18,5.54h16.88l13.71,1.32 l11.08,5.01l6.07,1.85l2.11,11.34l7.38,8.18l6.07,3.43l-3.33,7.1l-5.9,9.38L347.59,285.62z" tabindex="0" role="button" aria-pressed="false" aria-label="گیلان، ۱ نمایندگی"></path><path class="prv has" data-province="mazandaran" data-name="مازندران" data-n="1" fill="#3D3732" d="M352.34,264.78l-1.85,5.8l-6.07,9.23l11.34,12.13l6.59,6.07l3.96,6.07l10.55,4.22l6.33,3.43l7.38,2.64h9.49 l14.77,8.44l1.85,2.64c0,0,4.22,7.38,5.01,8.18c0.79,0.79,8.97,4.75,8.97,4.75h7.65l4.75-3.16l9.49-3.96l3.96-1.58 c0,0,8.7,1.32,11.6,2.9c2.9,1.58,9.49,3.69,9.49,3.69l7.12-4.75l14.51-9.76l9.23-1.32l8.97-4.22l7.38-7.91l3.16-7.91l5.8-6.59 l2.11-1.85v-3.43l-2.11-3.96l-8.18-2.64l-1.85-6.07l-9.76-0.53l-2.9-5.01l-10.29-0.53l-17.67,5.27l-24.53,5.54l-13.45,2.11 l-9.23,4.75c0,0-7.12,1.58-8.18,1.05c-1.05-0.53-13.45-2.37-13.45-2.37l-9.76-2.37l-24.79-6.33l-21.36-9.23l-4.75-4.48" tabindex="0" role="button" aria-pressed="false" aria-label="مازندران، ۱ نمایندگی"></path><path class="prv" data-province="ardabil" data-name="اردبیل" data-n="0" fill="#24272D" d="M250.54,173.79l-7.38-10.29l-3.43-1.58h-2.37l-2.37-6.33l-9.76-1.32l-2.9-3.69v-3.43l5.01-2.64l6.33-2.64 l2.77-3.43v-3.69l-5.67-3.96l-3.96-5.27l2.9-4.22l6.73-3.16l1.45-4.22l-19.52-19.52l-12.92,5.01l-9.49,5.8l-7.91,5.01l7.91,8.7 l2.11,7.12l-0.79,11.6l1.05,6.33l1.05,3.43l1.85,1.85l-3.96,2.64l-2.11,3.43l1.58,5.27l-13.71,16.62l7.12,5.54l6.86,1.85h8.97 l4.75-1.05l0.79,5.54c0,0,2.64,7.91,3.16,8.7c0.53,0.79,5.8,3.96,5.8,3.96l-1.32,4.75l10.29,2.9c0,0-1.85,7.38-2.64,8.18 c-0.79,0.79-4.48,1.58-4.48,4.75s6.59,16.62,6.59,16.62l6.59,4.48l6.86,2.64l3.69,6.33h6.86h3.96l11.34-2.11l-4.75-12.66 l-8.97-16.88l-3.96-13.71l5.01-11.08l0.53-10.55l-1.58-10.29L250.54,173.79z" tabindex="0" role="button" aria-pressed="false" aria-label="اردبیل، بدون نمایندگی"></path><path class="prv has" data-province="east-azerbaijan" data-name="آذربایجان شرقی" data-n="1" fill="#3D3732" d="M188.03,110.23l-7.12,7.65l-5.8,2.9l-4.75,5.54l-3.43,1.58l-5.01,2.11l-8.97,8.44l-5.27,4.75l-1.85,2.64 l-8.44-1.85l-5.27,0.53l-4.22,1.32l-21.1-1.85l-10.29-0.79l-7.65-3.96l-6.59,2.37l-1.85,4.22v11.6l1.85,7.65l-5.54,4.48 c0,0-4.22,1.58-4.22,3.82s0,12.26,0,12.26s7.12,16.09,8.7,20.04c1.58,3.96,8.18,25.58,8.18,25.58l15.3,17.67l10.29,2.11l4.75,4.22 l-1.32,7.65l5.54,1.58l10.55-4.48c0,0,5.54-0.53,8.97-0.79c3.43-0.26,8.18-2.37,8.18-2.37s6.07-0.79,6.86,0.53 c0.79,1.32,3.16,4.48,3.16,5.8c0,1.32,0.26,3.96,0.26,5.01c0,1.05,1.05,5.54,1.05,5.54h3.16c0,0,6.07-2.37,7.91-3.16 c1.85-0.79,8.97,0.79,8.97,0.79l7.12-7.91l8.18-3.69l11.34-7.38h6.07h6.07l15.76-8.18l-8.64-5.27l-6.59-16.62l0.29-1.41l1.32-1.61 l2.87-1.73l2.64-8.18l-10.29-2.9l1.32-4.75l-5.8-3.96l-3.16-8.7l-0.79-5.54l-4.75,1.05H197l-6.86-1.85l-7.12-5.54l13.71-16.62 l-1.58-5.27l2.11-3.43l3.96-2.64l-1.85-1.85l-2.11-9.76l0.79-11.6l-2.11-7.12l-7.44-9" tabindex="0" role="button" aria-pressed="false" aria-label="آذربایجان شرقی، ۱ نمایندگی"></path><path class="prv" data-province="west-azerbaijan" data-name="آذربایجان غربی" data-n="0" fill="#24272D" d="M81.48,325.57h12.66l2.37-10.29l2.77-1.98v-5.54h16.62v-9.89l7.91-6.33l6.73,5.14l6.73,0.79l15.43-2.37 l7.12,2.77l7.12,3.96l10.68,5.14l11.08-8.7l-1.98-6.73l-3.69-13.05l-3-7.69l-5.96-0.22l-7.91,3.16h-3.16l-1.05-5.54l-0.26-5.01 l-3.16-5.8l-1.65-0.67l-5.21,0.14l-5.46,1.89l-11.68,1.27l-10.55,4.48l-5.54-1.58l1.32-7.65l-4.75-4.22l-10.29-2.11l-15.3-17.67 l-8.18-25.58l-8.7-20.04V173.4l0.63-1.5l2.49-1.82l6.64-4.98l-1.85-7.65v-11.6l1.85-4.22l6.59-2.37l-8.44-13.71l-5.54-1.05 l-2.37-5.54l-11.34-9l-2.11-9.99l-7.65-1.05l-6.86-6.59l-8.44,4.75l-1.32,10.55l-3.43,5.8l-7.38,1.05l-7.65-1.05l-3.16,2.64 c0,0,1.58,5.01,1.85,5.8c0.26,0.79-0.53,4.75,0.26,5.8c0.79,1.05,5.54,3.16,5.54,3.16l-0.53,8.44c0,0,0,5.54,0.79,6.33 c0.79,0.79,5.54,5.01,5.54,5.01s-1.05,3.69-1.05,5.01c0,1.32,1.05,10.02,1.05,11.08s-0.26,6.86-0.26,7.91s2.64,5.54,3.43,5.54 c0.79,0,5.54-1.05,5.01,1.32c-0.53,2.37-3.16,8.93-4.48,10.4c-1.32,1.47-4.75,9.91-4.75,9.91s2.37,9.23,3.43,10.02 c1.05,0.79,6.33,4.48,6.33,4.48s4.75,0.26,5.01,1.85c0.26,1.58,0,1.85,0.53,5.54c0.53,3.69,0.79,6.07,1.58,8.7 c0.79,2.64,10.29,11.87,10.29,11.87s-2.11,8.97-2.11,10.02s5.8,8.44,6.59,9.23c0.79,0.79,1.85,11.87,1.85,11.87l6.33,8.97 l4.22,14.77l6.33,0.26l3.69,15.03L81.48,325.57z" tabindex="0" role="button" aria-pressed="false" aria-label="آذربایجان غربی، بدون نمایندگی"></path><path class="prv has" data-province="zanjan" data-name="زنجان" data-n="1" fill="#3D3732" d="M188.69,298.27l5.14-3.16l6.59,3.16l5.01,2.11h9.23c0,0,2.37,5.01,2.37,6.33c0,1.32-0.26,3.69,0,5.01 c0.26,1.32-3.16,6.86-3.16,6.86s-1.32,3.96-1.32,5.01c0,1.05,4.51,3.16,4.5,3.96c-0.01,0.79,3.41,5.27,3.94,6.33s5.8,2.9,6.86,4.48 s13.98,5.54,13.98,5.54l8.7,3.16h2.9l1.58-1.32c0,0,1.85-1.32,1.85-2.9c0-1.58,0-5.8,0-5.8v-5.27l8.97-7.38l6.59,5.01l5.27-2.64 l2.11-3.16l3.69-2.51h2.9c0,0,4.22-4.88,4.22-7.52c0-2.64,0-6.59,0-6.59v-2.64l-3.16-3.69l-5.01-5.54l-9.76-3.16l-3.43-4.75 l1.58-9.23l2.9-1.85c0,0,2.11,0.79,4.22,0s8.7,2.37,8.7,2.37l-6.07-13.71l-12.4-14.51l-22.15,2.11l-3.69-6.33l-4.81-1.85 l-15.76,8.18h-12.13l-11.34,7.38l-8.18,3.69l-7.12,7.91l-2.36,1.07L188.69,298.27z" tabindex="0" role="button" aria-pressed="false" aria-label="زنجان، ۱ نمایندگی"></path><path class="prv has" data-province="kurdistan" data-name="کردستان" data-n="3" fill="#754B2F" d="M95.92,327.35 L99.09,330.12 L100.08,334.67 L106.6,335.66 L113.53,333.88 L121.84,333.29 L132.32,335.66 L131.13,338.36 L120.85,341 L116.89,341 L115.31,348.91 L114.12,355.04 L116.49,359.59 L120.85,365.13 L121.64,369.48 L130.34,369.48 L133.9,372.05 L137.46,375.81 L139.64,377.4 L140.43,384.12 L142.41,387.48 L144.98,389.26 L152.69,392.82 L152.69,396.19 L172.87,397.18 L169.7,392.82 L172.87,386.49 L180.66,384.32 L184.74,383.33 L184.74,377.59 L207.48,378.19 L209.07,384.71 L210.45,386.69 L213.02,382.14 L226.67,382.14 L226.67,370.87 L213.81,355.04 L209.26,347.07 L223.11,345.35 L227.86,338.36 L221,333.88 L217.06,327.55 L212.56,323.59 L213.88,318.58 L217.04,311.73 L217.04,306.71 L214.67,300.38 L205.44,300.38 L193.84,295.11 L188.69,298.27 L177.62,306.98 L152.69,295.11 L137.26,297.48 L130.54,296.69 L123.81,291.55 L115.9,297.88 L115.9,307.77 L99.29,307.77 L99.29,313.31 L96.52,315.29 L94.14,325.57Z" tabindex="0" role="button" aria-pressed="false" aria-label="کردستان، ۳ نمایندگی"></path><path class="prv has" data-province="kermanshah" data-name="کرمانشاه" data-n="6" fill="#99582C" d="M99.09,465.81l4.15-2.57l6.92-6.53l2.37-4.95l-3.96-7.32l10.29-1.38l4.15-5.74l2.57,3.76l14.04,3.76l8.7,9.69 l6.53,3.96l11.67-1.98c0,0,2.57-3.16,3.16-3.16c0.59,0,6.92,2.57,6.92,2.57s4.55,0.4,5.14,0.2c0.59-0.2,3.36-10.68,3.36-10.68 l7.91,0.2l-1.19-5.34l4.15-5.74l3.56-7.52l2.57-4.55l10.09,2.77l9.49-7.52v-5.34v-3.16l-9.49-3.76l-2.97-2.77l-0.59-7.32l1.78-8.7 l-3.94-8.53l-21.77-0.57v5.74l-11.87,3.16l-3.16,6.33l3.16,4.35l-20.18-0.99v-3.36l-10.29-5.34l-1.98-3.36l-0.79-6.73l-9.3-7.91 h-8.7l0.99,4.75l-1.38,5.14l-9.69-1.98c0,0-3.96,2.18-3.96,3.36c0,1.19-1.38,4.15,0.2,5.74c1.58,1.58,2.37,2.77,1.58,3.16 s-5.34,2.18-5.34,2.18l-3.1,2.77l-1.85,3.36c0,0-2.37,3.16-2.37,3.76s1.58,4.55,1.58,5.34c0,0.79-3.36,2.37-4.15,2.37 c-0.79,0-1.98,0.2-2.57,0.79s-1.78,3.96-1.78,3.96s1.19,3.36-0.79,3.46s-2.77-1.48-2.77,0s-0.4,5.84,0,6.63 c0.4,0.79,6.53,2.77,5.93,4.35s-2.18,5.34-2.37,6.73c-0.2,1.38-2.33,7.32-3.74,8.51c-1.41,1.19-2.59,4.55-2.59,4.55l5.14,4.35 L99.09,465.81z" tabindex="0" role="button" aria-pressed="false" aria-label="کرمانشاه، ۶ نمایندگی"></path><path class="prv" data-province="ilam" data-name="ایلام" data-n="0" fill="#24272D" d="M204.32,571.64l2.18-6.13l6.73-4.95l3.56-15.43l1.58-14.04l6.33-4.95l-1.98-8.31l-12.26-8.7l-6.13-1.98 l-7.91-8.31l-10.09-5.54l-10.48-5.74l-6.73-4.55l-4.35-4.95l-3.76-5.74l1.98-4.35l4.55,2.18l1.38-4.35h5.14l12.66-3.16l8.51-5.34 l0.4-3.76v-5.14l-2.57-2.77l-7.91-0.2l-3.36,10.68l-5.14-0.2l-6.92-2.57l-3.16,3.16l-11.67,1.98l-6.53-3.96l-8.7-9.69l-14.04-3.76 l-2.57-3.76l-4.15,5.74l-10.29,1.38l3.96,7.32l-2.37,4.95l-6.92,6.53l-4.15,2.57l2.57,6.92l6.92-0.79c0,0,1.58,0.59,1.58,2.18 s-0.4,3.96-0.4,3.96l4.95,2.57c0,0,2.18,1.78,3.36,4.55c1.19,2.77,6.92,8.51,7.12,9.49c0.2,0.99-1.58,3.16-2.97,4.55 c-1.38,1.38-6.92-0.79-4.35,2.57c2.57,3.36,2.37,1.38,2.57,3.36c0.2,1.98,0.79,5.34,0.79,5.34l15.03,2.18l14.04,9.89 c0,0,10.29,8.31,11.57,9.3c1.29,0.99,7.22,6.33,7.62,7.12s6.33,3.76,6.92,3.76c0.59,0,6.13,0,6.13,0s6.73,4.15,7.71,6.73 c0.99,2.57,1.38,3.96,3.16,7.32c1.78,3.36,2.18,3.56,3.96,7.71C199.18,568.67,204.32,571.64,204.32,571.64z" tabindex="0" role="button" aria-pressed="false" aria-label="ایلام، بدون نمایندگی"></path><path class="prv has" data-province="hamadan" data-name="همدان" data-n="1" fill="#3D3732" d="M256.87,342.85l4.02-3.43l9.49,7.65l4.75,6.59l3.16,2.18h9.69l3.56,1.78c0,0,0.99,1.19,0,3.16 s-1.78,2.77-1.78,4.95c0,2.18,4.15,8.11,4.15,8.9s0.59,3.56,0,5.34c-0.59,1.78-7.32,9.69-7.32,9.69s-4.55-2.37-5.74,0.79 c-1.19,3.16-3.76,7.32-3.76,9.49c0,2.18,0.4,5.93-1.58,8.7s-5.54,3.76-7.32,7.52c-1.78,3.76,2.97,9.1,2.97,9.1l4.35,10.68v5.54 c0,0-3.36,5.14-5.93,5.34c-2.57,0.2-11.47-2.77-11.47-2.77l-5.14-5.54c0,0-4.55,0-5.74,0.99s-4.95,5.54-4.95,5.54l-6.65-1.98 l-2.64-1.78l-9.49-7.52l-2.97-2.97l-7.12-2.97l-1.19-2.57l9.49-7.52v-8.51l-9.49-3.76l-2.97-2.77l-0.59-7.32l1.78-8.7l2.57-4.55 h13.65v-11.27l-12.23-15.06l-5.17-8.75l13.85-1.71l4.75-6.99l13.98,5.54l8.7,3.16l4.48-1.32L256.87,342.85z" tabindex="0" role="button" aria-pressed="false" aria-label="همدان، ۱ نمایندگی"></path><path class="prv has" data-province="qazvin" data-name="قزوین" data-n="2" fill="#604430" d="M291.55,360.78 L296.3,359.2 L302.23,359.2 L303.62,352.87 L310.74,352.87 L318.65,351.88 L324.78,353.07 L331.7,352.87 L336.65,353.66 L331.9,348.52 L332.3,344.36 L339.22,332.1 L345.15,326.96 L352.87,319.64 L356.82,315.29 L346.93,309.95 L346.14,305.4 L350.3,305.4 L366.32,304.08 L362.36,298.01 L351.38,286.8 L347.59,285.62 L328.34,281.92 L322.27,287.2 L307.77,287.46 L296.69,285.35 L286.67,278.49 L282.01,276.64 L278.89,276 L276.41,276.45 L273.75,276.12 L270.85,277.97 L269.26,287.2 L272.69,291.95 L282.45,295.11 L290.63,304.34 L290.45,314.62 L286.41,321.09 L283.51,321.09 L279.81,323.59 L277.7,326.76 L272.43,329.4 L265.84,324.38 L256.87,331.77 L256.87,342.85 L260.89,339.42 L270.38,347.07 L275.13,353.66 L278.3,355.84 L287.99,355.84 L291.55,357.62Z" tabindex="0" role="button" aria-pressed="false" aria-label="قزوین، ۲ نمایندگی"></path><path class="prv has" data-province="alborz" data-name="البرز" data-n="2" fill="#604430" d="M336.65,353.66 L340.87,352.34 L343.51,345.88 L344.43,343.37 L366.32,344.43 L376.87,342.45 L379.64,335.46 L384.91,330.19 L391.9,330.19 L394.8,330.19 L399.02,324.91 L400.08,316.74 L400.08,314.49 L390.85,314.49 L381.88,311.07 L376.74,307.9 L366.32,304.08 L346.14,305.4 L346.93,309.95 L356.82,315.29 L339.22,332.1 L332.3,344.36 L331.9,348.52Z" tabindex="0" role="button" aria-pressed="false" aria-label="البرز، ۲ نمایندگی"></path><path class="prv has" data-province="lorestan" data-name="لرستان" data-n="1" fill="#3D3732" d="M222.71,517.84 L225.48,512.3 L227.86,509.53 L252.58,509.53 L259.31,511.51 L270.38,513.68 L279.48,513.68 L286.01,516.65 L291.55,521.99 L294.19,523.97 L305.4,518.82 L305.4,510.52 L305.4,505.57 L308.36,503.59 L315.88,503.59 L318.45,502.21 L317.26,496.67 L313.9,493.11 L318.45,490.14 L321.81,484.8 L321.81,483.22 L309.35,483.22 L310.54,475.51 L303.62,470.36 L300.25,462.65 L287.79,462.65 L283.44,467 L278.3,464.63 L276.91,460.67 L266.23,460.67 L264.05,458.69 L268.21,451.57 L268.6,448.01 L268.01,446.83 L258.12,444.05 L252.98,438.52 L247.24,439.51 L242.3,445.04 L235.64,443.07 L220.54,430.8 L213.42,427.84 L212.23,425.26 L202.14,422.49 L196.01,434.56 L191.86,440.3 L193.04,445.64 L195.62,448.41 L195.22,457.31 L186.71,462.65 L174.05,465.81 L168.91,465.81 L167.53,470.16 L162.98,467.99 L161,472.34 L169.11,483.02 L196.41,498.85 L204.32,507.15 L210.45,509.13Z" tabindex="0" role="button" aria-pressed="false" aria-label="لرستان، ۱ نمایندگی"></path><path class="prv has" data-province="khuzestan" data-name="خوزستان" data-n="10" fill="#B3612B" d="M204.32,571.64l7.45,10.68l-5.54,13.98l-3.16,8.44c0,0,0.79,11.6,0,12.4c-0.79,0.79,0,13.71,0,13.71h16.88 v32.97l6.07,1.32l2.37,3.43l1.58,3.69l7.91,3.43c0,0,2.11,3.96,2.11,4.75s-1.32,3.69,0,5.01c1.32,1.32,5.54,7.65,5.54,7.65h6.07 l2.37-2.11l15.03-2.64V677l-4.75-3.69l1.05-4.48l3.69-2.11h3.43v-3.96l5.27-1.85c0,0,6.59,0.53,6.86,1.32 c0.26,0.79,1.32,6.59,1.32,6.59h-8.97c0,0-3.16,6.33-2.37,6.86c0.79,0.53,5.8,1.05,5.8,1.05l4.22,3.96l11.34,1.05l3.96,9.23 l19.25-13.19h9.76l2.9,1.58l1.85-3.16l3.96,2.37l7.91,4.22l2.9-1.32v-11.6l-4.75-6.86l-1.32-2.11l3.96-4.22l-0.53-3.96l-5.27-7.12 l-7.38-1.32l-0.53-8.18l-5.8,1.05l-1.85,2.11l-5.8-5.27l-1.05-3.69l3.76-8.18l-4.55-6.86l2.9-2.9l8.44,1.58l4.22-6.07l2.64-8.44 l3.43-6.07l2.64-3.96l-5.54-9.76l-0.26-4.48l-13.91-11.08l-4.55-8.7v-5.01l-8.44-8.44l-14.77-13.19l0.13-4.81l-8.18-7.32l-6.53-2.97 h-9.1l-17.8-4.15h-24.73l-5.14,8.31l1.98,8.31l-6.33,4.95l-1.58,14.04l-3.56,15.43l-6.73,4.95L204.32,571.64z" tabindex="0" role="button" aria-pressed="false" aria-label="خوزستان، ۱۰ نمایندگی"></path><path class="prv has" data-province="markazi" data-name="مرکزی" data-n="4" fill="#84502E" d="M321.81,483.22v-6.73l8.11-3.26l8.11-4.65l8.11-0.99l5.34-1.78l10.09-4.35h7.71l4.75-7.12V449l-1.58-7.12 l-4.35-8.7c0,0-10.29-1.98-12.46-1.78c-2.18,0.2-7.91-0.62-8.9-0.01c-0.99,0.61-4.95-2.76-4.95-2.76l-2.57-8.11 c0,0-4.35-3.16-5.54-2.87c-1.19,0.3-4.15-1.09-4.15-1.09l-2.37-13.25l2.77-7.91l4.15,1.78h3.36l6.99-1.78c0,0,6.26-3.42,6.86-2.8 c0.59,0.62,5.34,0,5.34,0l1.78-9.66l7.91-5.93l3.16-1.58l2.37-14.64l0.59-2.77l-6.46-3.16l-10.15-2.57c0,0-8.51-0.4-9.1,0 s-7.32,3.16-7.32,3.16l-7.71-2.57l-8.68-0.14l-4.38-0.85l-7.91,0.99h-7.12l-1.38,6.33h-5.93l-4.75,1.58l-1.59,3.31l-0.19,1.63 l0.67,2.24l3.49,6.66l0.21,2.17l0.05,2.48l-7.58,10.38l-2.66-0.82l-1.88,0.25l-1.2,1.36l-3.58,8.33l-0.21,5.03l-1.55,4.84l-4,3.6 l-2.59,2.65l-1.1,2.65l0.29,2.44l3.05,5.28l4.35,10.68v5.54l-2.75,3.39l-3.19,1.96l-1.58,0.01l0.59,1.18l-0.4,3.56l-4.15,7.12 l2.18,1.98h10.68l1.38,3.96l5.14,2.37l4.35-4.35h12.46l3.36,7.71l6.92,5.14l-1.19,7.71H321.81z" tabindex="0" role="button" aria-pressed="false" aria-label="مرکزی، ۴ نمایندگی"></path><path class="prv" data-province="qom" data-name="قم" data-n="0" fill="#24272D" d="M368.1,433.18 L374.03,434.16 L374.03,425.46 L377.59,422.49 L397.37,417.55 L412.6,415.57 L417.15,413.2 L424.08,393.81 L413,385.7 L406.47,382.93 L402.71,378.38 L392.82,376.41 L383.33,374.23 L374.03,375.22 L368.1,376.11 L358.41,382.93 L356.63,392.6 L351.29,392.6 L344.43,395.4 L338.46,396.92 L334.08,397.18 L329.92,395.4 L327.15,403.31 L329.53,416.56 L333.68,417.65 L339.22,420.52 L341.79,428.63 L346.74,431.38 L355.64,431.4Z" tabindex="0" role="button" aria-pressed="false" aria-label="قم، بدون نمایندگی"></path><path class="prv has" data-province="isfahan" data-name="اصفهان" data-n="10" fill="#B3612B" d="M412.21,647.73l-1.58-9.49l2.64-12.4l3.43-8.18l1.32-7.38v-10.81l2.64-10.55l12.13-6.59l7.91,4.75 c0,0,3.16,3.43,4.22,4.48c1.05,1.05,3.69,1.32,3.69,1.32l19.78,0.26l9.23-1.32l10.02-9.49l-7.12-3.96l-2.64-6.59v-40.62l13.45-9.76 l9.23-1.32l23.21-1.25l3.16-7.71l9.49-1.58l8.7-3.96l1.32-7.38l10.81-2.37l12.66-3.43c0,0,6.33-3.69,8.44-3.69 c2.11,0,16.88-2.64,16.88-2.64l11.34-8.7l3.16-10.29v-42.2l-140.31,2.11l-8.18-6.07l-7.65-3.36l-9.76-1.38c0,0-9.49,0.13-10.29,1.38 c-0.79,1.25-3.16,1.52-3.16,1.52l-8.18-2.9l-5.08-2.97l-6.53,2.63l-13.25,1.72l-19.78,4.95l-3.56,2.97v7.58l-5.93,0.13l4.35,8.7 l1.58,7.12v5.34l-4.75,7.12h-7.71l-10.09,4.35l-5.34,1.78l-8.11,0.99l-16.22,7.91v6.73l-3.36,6.92l-4.55,2.97l3.36,3.56l1.19,5.54 l-2.57,1.38h-7.52l-2.97,1.98v13.25l13.45,7.05l5.8,1.05l5.01-0.26l7.65,3.96l1.85-0.26l6.33-4.48l11.08-5.01l8.18,1.32v4.48 l1.85,7.38v7.65l9.23,4.48l2.11,2.9l9.1,6.07l2.77,5.8v10.68l-1.58,1.71l-3.96,10.02l2.9,21.63v11.08l1.58,12.13L412.21,647.73z" tabindex="0" role="button" aria-pressed="false" aria-label="اصفهان، ۱۰ نمایندگی"></path><path class="prv has" data-province="tehran" data-name="تهران" data-n="13" fill="#C0662A" d="M424.08,393.81l5.01-10.75l-0.79-3.82l-4.22-6.07c0,0-1.58-1.05-1.85-2.37c-0.26-1.32,0-6.33,0-7.25 c0-0.92-0.63-10.15-0.12-11.08c0.51-0.92,5.92,0.26,6.97,1.19c1.05,0.92,18.86,11.21,18.86,11.21l10.42-4.09c0,0,5.27-5.8,7.52-7.65 s10.42-8.18,10.95-8.84c0.53-0.66,3.3-5.93,3.3-5.93l-2.64-2.37l-10.42-3.96l-10.02-2.24l-13.85,5.01l-5.01,3.43h-6.86l-10.02-4.75 l-6.46-10.42l-14.11-7.78l-1.71,9.63l-4.22,5.27h-9.89l-5.27,5.27l-2.77,6.99l-10.55,1.98l-21.89-1.05l-3.56,8.97l-1.45,3.1 l7.32-3.16h9.1l10.15,2.57l6.46,3.16l-2.97,17.41l13.85-1.19l19.38,4.15l3.76,4.55l6.53,2.77L424.08,393.81z" tabindex="0" role="button" aria-pressed="false" aria-label="تهران، ۱۳ نمایندگی"></path><path class="prv has" data-province="semnan" data-name="سمنان" data-n="2" fill="#604430" d="M418.28,413.86 L422.23,416.16 L430.41,419.07 L433.57,417.55 L435.27,416.85 L443.86,416.16 L449.14,416.91 L453.62,417.55 L461.26,420.91 L469.44,426.98 L609.75,424.87 L632.76,423.29 L649.84,397.97 L664.47,380.88 L673.57,375.81 L679.04,371.85 L683.86,369.48 L688.6,368.16 L690.45,361.31 L689.92,347.33 L676.21,333.62 L674.89,327.55 L674.63,318.58 L677.53,311.99 L672.46,302.46 L672.75,301.92 L674.1,300.92 L675.32,300.03 L677.53,296.16 L678.32,291.42 L676.47,284.82 L665.92,284.3 L657.22,280.08 L652.74,275.86 L649.84,267.15 L638.76,273.22 L638.15,272.74 L637.07,270.93 L635.89,267.75 L636.15,265.75 L637.38,262.37 L638.23,260.56 L638.84,258.91 L639.3,256.31 L639.39,252.55 L639.19,250.98 L637.9,249.85 L635.56,249.07 L633.22,248.69 L633.22,242.1 L629.53,242.36 L622.41,245.79 L622.41,251.33 L615.55,256.87 L615.55,266.1 L609.48,273.22 L601.04,276.65 L588.91,274.27 L579.42,277.44 L573.35,286.14 L567.81,287.2 L551.99,293.79 L540,293.79 L535.9,291.95 L527.73,301.04 L524.82,308.43 L517.7,316.08 L508.74,320.43 L499.24,321.88 L477.48,335.99 L480.12,338.36 L476.82,344.3 L465.88,353.13 L458.36,360.78 L447.95,364.87 L429.09,353.66 L425.92,352.48 L422.11,352.47 L422.23,370.8 L424.08,373.18 L428.3,379.24 L429.09,383.07 L424.08,393.81 L417.15,413.2Z" tabindex="0" role="button" aria-pressed="false" aria-label="سمنان، ۲ نمایندگی"></path><path class="prv has" data-province="south-khorasan" data-name="خراسان جنوبی" data-n="1" fill="#3D3732" d="M606.58,477.35l3.16,9.23l10.55,16.62l4.35,7.12l13.45,4.75c0,0,11.6,3.96,11.74,5.54 c0.13,1.58,10.42,18.22,10.81,19.4c0.4,1.18,5.14,11.07,5.54,14.63c0.4,3.56,3.16,10.29,3.16,10.29h10.29c0,0,9.36-0.4,10.81,0 c1.45,0.4,9.36,3.56,14.11,5.93c4.75,2.37,23.34,5.14,25.32,6.73c1.98,1.58,11.87,5.54,14.64,7.52s12.26,7.12,15.43,9.1 c3.16,1.98,12.26,12.26,14.24,13.85s11.08,12.66,11.08,12.66s10.29,7.52,10.29,8.7c0,1.19,5.54,9.49,6.73,11.47 c1.19,1.98,9.1,10.29,10.29,11.87s4.35,4.35,4.35,4.35l25.32-11.47v-9.89h11.47l7.52-6.73l-1.98-6.33c0,0-0.79-3.56,1.98-3.96 c2.77-0.4,14.64-3.96,14.64-3.96l9.49-3.16l3.56-9.89v-3.56l-3.16-3.96l-1.98-26.97l1.98-6.66v-9.89l-11.47-45.49l1.19-12.66 l5.54-9.49l7.91-4.35v-3.96l-10.29-3.56l-7.91-5.93l-1.45-23.74l-11.87,1.05l-3.96,4.75l-3.69,2.11l-6.35-9.04l-20.02-2.57 l-6.07-6.07l-41.67,1.32l-2.11,4.75l-9.23-8.44l-3.7-4.36l-1.18-2.21l-0.83-2.37l-0.09-0.56l-0.19-0.57l-0.3-0.18l-1.05,0.3 l-3.44,2.86l-3.01,0.28l-2.96-0.08l-3.53-1.2l-5-2.16l-10.58-6.37l-7.91-14.77l4.48-7.12l3.43-3.43l-1.05-2.11l-11.87-8.44h-15.03 l-8.44,1.85l-7.91,3.69l-5.27,3.96l-7.38,7.91l-6.59,3.69h-15.03l-17.08,25.32l-23.01,1.58v42.2L606.58,477.35z" tabindex="0" role="button" aria-pressed="false" aria-label="خراسان جنوبی، ۱ نمایندگی"></path><path class="prv has" data-province="yazd" data-name="یزد" data-n="2" fill="#604430" d="M468.38,593.13l4.55,6.2c0,0,1.58,3.96,0.99,4.15c-0.59,0.2-5.54,3.56-5.54,3.56s-0.79,2.37-0.79,3.56 c0,1.19,10.88,13.65,10.88,13.65l17.41,9.49c0,0,6.92,6.13,7.12,7.12c0.2,0.99,9.3-0.59,10.09,0c0.79,0.59,8.51,2.37,8.51,2.37 s4.15,1.38,4.55,2.97c0.4,1.58,0.99,15.82,0.99,15.82l-1.19,9.69c0,0-3.96,0.4-0.4,3.36s7.32,6.13,7.91,7.52 c0.59,1.38,2.18,6.33,2.57,7.52C536.43,691.31,539,701,539,701l5.74,4.35h19.19l-4.95-22.95l1.19-10.68l-8.7-8.51l-3.16-6.13 l11.27-5.74l-0.99-14.24V619.9l12.07-4.15c0,0,5.34,2.08,6.23,2.37c0.89,0.3,7.12-1.19,7.12-1.19l9.69-2.08l13.45-6.03l9.3-1.38 l12.16-6.13l1.98-3.56l6.82-9l3.66-5.93l10.19-0.49l8.9-3.66l8.93-3.2l0.26-10.55l-2.34-6.6l-0.83-3.68L660.65,540l-10.81-19.4 l-25.19-10.29l-14.9-23.74l-3.16-9.23l-11.34,8.7l-16.88,2.64l-8.44,3.69l-23.47,5.8l-1.32,7.38l-8.7,3.96l-9.49,1.58l-3.16,7.71 l-23.21,1.25l-9.23,1.32l-13.45,9.76v40.62l2.64,6.59l7.12,3.96l-10.02,9.49L468.38,593.13z" tabindex="0" role="button" aria-pressed="false" aria-label="یزد، ۲ نمایندگی"></path><path class="prv has" data-province="fars" data-name="فارس" data-n="8" fill="#A75D2C" d="M356.3,697.57l2.64,4.75v3.03h12.92l11.6,1.19l5.01,6.33c0,0-0.26,5.54,0,6.33s10.02,3.96,11.08,4.22 c1.05,0.26,9.76,13.71,9.76,14.51s7.91,13.71,7.91,13.71l5.27,11.87c0,0,3.43,9.49,4.22,11.6c0.79,2.11,6.07,13.71,6.59,16.35 c0.53,2.64,2.11,8.7,3.43,10.81c1.32,2.11,7.65,7.91,8.7,8.44c1.05,0.53,5.01,3.16,7.38,5.54c2.37,2.37,3.69,4.22,4.48,6.86 c0.79,2.64,1.58,5.01,2.37,7.38c0.79,2.37,0,4.75,2.37,7.91c2.37,3.16,8.18,8.7,9.76,10.29c1.58,1.58,3.16,4.22,7.91,6.59 c4.75,2.37,13.98,3.43,20.84,6.86c6.86,3.43,9.76,5.27,12.92,6.86c3.16,1.58,7.18,2.9,7.18,2.9l4.17-1.32l7.65-7.38v-5.27 l-1.58-5.27c0,0,3.16-2.11,5.27-2.9c2.11-0.79,9.23-3.96,10.81-3.96s19.52,0.79,22.95,1.05c3.43,0.26,20.04,0.26,20.04,0.26 s8.97-4.22,10.55-5.8c1.58-1.58,13.98-16.88,13.98-16.88s-7.12-15.03-7.91-15.82c-0.79-0.79-2.11-4.22-2.11-6.86s0-15.56,0-17.01 s2.11-9.89,2.11-9.89l-10.55-15.03l3.96-18.46l-22.68-32.7l-13.38-3.3h-19.19L539,701l-5.54-18.4l-7.91-7.52l-1.37-1.59l0.46-1.36 l1.31-0.41l1.19-9.69l-0.99-15.82l-4.55-2.97l-8.51-2.37H503l-7.12-7.12l-17.41-9.49l-10.7-13.19l0.61-4.02l5.54-3.56l-0.99-4.15 l-4.24-5.77l-20.09-0.69l-2.13-0.46l-1.56-0.86l-4.22-4.48l-7.91-4.75l-12.13,6.59l-2.58,10.32l-0.06,11.05l-1.32,7.38l-3.43,8.18 l-2.64,12.4l1.58,9.49l-2.96,9.27l-1.64,3.68l-1.73,2.07l-1.06,0.22l-0.98-0.43l-1.13-1.64l-8.41-0.57l-2.19-1.63l-2.85-3.08 l-8.7-5.27l1.32,6.86l3.22,9.66l0.18,1.46l-2.09,3.91l-11.34,9.23v11.6l-12.4,1.32L356.3,697.57z" tabindex="0" role="button" aria-pressed="false" aria-label="فارس، ۸ نمایندگی"></path><path class="prv has" data-province="kerman" data-name="کرمان" data-n="3" fill="#754B2F" d="M785.26,901.57l4.75-3.96l2.37-2.77v-10.29l-7.12-4.35v-8.31v-6.33l-3.96-6.33l5.54-55.78l8.31-3.56l2.37-3.16 v-7.12l-4.75-6.73l4.75-2.37l9.89-3.56h9.1l3.56-6.73v-22.55v-5.93l-5.93-14.64l-1.19-62.51l3.96-7.52l-14.64-16.22l-6.73-11.47 l-10.29-8.7l-11.08-12.66l-14.24-13.85l-16.7-9.89l-13.36-6.73l-25.32-6.73l-14.11-5.93h-21.1l-0.26,10.55l-8.93,3.2l-8.9,3.66 l-10.19,0.49l-10.48,14.93l-1.98,3.56l-12.16,6.13l-9.3,1.38l-13.45,6.03l-16.81,3.26l-6.23-2.37l-12.07,4.15l0.99,31.45 l-11.27,5.74l3.16,6.13l8.7,8.51l-1.19,10.68l4.95,22.95l13.38,3.3l22.68,32.7l-3.96,18.46l6.33,1.58l10.55,4.48l8.18-6.59 l16.09-7.12l3.16,1.32l0.26,16.35l-1.32,14.24c0,0-0.26,6.33,0.53,6.86s5.01,5.01,5.01,5.01s3.69,1.32,4.48,2.11 s7.65,3.16,7.65,3.16l8.18,0.26l7.91-5.8v-1.32l12.66-2.11l2.37,6.33c0,0-0.53,7.12,0,8.7s7.38,5.54,7.38,5.54l6.86,1.05 c0,0,8.97,0,8.97,1.05s0.79,7.38,0.79,7.38l-9.49,10.55l5.01,3.96c0,0,0.79,5.8,0.79,7.65s0,7.12,0,7.12l2.9,6.07 c0,0,6.59,2.37,7.65,5.54c1.05,3.16,11.34,10.81,11.34,10.81l9.76,1.58c0,0,5.93,6.33,7.71,7.65s15.49,3.43,15.49,3.43l5.01,6.07 L785.26,901.57z" tabindex="0" role="button" aria-pressed="false" aria-label="کرمان، ۳ نمایندگی"></path><path class="prv has" data-province="bushehr" data-name="بوشهر" data-n="1" fill="#3D3732" d="M345.48,682.8l-11.87-6.59l-1.85,3.16l-3.03,1.25l3.36,4.55l-0.4,10.68l22.55,26.7l3.96,1.98v9.69 c0,0-0.2,4.55,0,5.14c0.2,0.59,0,4.35,0,4.35h4.35h5.74c0,0,2.18,0.4,2.77,2.18c0.59,1.78,1.38,4.95,1.38,4.95s1.19,1.58,0,2.37 c-1.19,0.79-5.74,2.18-5.74,2.18s0.2,3.76,0.4,4.55c0.2,0.79,1.58,2.37,2.77,2.97c1.19,0.59,7.12,0.99,7.71,1.19 c0.59,0.2,2.18,2.57,2.18,4.15s0,7.71,0,7.71l0.99,6.73c0,0,1.38,3.96,2.18,4.75c0.79,0.79,2.97,4.55,4.15,5.34 c1.19,0.79,2.77,3.76,2.97,4.35c0.2,0.59-0.4,5.34,0,6.33c0.4,0.99,1.98,2.97,2.77,4.35c0.79,1.38,3.76,3.96,4.75,5.34 c0.99,1.38,4.75,6.92,4.75,6.92s2.18,2.37,4.15,3.36s18.79,1.19,20.37,1.19c1.58,0-0.2-0.4,7.91,4.75 c8.11,5.14,8.11,5.54,10.09,6.53s-0.59-2.37,5.74,1.58c6.33,3.96,8.7,6.73,8.7,6.73l2.18,5.34c0,0-3.96,2.57-3.16,3.16 c0.79,0.59,5.93,4.35,5.93,4.35l4.35,2.97l9.36-5.74l-6.13-5.6l-9.76-10.29l-2.65-8.74l-2.1-6.55l-2.06-4.1l-2.42-2.75l-7.38-5.54 l-8.7-8.44l-3.43-10.81l-10.81-27.96l-5.27-11.87l-7.91-13.71l-9.76-14.51l-11.08-4.22v-6.33l-5.01-6.33l-11.6-1.19h-12.92v-3.03 l-2.64-5.87l-7.91-3.36v-9.89L345.48,682.8z" tabindex="0" role="button" aria-pressed="false" aria-label="بوشهر، ۱ نمایندگی"></path><path class="prv has" data-province="hormozgan" data-name="هرمزگان" data-n="2" fill="#604430" d="M468.58,860.03l7.98,5.54l8.84,6.33l13.32,3.69h4.48l3.16,5.27c0,0-1.32,4.48,0,4.75 c1.32,0.26,9.49,6.86,9.49,6.86h4.8l12.08-2.11l4.48,2.11l5.54,1.85h4.48l3.69,3.69c0,0,4.22,1.32,5.27,2.11 c1.05,0.79,5.54,2.11,6.07,2.9s3.69,3.16,3.69,3.16s8.18-1.85,8.97-1.85s3.69-1.58,4.75-2.77c1.05-1.19,10.55-8.57,10.55-8.57 l7.38-3.43l7.38,0.53l3.16-3.16c0,0,0.79-0.79,1.85-2.37c1.05-1.58,6.59-8.18,6.59-8.18l5.01-1.05c0,0,7.38-1.05,8.18-1.05 s4.75-0.79,6.86-2.37c2.11-1.58,6.59-4.75,6.59-4.75l5.8-4.22l11.6,2.11l17.67,1.85l3.69,9.49l3.69,0.79l6.07,13.19v9.23v10.29 l1.32,6.59c0,0,2.9,4.75,4.48,7.65c1.58,2.9,0,6.33,0,6.33s1.14,3.16,0.7,3.96c-0.44,0.79,4.04,8.7,4.04,8.7s-0.26,4.48,0,5.27 c0.26,0.79,1.85,3.69,1.85,3.69h20.57l2.37,1.85l2.11,5.27l4.48-3.96c0,0,2.37-1.05,3.16,1.58c0.79,2.64,2.9,5.54,2.9,5.54h8.97 h11.34l10.55,2.11h10.68l6.46,5.01l2.9,1.85h3.69l6.33,1.32l2.77-1.05v-23.34l-13.25-10.68l4.95-4.75l-9.89-31.25l-17.01-8.84 l-5.01-6.07l-15.49-3.43l-7.71-7.65l-9.76-1.58l-7.23-5.95l-4.11-4.87l-1.97-2.48l-5.68-3.06l-2.9-6.07l-0.79-14.77l-5.01-3.96 l9.49-10.55l-0.79-7.38l-8.97-1.05l-6.86-1.05l-7.38-5.54v-8.7l-2.37-6.33l-12.66,2.11v1.32l-7.91,5.8l-8.18-0.26l-7.65-3.16 l-4.48-2.11l-5.01-5.01l0.79-21.1l-0.26-16.35l-3.16-1.32l-16.09,7.12l-8.18,6.59l-10.55-4.48l-6.33-1.58l10.55,15.03l-2.11,9.89 v17.01l2.11,6.86l7.91,15.82l-15.22,17.8l-9.31,4.88l-42.99-1.32l-6.98,2.4l-9.11,4.46l0.98,3.27l0.6,7.28l-7.65,7.38l-4.17,1.32 l-20.1-9.76l-10.31-3.59l-12.31-4.26L468.58,860.03z" tabindex="0" role="button" aria-pressed="false" aria-label="هرمزگان، ۲ نمایندگی"></path><path class="prv has" data-province="chaharmahal-bakhtiari" data-name="چهارمحال و بختیاری" data-n="2" fill="#604430" d="M387.15,616.08V605l-2.9-21.63l3.96-10.02l1.58-1.71v-10.68l-2.77-5.8l-9.1-6.07l-2.11-2.9l-9.23-4.48v-7.65 l-1.85-7.38v-4.48l-8.18-1.32l-6.59,3.1l-4.48,1.91l-6.33,4.48l-1.85,0.26l-5.01-2.9c0,0-1.85-1.05-2.64-1.05 c-0.79,0-3.69,0-5.01,0.26c-1.32,0.26-5.8-1.05-5.8-1.05l-13.45-7.05l-11.21,5.14l-0.13,4.81l23.21,21.63v5.01l4.55,8.7l13.91,11.08 l0.26,4.48l5.54,9.76l-5.36,8.77l4.88,4.74l1.73,0.85l1.91,0.15l8.7-2.64h1.19l1.71,2.64l6.07,5.54l5.54-1.58l0.35,0.25l0.4,1.29 l0.3,4l6.07,4.22l3.58-1.38l1.69-0.21H387.15z" tabindex="0" role="button" aria-pressed="false" aria-label="چهارمحال و بختیاری، ۲ نمایندگی"></path><path class="prv has" data-province="sistan-baluchestan" data-name="سیستان و بلوچستان" data-n="4" fill="#84502E" d="M785.26,901.57l5.14,18.2l4.75,13.05l-4.95,4.75l4.95,3.96l8.31,6.73v7.91v8.31v3.56v3.56l11.08-3.16 l5.54,3.16l2.37,2.37h15.03l13.45,2.37h11.47l2.77,3.56l5.14-7.91l8.7,7.91c0,0,2.77,3.96,3.96,3.96s36.79,6.73,36.79,6.73 l5.14-2.37l3.56-4.35l1.98-29.27l3.16-5.93l2.37-8.7v-8.7v-4.75l2.37-4.75l11.47,0.4l4.75-10.29l6.33,1.98c0,0-3.16-0.79,0-3.96 c3.16-3.16,6.73-6.33,6.73-6.33l18.2-1.98l24.92-2.77v-5.54v-5.54l3.56-9.1v-3.96l2.77-2.77v-7.91c0,0-5.14-4.35-6.33-4.35 s-11.87,0-11.87,0h-4.75c0,0-1.58-0.4-3.16,0c-1.58,0.4-3.96-9.49-3.96-9.49v-33.23l-0.79-7.12l0.4-9.89l0.4-3.16 c0,0-8.7-0.79-10.68,0s-8.7-5.14-8.7-5.14l-4.35-3.16l-11.47-3.96c0,0-8.31-5.54-9.89-5.54c-1.58,0-11.87-13.05-11.87-13.05 l-8.7-13.45l-5.54-11.47l-5.14-13.85l-21.76-24.13v-4.35l49.45-59.34l0.79-9.49v-4.75l-3.56-11.08l-1.98-5.14l-10.29-3.16h-7.91 l-26.51-7.52l-3.56,13.45l-24.13,7.12l-1.34,0.64l-0.66,1.35l0.02,1.96l1.98,6.33l-7.52,6.73h-11.47v9.89l-25.32,11.47l-3.96,7.52 l1.19,62.51l5.93,14.64v28.48l-3.56,6.73h-9.1l-9.89,3.56l-4.75,2.37l4.75,6.73v7.12l-2.37,3.16l-8.31,3.56l-5.54,55.78l3.96,6.33 v14.64l7.12,4.35v10.29l-2.37,2.77L785.26,901.57z" tabindex="0" role="button" aria-pressed="false" aria-label="سیستان و بلوچستان، ۴ نمایندگی"></path><path class="prv has" data-province="kohgiluyeh-boyerahmad" data-name="کهگیلویه و بویراحمد" data-n="3" fill="#754B2F" d="M348.38,681.48v11.6l4.75,3.16l3.16,1.32l3.16-3.16l12.4-1.32v-6.07c0,0,0.26-5.54,0-5.54 s11.34-9.23,11.34-9.23s2.11-2.64,2.11-4.22s-3.43-10.81-3.43-10.81l-1.32-6.86l8.7,5.27c0,0,3.96,4.75,5.27,4.75 c1.32,0,7.38,0.53,8.18,0.53c0.79,0,0.53,2.9,3.16,1.85s6.33-15.03,6.33-15.03l-23.47-19.52l-1.58-12.13c0,0-6.33,0.53-6.86,0 c-0.53-0.53-5.27,1.58-5.27,1.58l-6.07-4.22c0,0,0-5.54-1.05-5.54c-1.05,0-5.54,1.58-5.54,1.58l-6.07-5.54c0,0-1.32-2.9-2.9-2.64 c-1.58,0.26-5.01,1.85-8.7,2.64c-3.69,0.79-8.52-5.73-8.52-5.73l-3.34,9.69l-4.22,6.07l-8.44-1.58l-2.9,2.9l4.55,6.86l-3.76,8.18 l1.05,3.69l5.8,5.27l1.85-2.11l5.8-1.05l0.53,8.18l7.38,1.32l5.27,7.12l0.53,3.96l-3.96,4.22l6.07,8.97V681.48z" tabindex="0" role="button" aria-pressed="false" aria-label="کهگیلویه و بویراحمد، ۳ نمایندگی"></path><path class="m-hov" data-mhov="1" d="M0 0"></path><path class="m-sel" data-msel="1" d="M0 0" fill="url(#mgradD)"></path></svg><span class="map-ping" data-mapping="1"><i></i><i></i></span></div>
+<div class="glass" style="position: relative; z-index: 1; border-radius: 22px; padding: 16px 18px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap"><div style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 2px" aria-live="polite"><b data-mname="1" style="font-size: 20px; font-weight: 700; color: #FFFFFF">تهران</b><span data-mcount="1" style="font-size: 14px; color: #C3C8CF">۱۳ نمایندگی فعال</span></div><a data-mcta="1" href="https://noroncar.ir/namayandegi/" class="btn btn-liquid" style="min-height: 50px">مشاهدهٔ نمایندگی‌ها</a></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ═══ ۹. راهکارهای سازمانی + ۱۰. همکاری ═══ -->
+<section id="fleet" class="dark sec">
+<div class="orb" style="width: 520px; height: 520px; background: rgba(244,128,38,0.18); left: -160px; top: 320px"></div>
+<div class="orb" style="width: 380px; height: 380px; background: rgba(90,120,255,0.10); right: -100px; bottom: 120px; animation-delay: -8s"></div>
+<div class="wrap" style="display: flex; flex-direction: column; gap: 52px">
+<div class="reveal" style="display: flex; flex-direction: column; gap: 16px; max-width: 720px">
+<span class="kicker kicker-d"><span class="kdot"></span>سازمان‌ها و ناوگان</span>
+<h2 class="h2" style="color: #FFFFFF">راهکارهای <span class="grad">سازمانی</span> نورون</h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 22px">
+<a href="#" class="glass lift zoom reveal" style="border-radius: 30px; padding: 12px; text-decoration: none; color: #FFFFFF; display: flex; flex-direction: column; gap: 14px">
+<div style="height: 180px; border-radius: 22px; background: #ECEEF2; overflow: hidden; display: flex; align-items: center; justify-content: center"><img class="mul" src="/_blob/d18e61e8c28625b82c766051d6e531d8" alt="ردیاب خودروی سنگین" style="height: 172px; width: auto; display: block"></div>
+<div style="padding: 4px 10px 10px"><h3 style="margin: 0; font-size: 18px; font-weight: 700">ردیابی خودروهای سنگین</h3><span style="font-size: 14px; color: #9EA4AE">مدل +S400</span></div>
+</a>
+<a href="#" class="glass lift zoom reveal" style="border-radius: 30px; padding: 12px; text-decoration: none; color: #FFFFFF; display: flex; flex-direction: column; gap: 14px">
+<div style="position: relative; height: 180px; border-radius: 22px; overflow: hidden"><img src="/_blob/cbb68f7f47395c3d9939613890f5621b" alt="سوخت‌گیری تراکتور با پایش سوخت نورون" style="width: 100%; height: 100%; object-fit: cover; object-position: 30% 55%; display: block"></div>
+<div style="padding: 4px 10px 10px"><h3 style="margin: 0; font-size: 18px; font-weight: 700">پایش سوخت ماشین‌آلات کشاورزی</h3><span style="font-size: 14px; color: #9EA4AE">دستگاه FUEL</span></div>
+</a>
+<a href="#" class="glass lift zoom reveal" style="border-radius: 30px; padding: 12px; text-decoration: none; color: #FFFFFF; display: flex; flex-direction: column; gap: 14px">
+<div style="position: relative; height: 180px; border-radius: 22px; overflow: hidden"><span class="phb">جایگاه: اسکرین‌شات پنل ناوگان</span><img src="/_blob/1e67ec5bbf2e0e8c4cc5b69ad1045043" alt="جایگاه تصویر پنل مدیریت ناوگان" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div style="padding: 4px 10px 10px"><h3 style="margin: 0; font-size: 18px; font-weight: 700">مدیریت ناوگان سازمانی و شهری</h3><span style="font-size: 14px; color: #9EA4AE">ردیاب سازمانی و سامانهٔ ناوگان</span></div>
+</a>
+<a href="#" class="glass lift zoom reveal" style="border-radius: 30px; padding: 12px; text-decoration: none; color: #FFFFFF; display: flex; flex-direction: column; gap: 14px">
+<div style="height: 180px; border-radius: 22px; background: #ECEEF2; overflow: hidden; display: flex; align-items: center; justify-content: center"><img class="mul" src="/_blob/fa974e1a7a1b60c6098b473c79772b03" alt="ردیاب خودروی یخچال‌دار" style="height: 172px; width: auto; display: block"></div>
+<div style="padding: 4px 10px 10px"><h3 style="margin: 0; font-size: 18px; font-weight: 700">پایش دمای بار یخچالی</h3><span style="font-size: 14px; color: #9EA4AE">مدل S400T با سنسور دما</span></div>
+</a>
+</div>
+
+<div class="glass reveal" style="border-radius: 40px; padding: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 14px">
+<div style="padding: 32px; display: flex; flex-direction: column; gap: 20px">
+<span class="kicker kicker-d">نمونه‌پروژهٔ شاخص</span>
+<h3 style="margin: 0; font-size: 32px; line-height: 1.45; font-weight: 700; color: #FFFFFF">پایش سوخت تراکتورها</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.95; color: #B9BEC7">نصب دستگاه FUEL روی تراکتورها و گزارش‌گیری متمرکز مصرف سوخت در پنل نورون.</p>
+<div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1)">
+<span class="grad" style="font-size: 40px; font-weight: 700; line-height: 1.2">حدود ۳۵ هزار</span><span style="font-size: 16px; color: #D0D4DA">تراکتور متصل</span>
+</div>
+<a href="#" class="btn btn-liquid" style="width: fit-content">درخواست مشاورهٔ سازمانی</a>
+</div>
+<div style="position: relative; border-radius: 30px; overflow: hidden; min-height: 420px"><img src="/_blob/cbb68f7f47395c3d9939613890f5621b" alt="پروژهٔ پایش سوخت تراکتورها با دستگاه FUEL نورون" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 25% 50%; display: block"></div>
+</div>
+
+<div class="glass reveal" style="position: relative; overflow: hidden; border-radius: 36px; padding: 40px 44px; display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; background: linear-gradient(120deg, rgba(244,128,38,0.22), rgba(255,255,255,0.04) 55%)">
+<div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap; position: relative; z-index: 1">
+<div class="glass" style="width: 76px; height: 76px; border-radius: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFC08A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5L12 4l9 6.5"></path><path d="M5 9.5V20h14V9.5"></path><path d="M9.5 20v-5.5h5V20"></path></svg></div>
+<div style="display: flex; flex-direction: column; gap: 10px; max-width: 620px">
+<p style="margin: 0; font-size: 14px; font-weight: 500; color: #FFC08A">برای فروشگاه‌ها و نصاب‌ها</p>
+<h2 style="margin: 0; font-size: 26px; line-height: 1.6; font-weight: 700; color: #FFFFFF">نمایندهٔ نورون در شهر خود شوید</h2>
+<p style="margin: 0; font-size: 15px; line-height: 1.95; color: #C3C8CF">نورون مشتری را با محصول آشنا می‌کند و سفارش مصرف‌کننده را به شبکهٔ نمایندگی می‌فرستد.</p>
+</div>
+</div>
+<a href="#" class="btn btn-liquid" style="position: relative; z-index: 1">درخواست همکاری و نمایندگی</a>
+</div>
+</div>
+</section>
+
+<!-- ═══ ۱۱. سؤالات متداول ═══ -->
+<section class="pearl sec">
+<div class="wrap" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start">
+<div class="reveal" style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<span class="kicker kicker-l"><span class="kdot"></span>سؤالات متداول</span>
+<h2 class="h2">پیش از خرید <span class="grad">بدانید</span></h2>
+<p class="lead" style="color: #4A4F57">پاسخ پرتکرارترین سؤال‌های مشتریان دربارهٔ انتخاب، نصب و هزینه‌ها.</p>
+<div class="glass-l" style="border-radius: 28px; padding: 24px; display: flex; flex-direction: column; gap: 14px; margin-top: 8px">
+<p style="margin: 0; font-size: 17px; font-weight: 700">سؤال دیگری دارید؟</p>
+<p style="margin: 0; font-size: 15px; color: #4A4F57">کارشناسان پشتیبانی نورون شبانه‌روز پاسخگو هستند.</p>
+<a href="https://noroncar.ir/support/" class="btn btn-ink" style="width: fit-content">تماس با پشتیبانی</a>
+</div>
+</div>
+<div style="flex: 2 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<details open="" class="neo-sm reveal" style="border-radius: 24px; padding: 22px 26px"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 17px; font-weight: 500">ردیاب بگیرم یا دزدگیر و ردیاب؟<span class="neo-in chev" style="width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span></summary><div class="neo-in" style="margin-top: 16px; border-radius: 18px; padding: 16px 18px"><p style="margin: 0; font-size: 15px; line-height: 1.95; color: #3E434A">اگر فقط می‌خواهید موقعیت خودرو را لحظه‌ای ببینید و هشدار سرقت بگیرید، ردیاب S350 کافی است. اگر علاوه بر ردیابی، دزدگیر هم می‌خواهید، S600 که دزدگیر و ردیاب را با هم دارد انتخاب بهتری است. برای انتخاب دقیق‌تر با مشاوران نورون تماس بگیرید.</p></div></details>
+<details class="neo-sm reveal" style="border-radius: 24px; padding: 22px 26px"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 17px; font-weight: 500">ردیاب به اینترنت نیاز دارد و هزینهٔ سالانه‌اش چقدر است؟<span class="neo-in chev" style="width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span></summary><div class="neo-in" style="margin-top: 16px; border-radius: 18px; padding: 16px 18px"><p style="margin: 0; font-size: 15px; line-height: 1.95; color: #3E434A">دستگاه با سیم‌کارت رایگانی که همراهش ارائه می‌شود به سامانه وصل است. برای دیدن خودرو در اپلیکیشن، گوشی شما باید به اینترنت وصل باشد، اما هشدارهای پیامکی و تماس صوتی بدون اینترنت هم می‌رسند. استفاده از سامانه در سال اول رایگان است و تمدید از سال دوم شامل هزینه می‌شود.</p></div></details>
+<details class="neo-sm reveal" style="border-radius: 24px; padding: 22px 26px"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 17px; font-weight: 500">نصب چقدر طول می‌کشد و هزینه‌اش چقدر است؟<span class="neo-in chev" style="width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span></summary><div class="neo-in" style="margin-top: 16px; border-radius: 18px; padding: 16px 18px"><p style="margin: 0; font-size: 15px; line-height: 1.95; color: #3E434A">نصب را نصاب مجاز نمایندهٔ نورون در شهر شما انجام می‌دهد. زمان و هزینهٔ نصب را نمایندهٔ شهرتان هنگام هماهنگی اعلام می‌کند.</p></div></details>
+<details class="neo-sm reveal" style="border-radius: 24px; padding: 22px 26px"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 17px; font-weight: 500">با خودروی من سازگار است؟<span class="neo-in chev" style="width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span></summary><div class="neo-in" style="margin-top: 16px; border-radius: 18px; padding: 16px 18px"><p style="margin: 0; font-size: 15px; line-height: 1.95; color: #3E434A">ردیاب‌ها و دزدگیرهای نورون برای خودروهای سواری طراحی شده‌اند و برای خودروهای سنگین و یخچال‌دار هم مدل‌های اختصاصی دارند. برای اطمینان از سازگاری با مدل خودروی خود، پیش از خرید با مشاوران یا نمایندهٔ شهرتان تماس بگیرید.</p></div></details>
+<details class="neo-sm reveal" style="border-radius: 24px; padding: 22px 26px"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 17px; font-weight: 500">شرایط گارانتی و بیمهٔ سرقت چیست؟<span class="neo-in chev" style="width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span></summary><div class="neo-in" style="margin-top: 16px; border-radius: 18px; padding: 16px 18px"><p style="margin: 0; font-size: 15px; line-height: 1.95; color: #3E434A">همهٔ ردیاب‌های نورون گارانتی دارند و بیمهٔ سرقت خودرو هم همراه با خرید دستگاه رایگان ارائه می‌شود. جزئیات گارانتی و بیمه را هنگام خرید از کارشناس فروش بپرسید.</p></div></details>
+<details class="neo-sm reveal" style="border-radius: 24px; padding: 22px 26px"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 17px; font-weight: 500">اگر از فروشگاه دیگری بخرم، گارانتی و بیمه دارم؟<span class="neo-in chev" style="width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span></summary><div class="neo-in" style="margin-top: 16px; border-radius: 18px; padding: 16px 18px"><p style="margin: 0; font-size: 15px; line-height: 1.95; color: #3E434A">گارانتی اصلی و بیمهٔ سرقت رایگان برای دستگاه‌هایی است که از سایت رسمی نورون یا نمایندگی‌های مجاز خریداری و توسط نصاب مجاز نصب شوند. اگر از فروشگاه دیگری خرید کرده‌اید، پیش از نصب با پشتیبانی نورون تماس بگیرید.</p></div></details>
+</div>
+</div>
+</section>
+
+<!-- ═══ ۱۲. مجله ═══ -->
+<section id="mag" class="pearl sec" style="padding-top: 24px">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 44px">
+<div class="reveal" style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 16px"><span class="kicker kicker-l"><span class="kdot"></span>مجلهٔ نورون</span><h2 class="h2">راهنمای انتخاب و خرید</h2></div>
+<a href="#" class="btn btn-neo" style="min-height: 48px">مشاهدهٔ همه ←</a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px">
+<a href="#" class="neo lift zoom reveal" style="border-radius: 32px; padding: 12px; text-decoration: none; color: #17191C; display: flex; flex-direction: column; gap: 16px">
+<div style="position: relative; aspect-ratio: 16 / 10; border-radius: 24px; overflow: hidden"><span class="phb">جایگاه: تصویر مقاله</span><img src="/_blob/1e67ec5bbf2e0e8c4cc5b69ad1045043" alt="جایگاه تصویر مقاله" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div style="padding: 4px 12px 14px; display: flex; flex-direction: column; gap: 10px"><span style="font-size: 13px; font-weight: 500; color: #A3490B">مقایسه</span><h3 style="margin: 0; font-size: 19px; line-height: 1.7; font-weight: 700">دزدگیر بهتر است یا ردیاب خودرو؟</h3><span style="font-size: 14px; color: #4A4F57">مطالعه ←</span></div>
+</a>
+<a href="#" class="neo lift zoom reveal" style="border-radius: 32px; padding: 12px; text-decoration: none; color: #17191C; display: flex; flex-direction: column; gap: 16px">
+<div style="position: relative; aspect-ratio: 16 / 10; border-radius: 24px; overflow: hidden"><span class="phb">جایگاه: تصویر مقاله</span><img src="/_blob/1e67ec5bbf2e0e8c4cc5b69ad1045043" alt="جایگاه تصویر مقاله" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div style="padding: 4px 12px 14px; display: flex; flex-direction: column; gap: 10px"><span style="font-size: 13px; font-weight: 500; color: #A3490B">راهنمای خرید</span><h3 style="margin: 0; font-size: 19px; line-height: 1.7; font-weight: 700">راهنمای خرید ردیاب خودرو</h3><span style="font-size: 14px; color: #4A4F57">مطالعه ←</span></div>
+</a>
+<a href="#" class="neo lift zoom reveal" style="border-radius: 32px; padding: 12px; text-decoration: none; color: #17191C; display: flex; flex-direction: column; gap: 16px">
+<div style="position: relative; aspect-ratio: 16 / 10; border-radius: 24px; overflow: hidden"><span class="phb">جایگاه: تصویر مقاله</span><img src="/_blob/1e67ec5bbf2e0e8c4cc5b69ad1045043" alt="جایگاه تصویر مقاله" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div style="padding: 4px 12px 14px; display: flex; flex-direction: column; gap: 10px"><span style="font-size: 13px; font-weight: 500; color: #A3490B">بهترین‌ها</span><h3 style="margin: 0; font-size: 19px; line-height: 1.7; font-weight: 700">بهترین ردیاب خودرو در سال ۱۴۰۵</h3><span style="font-size: 14px; color: #4A4F57">مطالعه ←</span></div>
+</a>
+</div>
+</div>
+</section>
+
+<!-- ═══ ۱۳. فوتر ═══ -->
+<footer class="dark" style="padding: 88px 0 32px">
+<div class="orb" style="width: 480px; height: 480px; background: rgba(244,128,38,0.16); right: 10%; top: -180px"></div>
+<div class="wrap" style="display: flex; flex-direction: column; gap: 32px">
+<div class="glass" style="border-radius: 36px; padding: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 36px">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<span style="display: flex; width: fit-content; padding: 6px 10px; border-radius: 16px; background: rgba(255,255,255,0.92)"><img src="/_blob/a4532d188099cfe9866d65efe1373476" alt="نورون" style="height: 42px; width: auto; display: block"></span>
+<div style="display: flex; gap: 10px">
+<div style="position: relative; width: 76px; height: 76px; border-radius: 18px; overflow: hidden"><img src="/_blob/e23f85d0d9e34712e642d729c7c8bec4" alt="جایگاه نماد اینماد" style="width: 100%; height: 100%; object-fit: cover; display: block"><span style="position: absolute; bottom: 6px; inset-inline: 0; text-align: center; font-size: 11px; color: #D0D4DA">اینماد</span></div>
+<div style="position: relative; width: 76px; height: 76px; border-radius: 18px; overflow: hidden"><img src="/_blob/e23f85d0d9e34712e642d729c7c8bec4" alt="جایگاه نماد ساماندهی" style="width: 100%; height: 100%; object-fit: cover; display: block"><span style="position: absolute; bottom: 6px; inset-inline: 0; text-align: center; font-size: 11px; color: #D0D4DA">ساماندهی</span></div>
+<div style="position: relative; width: 76px; height: 76px; border-radius: 18px; overflow: hidden"><img src="/_blob/e23f85d0d9e34712e642d729c7c8bec4" alt="جایگاه نشان دانش‌بنیان" style="width: 100%; height: 100%; object-fit: cover; display: block"><span style="position: absolute; bottom: 6px; inset-inline: 0; text-align: center; font-size: 11px; color: #D0D4DA">دانش‌بنیان</span></div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; font-size: 15px">
+<h3 style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: #FFC08A">واحد فروش</h3>
+<a href="tel:05152220010" dir="ltr" style="color: #E6E8EB; text-decoration: none; text-align: right">۰۵۱-۵۲۲۲۰۰۱۰</a>
+<a href="tel:05152220011" dir="ltr" style="color: #E6E8EB; text-decoration: none; text-align: right">۰۵۱-۵۲۲۲۰۰۱۱</a>
+<a href="tel:05152220808" dir="ltr" style="color: #E6E8EB; text-decoration: none; text-align: right">۰۵۱-۵۲۲۲۰۸۰۸</a>
+<a href="tel:05152220909" dir="ltr" style="color: #E6E8EB; text-decoration: none; text-align: right">۰۵۱-۵۲۲۲۰۹۰۹</a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; font-size: 15px">
+<h3 style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: #FFC08A">پشتیبانی</h3>
+<a href="tel:09120468018" dir="ltr" style="color: #E6E8EB; text-decoration: none; text-align: right">۰۹۱۲۰۴۶۸۰۱۸</a>
+<a href="tel:05152226163" dir="ltr" style="color: #E6E8EB; text-decoration: none; text-align: right">۰۵۱۵۲۲۲۶۱۶۳</a>
+<a href="tel:05152214000" dir="ltr" style="color: #E6E8EB; text-decoration: none; text-align: right">۰۵۱۵۲۲۱۴۰۰۰</a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; font-size: 15px">
+<h3 style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: #FFC08A">دسترسی سریع</h3>
+<a href="https://noroncar.ir/namayandegi/" style="color: #E6E8EB; text-decoration: none">نمایندگی‌ها</a>
+<a href="https://noroncar.ir/support/" style="color: #E6E8EB; text-decoration: none">پشتیبانی</a>
+<a href="https://noroncar.ir/download-app/" style="color: #E6E8EB; text-decoration: none">دانلود اپلیکیشن</a>
+<a href="https://noroncar.ir/contact-us/" style="color: #E6E8EB; text-decoration: none">تماس با ما</a>
+<a href="#" style="color: #E6E8EB; text-decoration: none">ورود به سامانه</a>
+</div>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<a href="#" class="soc" aria-label="تلگرام نورون"><img src="/_blob/b5ad64751f2837140c0d9a1a797bbe20" alt="" aria-hidden="true"></a><a href="#" class="soc" aria-label="اینستاگرام نورون"><img src="/_blob/4526752296b8f5fc7b735fbb45e3919c" alt="" aria-hidden="true"></a><a href="#" class="soc" aria-label="واتس‌اپ نورون"><img src="/_blob/53b7d92f7560fb2d9ff36bc830a0f742" alt="" aria-hidden="true"></a><a href="#" class="soc" aria-label="ایتا نورون"><img src="/_blob/92eb0b827c9a73f6aa40b65b44bc520a" alt="" aria-hidden="true"></a>
+</div>
+<div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; font-size: 13px; color: #9EA4AE">
+<span>تمام حقوق این سایت متعلق به شرکت ارغوان طوس مشرق زمین است.</span>
+<a href="#top" class="btn btn-glass" style="min-height: 46px; padding: 0 18px; font-size: 14px; border-radius: 999px">بازگشت به بالا
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"></path></svg></a>
+</div>
+</div>
+</div>
+</footer>
+
+<!-- فهرست موارد تکمیل‌نشده (فقط برای بررسی) -->
+<aside style="background: #FFF8EE; border-top: 2px dashed #D9913F; padding: 48px 0 64px">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font-size: 22px; font-weight: 700; color: #7A3E00">فهرست موارد تکمیل‌نشده</h2>
+<p style="margin: 0; font-size: 14px; color: #6B5233">فقط برای بررسی کارفرما؛ در سایت نهایی نمایش داده نمی‌شود. جایگاه‌های تصویر را با انتخاب تصویر و جایگزینی آن پر کنید و برچسب جایگاه را حذف کنید.</p>
+</div>
+<ul style="margin: 0; padding: 0 20px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 8px 32px; font-size: 15px; line-height: 1.9; color: #2B2F35">
+<li>هزینهٔ نصب</li>
+<li>تفاوت دقیق امکانات S350 و S600 برای جدول مقایسه</li>
+<li>۳ ویدئوی واقعی مشتری (کاور و عنوان)</li>
+<li>اعتبار گارانتی و بیمه برای خرید از فروشگاه‌های دیگر</li>
+<li>پنل مدیریت ناوگان</li>
+<li>قیمت‌ها پیش از انتشار دوباره چک شود</li>
+<li>تصاویر مقالات، نمادهای اینماد و ساماندهی، لینک شبکه‌های اجتماعی</li>
+</ul>
+</div>
+</aside>
+
+
+
+</div>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap"></helmet></x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":10400}}'>
+class Component extends DCLogic {
+  refs() {
+    if (!this._r) {
+      this._r = {
+        root: (el) => { this.root = el; },
+        path: (el) => { this.pathEl = el; },
+        car: (el) => { this.car = el; },
+        tail: (el) => { this.tail = el; },
+        drive: (el) => { this.drive = el; },
+        heroMap: (el) => { this.heroMap = el; },
+        driveTop: (el) => { this.driveTop = el; },
+        heroText: (el) => { this.heroText = el; },
+        carIn: (el) => { this.carIn = el; },
+        heroCar: (el) => { this.heroCar = el; }
+      };
+      this.tickB = (now) => this.tick(now);
+    }
+    return this._r;
+  }
+  componentDidMount() {
+    this.refs();
+    this.cur = 0; this.ang = 0; this.vel = 0; this.target = 0; this.loop = 0; this.lastT = 0;
+    this.stage = -1; this.isParked = null; this.isBraking = null; this.isReverse = null; this.angInit = false; this.tailS = -1; this.heroT = '';
+    this.intro = false; this.introDone = false; this.startLen = 0; this.rel = 0; this.vh = window.innerHeight || 800; this.offTop = 0;
+    this.reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    this.onScroll = (e) => {
+      const tg = e && e.target;
+      if (tg && tg.nodeType === 1 && tg !== this.sc && this.root && tg.contains(this.root)) { this.sc = tg; this.syncScroller(); }
+      this.updateTarget();
+      this.kick();
+    };
+    this.onResize = () => this.schedule();
+    window.addEventListener('scroll', this.onScroll, { passive: true, capture: true });
+    window.addEventListener('resize', this.onResize, { passive: true });
+    this.timers = [setTimeout(() => this.measure(), 60), setTimeout(() => this.measure(), 1000), setTimeout(() => this.measure(), 2800)];
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => this.schedule());
+    if (window.ResizeObserver && this.root) { this.ro = new ResizeObserver(() => this.schedule()); this.ro.observe(this.root); }
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll, { capture: true });
+    window.removeEventListener('resize', this.onResize);
+    (this.timers || []).forEach((t) => clearTimeout(t));
+    clearTimeout(this.mt);
+    if (this.ro) this.ro.disconnect();
+    if (this.loop) cancelAnimationFrame(this.loop);
+    if (this.mapOff) { this.mapOff(); this.mapOff = null; }
+  }
+  componentDidUpdate(pp, ps) {
+    const s = this.state || {};
+    if (!ps || ps.d !== s.d) this.buildTable();
+    if (this.mapApply) this.mapApply();
+  }
+  schedule() { clearTimeout(this.mt); this.mt = setTimeout(() => this.measure(), 140); }
+  findScroller() {
+    let el = this.root ? this.root.parentElement : null;
+    while (el && el !== document.body && el !== document.documentElement) {
+      const cs = getComputedStyle(el);
+      if (/(auto|scroll|overlay)/.test(cs.overflowY) && el.scrollHeight > el.clientHeight + 2) return el;
+      el = el.parentElement;
+    }
+    return null;
+  }
+  scrollY() { return this.sc ? this.sc.scrollTop : (window.pageYOffset || document.documentElement.scrollTop || 0); }
+  syncScroller() {
+    const root = this.root; if (!root) return;
+    const rr = root.getBoundingClientRect();
+    const top0 = this.sc ? this.sc.getBoundingClientRect().top : 0;
+    this.offTop = rr.top - top0 + this.scrollY();
+    this.vh = this.sc ? this.sc.clientHeight : window.innerHeight;
+    this.scrollable = rr.height > this.vh + 40;
+  }
+  initMap() {
+    const root = this.root; if (!root || this.mapOff) return;
+    const doc = root.ownerDocument || document;
+    const fa = (n) => String(n).replace(/[0-9]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.charAt(+d));
+    const W = () => this.root ? this.root.querySelector('[data-mapwrap]') : null;
+    const inMap = (t) => !!(t && t.closest && this.root && this.root.contains(t) && t.closest('[data-mapwrap]'));
+    const prvOf = (t) => inMap(t) ? t.closest('[data-province]') : null;
+    const show = (p) => {
+      const w = W(); if (!w || !p) return;
+      const nm = w.querySelector('[data-mname]'), ct = w.querySelector('[data-mcount]'), cta = w.querySelector('[data-mcta]');
+      const n = +p.getAttribute('data-n') || 0;
+      if (nm) nm.textContent = p.getAttribute('data-name');
+      if (ct) ct.textContent = n ? fa(n) + ' نمایندگی فعال' : 'هنوز نمایندگی در این استان ثبت نشده است';
+      if (cta) { cta.setAttribute('href', n ? 'https://noroncar.ir/namayandegi/' : 'tel:05152220010'); cta.textContent = n ? 'مشاهدهٔ نمایندگی‌ها' : 'تماس با نورون'; }
+    };
+    const selEl = () => { const w = W(); return w ? w.querySelector('[data-province="' + (this.mapSel || 'tehran') + '"]') : null; };
+    this.mapApply = () => {
+      const w = W(); if (!w) return;
+      const p = selEl(); if (!p) return;
+      Array.prototype.forEach.call(w.querySelectorAll('[data-province].sel'), (el) => { if (el !== p) { el.classList.remove('sel'); el.setAttribute('aria-pressed', 'false'); } });
+      p.classList.add('sel'); p.setAttribute('aria-pressed', 'true');
+      const sl = w.querySelector('[data-msel]'); if (sl && sl.getAttribute('d') !== p.getAttribute('d')) sl.setAttribute('d', p.getAttribute('d'));
+      show(p);
+      const dd = this.root.querySelector('[data-mselect]'); if (dd && dd.value !== p.getAttribute('data-province')) dd.value = p.getAttribute('data-province');
+      const pg = w.querySelector('[data-mapping]'); if (pg && this.ping) { pg.style.left = this.ping.x + 'px'; pg.style.top = this.ping.y + 'px'; }
+      const pk = this.root.querySelector('[data-park]'); if (pk) pk.classList.toggle('arrived', !!this.isParked);
+    };
+    const pick = (p) => { if (!p) return; this.mapSel = p.getAttribute('data-province'); this.mapApply(); };
+    const hovOn = (p) => { const w = W(); const h = w && w.querySelector('[data-mhov]'); if (h) { h.setAttribute('d', p.getAttribute('d')); h.classList.add('on'); } show(p); };
+    const hovOff = () => { const w = W(); const h = w && w.querySelector('[data-mhov]'); if (h) h.classList.remove('on'); show(selEl()); };
+    const over = (e) => { const p = prvOf(e.target); if (p) hovOn(p); };
+    const out = (e) => { if (!prvOf(e.target)) return; if (prvOf(e.relatedTarget)) return; hovOff(); };
+    const click = (e) => { const p = prvOf(e.target); if (p) pick(p); };
+    const key = (e) => { if (e.key !== 'Enter' && e.key !== ' ') return; const p = prvOf(e.target); if (p) { e.preventDefault(); pick(p); } };
+    const chg = (e) => { const t = e.target; if (!t || !t.matches || !t.matches('[data-mselect]') || !this.root || !this.root.contains(t) || !t.value) return; this.mapSel = t.value; this.mapApply(); };
+    const ev = [['mouseover', over], ['mouseout', out], ['focusin', over], ['focusout', out], ['click', click], ['keydown', key], ['change', chg]];
+    ev.forEach((x) => doc.addEventListener(x[0], x[1]));
+    this.mapOff = () => ev.forEach((x) => doc.removeEventListener(x[0], x[1]));
+    this.mapApply();
+  }
+  measure() {
+    const root = this.root; if (!root) return;
+    if (!this.sc) this.sc = this.findScroller();
+    this.syncScroller();
+    const rr = root.getBoundingClientRect();
+    const W = Math.round(root.clientWidth), H = Math.round(rr.height);
+    if (!W || !H) return;
+    const off = (el) => { const r = el.getBoundingClientRect(); return { x: r.left - rr.left, y: r.top - rr.top, w: r.width, h: r.height }; };
+    const hero = root.querySelector('[data-hero]');
+    const park = root.querySelector('[data-park]');
+    const secs = Array.prototype.slice.call(root.querySelectorAll('[data-stop]'));
+    if (!hero || !park) return;
+    const mob = W < 600;
+    const h = off(hero);
+    const m = Math.round(Math.max(14, Math.min(64, (W - Math.min(W, 1240)) / 4 + 12)));
+    const Lx = m, Rx = W - m;
+    const hm = root.querySelector('[data-heromap]');
+    let d, sx, sy, pre = '', preEnd = null;
+    if (hm) {
+      const r0 = off(hm), NW = 1672, NH = 941;
+      const sc = Math.max(r0.w / NW, r0.h / NH);
+      const ox = r0.x + (r0.w - NW * sc) * (+hm.getAttribute('data-ox') || 0);
+      const oy = r0.y + (r0.h - NH * sc) * (+hm.getAttribute('data-oy') || 0);
+      const T = (p) => Math.round(ox + p[0] * sc) + ' ' + Math.round(oy + p[1] * sc);
+      const R = [[-60,898],[-40,897],[21,896],[60,893],[99,890],[147,882],[175,880],[203,878],[208,881],[225,880],[242,878],[259,873],[275,870],[292,867],[309,864],[325,861],[342,858],[358,856],[375,852],[391,849],[408,846],[425,842],[442,838],[461,834],[475,830],[489,826],[499,823],[510,819],[521,816],[532,813],[541,807],[550,802],[561,792],[564,786],[568,780],[564,776],[562,771],[560,767],[555,765],[550,762],[545,758],[538,755],[530,751],[522,747],[511,742],[504,738],[498,733],[494,726],[494,722],[493,718],[496,716],[501,713],[505,710],[513,707],[521,705],[528,703],[536,700],[545,698]];
+      d = 'M' + T(R[0]);
+      for (let i = 1; i + 2 < R.length; i += 3) d += ' C' + T(R[i]) + ' ' + T(R[i + 1]) + ' ' + T(R[i + 2]);
+      const last = R[R.length - 1];
+      sx = Math.round(ox + last[0] * sc); sy = Math.round(oy + last[1] * sc);
+      const pX = ox + 605 * sc, pY = oy + 684 * sc, k = sc;
+      const rn = (v) => Math.round(v);
+      pre = ' C' + rn(sx + (pX - sx) * 0.4) + ' ' + rn(sy) + ' ' + rn(pX - (pX - sx) * 0.35) + ' ' + rn(pY) + ' ' + rn(pX) + ' ' + rn(pY)
+          + ' C' + rn(pX + 80 * k) + ' ' + rn(pY) + ' ' + rn(pX + 60 * k) + ' ' + rn(pY + 50 * k) + ' ' + rn(pX + 60 * k) + ' ' + rn(pY + 110 * k);
+      preEnd = { x: rn(pX + 60 * k), y: rn(pY + 110 * k) };
+      const hc = this.heroCar;
+      if (hc) {
+        const par = hc.offsetParent ? off(hc.offsetParent) : { x: 0, y: 0 };
+        hc.style.left = Math.round(ox + (+hc.getAttribute('data-x')) * sc - par.x) + 'px';
+        hc.style.top = Math.round(oy + (+hc.getAttribute('data-y')) * sc - par.y) + 'px';
+        hc.style.width = Math.round((+hc.getAttribute('data-w')) * sc) + 'px';
+      }
+    } else {
+      sx = Math.round(W * 0.5); sy = Math.round(h.y + h.h - 100); d = 'M' + sx + ' ' + sy;
+    }
+    let dr = 'M' + sx + ' ' + sy + pre;
+    d += pre;
+    const first = dr;
+    const legs = [];
+    const stops = [];
+    const CROSS = mob ? 170 : 320;
+    let cx = preEnd ? preEnd.x : sx, cy = preEnd ? preEnd.y : sy, side = 'L';
+    secs.forEach((el, i) => {
+      const o = off(el);
+      const tx = side === 'L' ? Lx : Rx;
+      const yTop = i === 0 ? cy : Math.round(Math.max(cy + 40, o.y - CROSS));
+      let yBot = Math.round(o.y + (i === 0 ? (mob ? 90 : 140) : (mob ? 18 : 26)));
+      const minDy = mob ? 90 : 120;
+      if (yBot < yTop + minDy) yBot = yTop + minDy;
+      let seg = '';
+      if (yTop > cy) seg += ' L' + cx + ' ' + yTop;
+      const ymid = Math.round((yTop + yBot) / 2);
+      seg += ' C' + cx + ' ' + ymid + ' ' + tx + ' ' + ymid + ' ' + tx + ' ' + yBot;
+      legs.push((i === 0 ? first : 'M' + cx + ' ' + cy) + seg);
+      d += seg; dr += seg;
+      stops.push({ i: i, x: tx, y: yBot });
+      cx = tx; cy = yBot; side = side === 'L' ? 'R' : 'L';
+    });
+    const pk = off(park);
+    let px = Math.round(pk.x + pk.w / 2), py = Math.round(pk.y + pk.h / 2);
+    if (!this.mapOff) this.initMap();
+    const tp = park.querySelector('[data-province="tehran"]');
+    if (tp) {
+      const o = off(tp);
+      if (o.w > 2) { px = Math.round(o.x + o.w / 2); py = Math.round(o.y + o.h * 0.52); }
+      const mb = park.querySelector('[data-mapbox]');
+      if (mb) { const ob = off(mb); this.ping = { x: px - ob.x, y: py - ob.y }; }
+      if (this.mapApply) this.mapApply();
+    }
+    const yT = Math.round(Math.max(cy + 40, pk.y - (mob ? 120 : 200)));
+    let seg = '';
+    if (yT > cy) seg += ' L' + cx + ' ' + yT;
+    const ym2 = Math.round((yT + py) / 2);
+    seg += ' C' + cx + ' ' + ym2 + ' ' + px + ' ' + ym2 + ' ' + px + ' ' + Math.max(py, ym2 + 10);
+    legs.push('M' + cx + ' ' + cy + seg);
+    d += seg; dr += seg;
+    this.geo = { sx: sx, sy: sy };
+    this.secEls = secs;
+    this.W = W;
+    this.heroH = h.h;
+    this.collectBoxes(root, park);
+    Array.prototype.forEach.call(root.querySelectorAll('section.dark, section.pearl, footer.dark'), (el) => { el.style.backgroundPosition = 'center ' + Math.round(-el.offsetTop) + 'px'; });
+    const vb = '0 0 ' + W + ' ' + H;
+    const st = this.state || {};
+    if (st.d !== d || st.vb !== vb) this.setState({ d: d, dr: dr, clipY: -100000, vb: vb, legs: legs, stops: stops, park: { x: px, y: py } });
+    else { this.updateTarget(); this.kick(); }
+  }
+  buildTable() {
+    const p = this.pathEl, s = this.state || {};
+    if (!p || !s.d || s.d.length < 12) return;
+    let L = 0;
+    try { L = p.getTotalLength(); } catch (e) { return; }
+    if (!L) return;
+    const n = Math.min(3200, Math.max(300, Math.round(L / 4)));
+    const xs = new Float32Array(n), ys = new Float32Array(n), ym = new Float32Array(n), an = new Float32Array(n);
+    let mx = -1e9;
+    for (let i = 0; i < n; i++) { const q = p.getPointAtLength(L * i / (n - 1)); xs[i] = q.x; ys[i] = q.y; if (q.y > mx) mx = q.y; ym[i] = mx; }
+    let prevA = 0;
+    for (let i = 0; i < n; i++) {
+      const a = Math.max(0, i - 3), b = Math.min(n - 1, i + 3);
+      let g = Math.atan2(ys[b] - ys[a], xs[b] - xs[a]) * 180 / Math.PI;
+      if (i > 0) { while (g - prevA > 180) g -= 360; while (g - prevA < -180) g += 360; }
+      an[i] = g; prevA = g;
+    }
+    this.tbl = { n: n, xs: xs, ys: ys, ym: ym, an: an, L: L, W: this.W || 1440 };
+    const geo = this.geo || { sx: 0 };
+    let si = 0, best = 1e12;
+    for (let i = 0; i < n; i++) { const dd = (xs[i] - geo.sx) * (xs[i] - geo.sx) + (ys[i] - geo.sy) * (ys[i] - geo.sy); if (dd < best) { best = dd; si = i; } }
+    let mm = ys[si];
+    for (let i = 0; i < n; i++) { if (i <= si) ym[i] = ys[si]; else { if (ys[i] > mm) mm = ys[i]; ym[i] = mm; } }
+    this.startLen = L * si / (n - 1);
+    this.stopLens = (s.stops || []).map((st) => Math.max(this.startLen + 1, this.lenForY(st.y)));
+    this.legEls = Array.prototype.slice.call(this.root.querySelectorAll('[data-leg]'));
+    this.stopDom = Array.prototype.slice.call(this.root.querySelectorAll('[data-stopi]'));
+    this.nLegs = (s.legs || []).length;
+    this.stage = -1; this.isParked = null;
+    this.updateTarget();
+    if (!this.introDone) {
+      this.introDone = true;
+      if (this.reduce) { this.cur = this.target; }
+      else { this.cur = 0; this.intro = true; this.introStart = 0; }
+    }
+    this.kick();
+  }
+  lenForY(y) {
+    const t = this.tbl, n = t.n;
+    if (y <= t.ym[0]) return 0;
+    if (y >= t.ym[n - 1]) return t.L;
+    let lo = 0, hi = n - 1;
+    while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (t.ym[mid] <= y) lo = mid; else hi = mid; }
+    const dy = t.ym[hi] - t.ym[lo];
+    const f = dy > 0 ? (y - t.ym[lo]) / dy : 0;
+    return t.L * (lo + f) / (n - 1);
+  }
+  updateTarget() {
+    if (!this.tbl) return;
+    this.rel = this.scrollY() - this.offTop;
+    const ty = this.scrollable ? this.rel + this.vh * 0.6 : -1;
+    this.target = Math.max(this.startLen, this.lenForY(ty));
+  }
+  kick() {
+    if (!this.loop && this.tbl) { this.lastT = 0; this.loop = requestAnimationFrame(this.tickB); }
+  }
+  tick(now) {
+    this.loop = 0;
+    const t = this.tbl;
+    if (!t) return;
+    const dt = this.lastT ? Math.min(0.05, Math.max(0.001, (now - this.lastT) / 1000)) : 1 / 60;
+    this.lastT = now;
+    const prev = this.cur;
+    if (this.intro) {
+      if (!this.introStart) this.introStart = now;
+      const p = Math.min(1, (now - this.introStart) / 2600);
+      const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+      this.cur = this.startLen * e;
+      if (p >= 1) this.intro = false;
+    } else {
+      this.cur += (this.target - this.cur) * (1 - Math.exp(-dt * 7));
+    }
+    const v = (this.cur - prev) / dt;
+    this.vel += (v - this.vel) * Math.min(1, dt * 12);
+    this.place(dt);
+    this.applyHero();
+    this.flags();
+    if (!this.intro && Math.abs(this.target - this.cur) < 0.35 && Math.abs(this.vel) < 6) {
+      this.cur = this.target; this.vel = 0;
+      this.place(1); this.flags();
+      this.lastT = 0;
+      return;
+    }
+    this.loop = requestAnimationFrame(this.tickB);
+  }
+  place(dt) {
+    const t = this.tbl;
+    if (!t || !this.car) return;
+    const l = Math.max(0, Math.min(t.L, this.cur));
+    const f = l / t.L * (t.n - 1);
+    const i = Math.min(t.n - 2, Math.floor(f));
+    const fr = f - i;
+    const x = t.xs[i] + (t.xs[i + 1] - t.xs[i]) * fr;
+    const y = t.ys[i] + (t.ys[i + 1] - t.ys[i]) * fr;
+    const a = t.an[i] + (t.an[i + 1] - t.an[i]) * fr;
+    if (!this.angInit) { this.ang = a; this.angInit = true; }
+    else {
+      let dA = a - this.ang;
+      while (dA > 180) dA -= 360;
+      while (dA < -180) dA += 360;
+      this.ang += dA * (1 - Math.exp(-dt * 16));
+    }
+    this.car.style.transform = 'translate3d(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px,0) rotate(' + this.ang.toFixed(2) + 'deg)';
+    if (this.tail) {
+      const sp = this.vel > 0 ? Math.min(1, this.vel / (t.W < 600 ? 900 : 1500)) : 0;
+      const q = Math.round(sp * 60);
+      if (q !== this.tailS) {
+        this.tailS = q;
+        this.tail.style.transform = 'scaleX(' + Math.max(0.001, q / 60).toFixed(3) + ')';
+        this.tail.style.opacity = (q / 60 * 0.95).toFixed(3);
+      }
+    }
+    this.tunnel(x, y);
+  }
+  applyHero() {
+    const hp = this.scrollable ? Math.max(0, Math.min(1.5, this.rel / (this.heroH || 900))) : 0;
+    const t = Math.max(0, Math.min(1, hp / 0.6));
+    const key = t.toFixed(3);
+    if (key === this.heroT) return;
+    this.heroT = key;
+    if (this.heroText) { this.heroText.style.transform = 'translate3d(0,' + (-t * 40).toFixed(1) + 'px,0)'; this.heroText.style.opacity = (1 - t * 0.5).toFixed(3); }
+  }
+  flags() {
+    const t = this.tbl, sl = this.stopLens || [], l = this.cur;
+    let stage = 0;
+    while (stage < sl.length && l >= sl[stage] - 4) stage++;
+    if (stage !== this.stage) {
+      this.stage = stage;
+      (this.stopDom || []).forEach((el) => { const i = +el.getAttribute('data-stopi'); el.classList.toggle('lit', i < stage); });
+      (this.legEls || []).forEach((el) => { const i = +el.getAttribute('data-leg'); el.classList.toggle('done', i < stage); el.classList.toggle('next', i === stage && i < (this.nLegs || 0)); });
+      (this.secEls || []).forEach((el, i) => el.classList.toggle('visited', i < stage));
+    }
+    const parked = l >= t.L - 3;
+    if (parked !== this.isParked) {
+      this.isParked = parked;
+      if (this.drive) this.drive.classList.toggle('parked', parked);
+      if (this.car) this.car.classList.toggle('parked', parked);
+      if (this.driveTop) this.driveTop.classList.toggle('parked', parked);
+      const pke = this.root && this.root.querySelector('[data-park]'); if (pke) pke.classList.toggle('arrived', parked);
+      const last = (this.legEls || [])[(this.nLegs || 1) - 1];
+      if (last) { last.classList.toggle('done', parked); if (parked) last.classList.remove('next'); }
+    }
+    const rev = !this.intro && this.vel < -60;
+    const braking = !this.intro && !rev && this.vel < 70;
+    if (rev !== this.isReverse) { this.isReverse = rev; if (this.car) this.car.classList.toggle('reverse', rev); }
+    if (braking !== this.isBraking) { this.isBraking = braking; if (this.car) this.car.classList.toggle('braking', braking); }
+  }
+  collectBoxes(root, park) {
+    const lr = (el) => {
+      let x = 0, y = 0, e = el;
+      while (e && e !== root) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; }
+      if (e !== root) return null;
+      return { x1: x, y1: y, x2: x + el.offsetWidth, y2: y + el.offsetHeight };
+    };
+    (this.on || new Set()).forEach((el) => el.classList.remove('tunnel'));
+    this.on = new Set();
+    const list = root.querySelectorAll('.neo, .neo-sm, .neo-in, .glass, .glass-l, .btn, .kicker, div.dark, article.dark, [data-box]');
+    const boxes = [];
+    Array.prototype.forEach.call(list, (el) => {
+      if (el === park || el.closest('.drive, .drive-top, .stage, .marquee')) return;
+      const r = lr(el);
+      if (!r || r.x2 - r.x1 < 8 || r.y2 - r.y1 < 8) return;
+      boxes.push({ el: el, x1: r.x1, y1: r.y1, x2: r.x2, y2: r.y2 });
+    });
+    this.boxes = boxes;
+    this.parkR = lr(park);
+    this.isSurf = null;
+  }
+  tunnel(x, y) {
+    const bx = this.boxes;
+    if (!bx) return;
+    const r = (this.W || 1440) < 600 ? 20 : 30;
+    const now = new Set();
+    for (let i = 0; i < bx.length; i++) {
+      const b = bx[i];
+      if (x > b.x1 - r && x < b.x2 + r && y > b.y1 - r && y < b.y2 + r) now.add(b.el);
+    }
+    const on = this.on || new Set();
+    on.forEach((el) => { if (!now.has(el)) el.classList.remove('tunnel'); });
+    now.forEach((el) => { if (!on.has(el)) el.classList.add('tunnel'); });
+    this.on = now;
+    const p = this.parkR;
+    const surf = !!(p && x > p.x1 - 6 && x < p.x2 + 6 && y > p.y1 - 6 && y < p.y2 + 6);
+    if (surf !== this.isSurf) { this.isSurf = surf; if (this.drive) this.drive.classList.toggle('surface', surf); }
+  }
+  renderVals() {
+    const r = this.refs();
+    const s = this.state || {};
+    const lg = s.legs || [];
+    const leg = (i) => lg[i] || 'M-20 -20';
+    return {
+      rootRef: r.root, pathRef: r.path, carRef: r.car, tailRef: r.tail, driveRef: r.drive, heroMapRef: r.heroMap, driveTopRef: r.driveTop, heroTextRef: r.heroText, carInRef: r.carIn, heroCarRef: r.heroCar,
+      d: s.d || 'M-20 -20', dr: s.dr || 'M-20 -20', clipY: s.clipY || 0, vb: s.vb || '0 0 100 100',
+      leg0: leg(0), leg1: leg(1), leg2: leg(2), leg3: leg(3), leg4: leg(4), leg5: leg(5), leg6: leg(6), leg7: leg(7),
+      stops: s.stops || [],
+      parkX: s.park ? s.park.x : -999, parkY: s.park ? s.park.y : -999
+    };
+  }
+}
+</script>
+</body>
+</html>

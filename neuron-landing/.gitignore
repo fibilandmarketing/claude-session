@@ -1,0 +1,3 @@
+build/regions/
+dist/*.zip
+__pycache__/

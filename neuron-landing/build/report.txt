@@ -1,0 +1,131 @@
+header     header.t1      only-d text  ردیاب خودرو
+header     header.t2      only-d text  نمایندگی‌ها
+header     header.u3      only-d url   https://noroncar.ir/namayandegi/
+header     header.t4      only-d text  پشتیبانی
+header     header.u5      only-d url   https://noroncar.ir/support/
+header     header.t6      only-d text  دانلود نرم‌افزار
+header     header.u7      only-d url   https://noroncar.ir/download-app/
+header     header.t8      only-d text  ورود به سامانه
+header     header.u9      only-d url   #
+header     header.u10     only-m url   tel:05152220010
+header     header.u11     only-m url   #
+why        why.t6         only-d text  برای تمام ردیاب‌های نورون
+why        why.t8         only-d text  بیمهٔ سرقت خودرو همراه با خرید دستگاه
+why        why.t10        only-d text  سیم‌کارت آماده، بدون خرید جداگانه
+why        why.t12        only-d text  هر روز هفته، حتی روزهای تعطیل
+why        why.t22        only-m text  برای تمام ردیاب‌ها
+why        why.t23        only-m text  همراه با خرید دستگاه
+why        why.t24        only-m text  آماده، بدون خرید جداگانه
+why        why.t25        only-m text  هر روز هفته
+choose     choose.t27     only-d text  ناوگان
+choose     choose.t31     only-d text  خودروی سنگین، پایش سوخت، بار یخچالی و ناوگان شهری
+choose     choose.t34     only-d text  با ۶ سؤال کوتاه، دستگاه مناسب خودروی خودتان را پیدا کنید.
+choose     choose.t40     only-d text  پک ردیابی وسایل شخصی
+choose     choose.t42     only-m text  با ۶ سؤال کوتاه انتخاب کنید.
+choose     choose.t43     only-m text  پک وسایل شخصی
+compare    compare.t4     only-d text  یا دزدگیر و ردیاب
+compare    compare.t11    only-d text  ردیاب
+compare    compare.t12    only-d text  ردیابی لحظه‌ای و تاریخچهٔ مسیر
+compare    compare.t16    only-d text  خاموش‌کردن خودرو از راه دور
+compare    compare.t18    only-d text  مناسب برای
+compare    compare.t19    only-d text  کسی که می‌خواهد همیشه بداند خودرو کجاست
+compare    compare.t27    only-d text  ردیابی لحظه‌ای و تاریخچهٔ مسیر
+compare    compare.t31    only-d text  خاموش‌کردن خودرو از راه دور
+compare    compare.t33    only-d text  مناسب برای
+compare    compare.t34    only-d text  کسی که هم جلوگیری از سرقت می‌خواهد هم ردیابی
+compare    compare.t39    only-m text  یا
+compare    compare.t40    only-m text  ردیابی لحظه‌ای و مسیر
+compare    compare.t41    only-m text  خاموش‌کردن از راه دور
+compare    compare.t42    only-m text  مناسب برای کسی که می‌خواهد همیشه بداند خودرو کجاست
+compare    compare.t43    only-m text  ردیابی لحظه‌ای و مسیر
+compare    compare.t44    only-m text  خاموش‌کردن از راه دور
+compare    compare.t45    only-m text  مناسب برای کسی که هم جلوگیری از سرقت می‌خواهد هم ردیابی
+personal   personal.t4    only-d text  با برچسب‌های هوشمند نورون
+personal   personal.t5    only-d text  نورون فقط برای خودرو نیست؛ با برچسب‌های هوشمند و پک ردیابی وسایل شخصی،
+personal   personal.t6    only-d text  نیازمند تأیید: نحوهٔ کار، برد و اتصال برچسب‌ها به اپلیکیشن
+personal   personal.t9    only-d text  برچسب پارک خودرو · جاسوئیچی هوشمند · ۸ برچسب ضد آب
+personal   personal.t15   only-d text  جایگاه تصویر
+personal   personal.t20   only-d text  خرید پک
+personal   personal.u21   only-d url   #
+personal   personal.t23   only-d text  برچسب پارک خودرو
+personal   personal.t25   only-d text  ضد آب
+personal   personal.t26   only-m text  با برچسب‌های هوشمند
+personal   personal.t27   only-m text  نورون فقط برای خودرو نیست؛ وسایل مهمتان را هم زیر نظر داشته باشید.
+personal   personal.t28   only-m text  نیازمند تأیید: نحوهٔ کار و برد برچسب‌ها
+personal   personal.t29   only-m text  پارک خودرو
+personal   personal.t30   only-m text  پارک خودرو · جاسوئیچ · ۸ برچسب ضد آب
+personal   personal.t31   only-m text  خرید
+personal   personal.u32   only-m url   #
+heavy      heavy.t2       only-d text  مخصوص خودروهای سنگین
+heavy      heavy.t7       only-d text  برای کامیون، اتوبوس و ماشین‌آلات سنگین؛ موقعیت و مسیر خودروهای سنگین ر
+heavy      heavy.t10      only-d text  پشتیبانی شبانه‌روزی
+heavy      heavy.t16      only-m text  برای کامیون، اتوبوس و ماشین‌آلات سنگین؛ موقعیت و مسیرشان را لحظه‌ای بب
+cold       cold.t16       only-d text  نمونهٔ نمایش در اپلیکیشن
+cold       cold.t17       only-d text  جایگاه: اسکرین‌شات واقعی دما
+theft      theft.t5       only-d text  از لحظهٔ هشدار تا پیدا کردن خودرو، این چهار قدم روی موبایل شما اتفاق م
+theft      theft.t23      only-d text  کارشناس پشتیبانی شبانه‌روزی
+theft      theft.t24      only-d text  بیمهٔ سرقت رایگان خودرو
+theft      theft.t31      only-m text  از لحظهٔ هشدار تا پیدا کردن خودرو، روی موبایل شما.
+theft      theft.t32      only-m text  پشتیبانی
+theft      theft.t33      only-m text  بیمهٔ سرقت
+city       city.t7        only-d text  ردیاب یا دزدگیر و ردیاب، بر اساس نیازتان
+city       city.t10       only-d text  پرداخت روی سایت، یا سفارش از نمایندهٔ شهر
+city       city.t12       only-d text  تحویل و نصب در شهر شما
+city       city.t13       only-d text  نمایندهٔ شهر برای تحویل و نصب هماهنگ می‌کند
+city       city.t18       only-d text  روی نقشه یا از همین فهرست، استان خود را انتخاب کنید.
+city       city.t36       only-m text  هماهنگی تحویل و نصب با نمایندهٔ شهر
+fleet      fleet.t7       only-d text  مدل +S400
+fleet      fleet.u8       only-d url   #
+fleet      fleet.t11      only-d text  دستگاه FUEL
+fleet      fleet.u12      only-d url   #
+fleet      fleet.t13      only-d text  جایگاه: اسکرین‌شات پنل ناوگان
+fleet      fleet.t16      only-d text  ردیاب سازمانی و سامانهٔ ناوگان
+fleet      fleet.u17      only-d url   #
+fleet      fleet.t20      only-d text  مدل S400T با سنسور دما
+fleet      fleet.u21      only-d url   #
+fleet      fleet.t35      only-m text  +S400
+fleet      fleet.u36      only-m url   #
+fleet      fleet.t37      only-m text  FUEL
+fleet      fleet.u38      only-m url   #
+fleet      fleet.t39      only-m text  جایگاه: پنل
+fleet      fleet.u40      only-m url   #
+fleet      fleet.t41      only-m text  S400T
+fleet      fleet.u42      only-m url   #
+faq        faq.t4         only-d text  پاسخ پرتکرارترین سؤال‌های مشتریان دربارهٔ انتخاب، نصب و هزینه‌ها.
+faq        faq.t6         only-d text  کارشناسان پشتیبانی نورون شبانه‌روز پاسخگو هستند.
+footer     footer.t23     only-d text  دسترسی سریع
+footer     footer.t35     only-d text  بازگشت به بالا
+footer     footer.t36     only-m text  بالا
+todo       todo.t2        only-d text  فقط برای بررسی کارفرما؛ در سایت نهایی نمایش داده نمی‌شود. جایگاه‌های ت
+todo       todo.t4        only-d text  تفاوت دقیق امکانات S350 و S600 برای جدول مقایسه
+todo       todo.t5        only-d text  ۳ ویدئوی واقعی مشتری (کاور و عنوان)
+todo       todo.t6        only-d text  اعتبار گارانتی و بیمه برای خرید از فروشگاه‌های دیگر
+todo       todo.t7        only-d text  پنل مدیریت ناوگان
+todo       todo.t8        only-d text  قیمت‌ها پیش از انتشار دوباره چک شود
+todo       todo.t9        only-d text  تصاویر مقالات، نمادهای اینماد و ساماندهی، لینک شبکه‌های اجتماعی
+todo       todo.t10       only-m text  فقط برای بررسی؛ فهرست کامل در نسخهٔ دسکتاپ.
+todo       todo.t11       only-m text  امکانات دقیق S350 و S600
+todo       todo.t12       only-m text  ویدئوها
+todo       todo.t13       only-m text  تصاویر جایگاه‌دار: پنل، مقالات
+todo       todo.t14       only-m text  قیمت‌ها پیش از انتشار
+drawer     drawer.t1      only-m text  صفحهٔ اصلی
+drawer     drawer.t2      only-m text  ردیاب خودرو
+drawer     drawer.t3      only-m text  دزدگیر خودرو
+drawer     drawer.t4      only-m text  نمایندگی‌ها
+drawer     drawer.u5      only-m url   https://noroncar.ir/namayandegi/
+drawer     drawer.t6      only-m text  راهکار سازمانی
+drawer     drawer.t7      only-m text  مجلهٔ نورون
+drawer     drawer.t8      only-m text  تماس با ما
+drawer     drawer.u9      only-m url   https://noroncar.ir/contact-us/
+drawer     drawer.t10     only-m text  ورود به سامانه
+drawer     drawer.u11     only-m url   #
+drawer     drawer.t12     only-m text  اپلیکیشن نورون
+drawer     drawer.t13     only-m text  موقعیت خودرو و هشدارها روی موبایل شما
+drawer     drawer.t14     only-m text  دانلود اپلیکیشن
+drawer     drawer.u15     only-m url   https://noroncar.ir/download-app/
+drawer     drawer.u16     only-m url   tel:09120468018
+drawer     drawer.t17     only-m text  پشتیبانی
+drawer     drawer.t18     only-m text  ۰۹۱۲۰۴۶۸۰۱۸
+drawer     drawer.u19     only-m url   tel:09120468018
+drawer     drawer.t20     only-m text  صفحهٔ پشتیبانی
+drawer     drawer.u21     only-m url   https://noroncar.ir/support/

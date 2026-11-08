@@ -1,0 +1,25 @@
+/* Neuron landing – shared base styles (fonts, isolation from theme CSS, visibility per breakpoint) */
+@font-face{font-family:"Vazir";src:url(../fonts/vazir-400.ttf) format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"Vazir";src:url(../fonts/vazir-500.ttf) format("truetype");font-weight:500;font-display:swap}
+@font-face{font-family:"Vazir";src:url(../fonts/vazir-700.ttf) format("truetype");font-weight:700;font-display:swap}
+
+/* the design was drawn on a bare page: browser defaults, body margin 0 */
+body.nrn-body{margin:0;padding:0;background:#0B0C0F}
+.nrn{display:block;color:#000;font-size:16px;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;font-weight:400;font-style:normal;text-align:start;direction:rtl;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.nrn-m{display:none}
+
+/* full-bleed rows (the logo marquee uses 100vw) must not add a horizontal scrollbar */
+.nrn{overflow-x:clip}
+
+/* admin switches */
+.nrn-hide-tbd .tbd{display:none !important}
+.nrn-hide-phb .phb,.nrn-hide-phb .phb-d{display:none !important}
+
+/* video lightbox */
+html.nrn-lock{overflow:hidden}
+.nrn-lightbox{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box;background:rgba(5,6,8,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:nrnFade .25s ease-out both}
+.nrn-lb-in{position:relative;width:min(960px,100%);aspect-ratio:16/9;border-radius:20px;overflow:hidden;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.nrn-lb-in video,.nrn-lb-in iframe{display:block;width:100%;height:100%;border:0}
+.nrn-lb-x{position:absolute;top:16px;left:16px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font:400 30px/1 Vazir,Tahoma,sans-serif;cursor:pointer}
+.nrn-lb-x:hover{background:rgba(244,128,38,.35)}
+@keyframes nrnFade{from{opacity:0}to{opacity:1}}
