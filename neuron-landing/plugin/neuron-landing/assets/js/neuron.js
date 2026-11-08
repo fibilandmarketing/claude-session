@@ -13,6 +13,21 @@
     return String(n).replace(/[0-9]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'.charAt(+d); });
   }
 
+  /* tablets: draw the desktop design at its design width and scale it to the screen */
+  if (!window.nrnFit) window.nrnFit = function () {
+    var h = document.querySelector('.nrn-d'); if (!h) return 1;
+    var r = h.querySelector('[data-ref="root"]'); if (!r) return 1;
+    var dw = +h.getAttribute('data-dw') || 0;
+    h.classList.remove('nrn-scaled'); h.style.height = '';
+    var vw = h.clientWidth;
+    if (!dw || !vw || vw >= dw || getComputedStyle(h).display === 'none') return 1;
+    var s = vw / dw;
+    h.style.setProperty('--nrn-dw', dw + 'px'); h.style.setProperty('--nrn-s', s);
+    h.classList.add('nrn-scaled');
+    h.style.height = Math.ceil(r.offsetHeight * s) + 'px';
+    return s;
+  };
+
   function Drive(root) {
     this.root = root;
     var holder = root.closest('[data-layout]');
@@ -75,6 +90,8 @@
   P.syncScroller = function () {
     var root = this.root; if (!root) return;
     var rr = root.getBoundingClientRect();
+    // tablets: the desktop design is drawn at a fixed width and scaled (see nrnFit)
+    this.s = root.offsetWidth ? (rr.width / root.offsetWidth) || 1 : 1;
     var top0 = this.sc ? this.sc.getBoundingClientRect().top : 0;
     this.offTop = rr.top - top0 + this.scrollY();
     this.vh = this.sc ? this.sc.clientHeight : window.innerHeight;
@@ -155,12 +172,14 @@
   P.measure = function () {
     var root = this.root; if (!root) return;
     if (!this.sc) this.sc = this.findScroller();
+    if (!this.mob && window.nrnFit) window.nrnFit();
     this.syncScroller();
+    var S = this.s || 1;
     if (!this.menuOff) this.initMenu();
     var rr = root.getBoundingClientRect();
-    var W = Math.round(root.clientWidth), H = Math.round(rr.height);
+    var W = Math.round(root.clientWidth), H = Math.round(rr.height / S);
     if (!W || !H) return;
-    var off = function (el) { var r = el.getBoundingClientRect(); return { x: r.left - rr.left, y: r.top - rr.top, w: r.width, h: r.height }; };
+    var off = function (el) { var r = el.getBoundingClientRect(); return { x: (r.left - rr.left) / S, y: (r.top - rr.top) / S, w: r.width / S, h: r.height / S }; };
     var hero = root.querySelector('[data-hero]');
     var park = root.querySelector('[data-park]');
     var secs = Array.prototype.slice.call(root.querySelectorAll('[data-stop]'));
@@ -334,7 +353,7 @@
   P.updateTarget = function () {
     if (!this.tbl) return;
     this.rel = this.scrollY() - this.offTop;
-    var ty = this.scrollable ? this.rel + this.vh * 0.6 : -1;
+    var ty = this.scrollable ? (this.rel + this.vh * 0.6) / (this.s || 1) : -1;
     this.target = Math.max(this.startLen, this.lenForY(ty));
   };
 
@@ -404,7 +423,7 @@
   };
 
   P.applyHero = function () {
-    var hp = this.scrollable ? Math.max(0, Math.min(1.5, this.rel / (this.heroH || 900))) : 0;
+    var hp = this.scrollable ? Math.max(0, Math.min(1.5, this.rel / (this.s || 1) / (this.heroH || 900))) : 0;
     var t = Math.max(0, Math.min(1, hp / 0.6));
     var key = t.toFixed(3);
     if (key === this.heroT) return;

@@ -25,9 +25,11 @@ if ( $nl->setting( 'hide_phb' ) ) {
 </head>
 <body <?php body_class( 'nrn-body' ); ?>>
 <?php wp_body_open(); ?>
-<div class="<?php echo esc_attr( $wrap ); ?> nrn-d" data-layout="d">
+<div class="<?php echo esc_attr( $wrap ); ?> nrn-d" data-layout="d" data-dw="<?php echo esc_attr( (int) $nl->setting( 'scale_from' ) ); ?>">
 <?php $nl->layout = 'd'; include NRN_DIR . 'templates/layout-desktop.php'; ?>
 </div>
+<script>/* tablets: scale the desktop design before the first paint (neuron.js keeps it updated) */
+window.nrnFit=function(){var h=document.querySelector('.nrn-d');if(!h)return 1;var r=h.querySelector('[data-ref="root"]');if(!r)return 1;var dw=+h.getAttribute('data-dw')||0;h.classList.remove('nrn-scaled');h.style.height='';var vw=h.clientWidth;if(!dw||!vw||vw>=dw||getComputedStyle(h).display==='none')return 1;var s=vw/dw;h.style.setProperty('--nrn-dw',dw+'px');h.style.setProperty('--nrn-s',s);h.classList.add('nrn-scaled');h.style.height=Math.ceil(r.offsetHeight*s)+'px';return s};window.nrnFit();</script>
 <div class="<?php echo esc_attr( $wrap ); ?> nrn-m" data-layout="m">
 <?php $nl->layout = 'm'; include NRN_DIR . 'templates/layout-mobile.php'; ?>
 </div>

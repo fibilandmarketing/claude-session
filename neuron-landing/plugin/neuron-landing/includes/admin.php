@@ -229,6 +229,7 @@ function nrn_sanitize_all( array $in ) {
 		'hide_tbd'   => empty( $s['hide_tbd'] ) ? 0 : 1,
 		'hide_phb'   => empty( $s['hide_phb'] ) ? 0 : 1,
 		'breakpoint' => max( 320, min( 1400, (int) ( $s['breakpoint'] ?? 768 ) ) ),
+		'scale_from' => max( 0, min( 1600, (int) ( $s['scale_from'] ?? 1280 ) ) ),
 	);
 	return $out;
 }
@@ -639,6 +640,10 @@ function nrn_render_settings( NRN_Content $c, $preview ) {
 		<label>عرض تغییر به نسخهٔ موبایل (پیکسل)
 			<input type="number" min="320" max="1400" data-scope="settings" data-k="breakpoint" value="<?php echo esc_attr( (int) $c->setting( 'breakpoint' ) ); ?>">
 			<small>در صفحه‌های باریک‌تر از این عدد، طراحی موبایل نمایش داده می‌شود (پیش‌فرض ۷۶۸).</small>
+		</label>
+		<label>عرض طراحی دسکتاپ برای تبلت (پیکسل)
+			<input type="number" min="0" max="1600" data-scope="settings" data-k="scale_from" value="<?php echo esc_attr( (int) $c->setting( 'scale_from' ) ); ?>">
+			<small>بین عرض موبایل و این عدد (مثل تبلت‌ها)، طراحی دسکتاپ دقیقاً در همین عرض ساخته و متناسب با صفحه کوچک می‌شود تا چیدمان به هم نریزد. پیش‌فرض ۱۲۸۰؛ صفر یعنی بدون کوچک‌نمایی.</small>
 		</label>
 	</div>
 	<div class="nrn-card">

@@ -74,7 +74,7 @@ function check(name, ok, extra) { console.log((ok ? 'PASS ' : 'FAIL ') + name + 
   await q.waitForTimeout(500);
   let dr = await q.evaluate(() => { const d = document.querySelector('.nrn-m [data-drawer]'); return [d.classList.contains('open'), d.getAttribute('aria-hidden'), document.activeElement && document.activeElement.className]; });
   check('mobile menu opens (focus moves to close button)', dr[0] && dr[1] === 'false' && /md-x/.test(dr[2]), dr.join(' | '));
-  await q.screenshot({ path: process.argv[3] ? process.argv[3] + '/drawer.png' : '/dev/null' });
+  if (process.argv[3]) await q.screenshot({ path: process.argv[3] + '/drawer.png' });
   await q.keyboard.press('Escape');
   await q.waitForTimeout(300);
   check('Escape closes menu', await q.evaluate(() => !document.querySelector('.nrn-m [data-drawer]').classList.contains('open')));

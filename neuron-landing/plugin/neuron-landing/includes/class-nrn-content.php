@@ -330,6 +330,7 @@ class NRN_Content {
 			'hide_tbd'   => 0,
 			'hide_phb'   => 0,
 			'breakpoint' => 768,
+			'scale_from' => 1280,
 		);
 		$s = isset( $this->data['settings'] ) && is_array( $this->data['settings'] ) ? array_merge( $d, $this->data['settings'] ) : $d;
 		return isset( $s[ $k ] ) ? $s[ $k ] : null;

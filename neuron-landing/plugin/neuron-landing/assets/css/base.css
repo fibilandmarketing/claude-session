@@ -11,6 +11,11 @@ body.nrn-body{margin:0;padding:0;background:#0B0C0F}
 /* full-bleed rows (the logo marquee uses 100vw) must not add a horizontal scrollbar */
 .nrn{overflow-x:clip}
 
+/* tablets: desktop design drawn at its design width, scaled to the screen (set by nrnFit) */
+.nrn-d.nrn-scaled{overflow:clip;position:relative}
+.nrn-d.nrn-scaled>[data-ref="root"]{width:var(--nrn-dw) !important;transform:scale(var(--nrn-s));transform-origin:100% 0}
+.nrn-d.nrn-scaled .marquee{margin-left:calc(50% - var(--nrn-dw) / 2) !important;margin-right:calc(50% - var(--nrn-dw) / 2) !important}
+
 /* admin switches */
 .nrn-hide-tbd .tbd{display:none !important}
 .nrn-hide-phb .phb,.nrn-hide-phb .phb-d{display:none !important}
