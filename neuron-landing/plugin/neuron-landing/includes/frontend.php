@@ -42,6 +42,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style( 'nrn-base', NRN_URL . 'assets/css/base.css', array(), $ver );
 	wp_enqueue_style( 'nrn-desktop', NRN_URL . 'assets/css/desktop.css', array( 'nrn-base' ), $ver );
 	wp_enqueue_style( 'nrn-mobile', NRN_URL . 'assets/css/mobile.css', array( 'nrn-base' ), $ver );
+	wp_enqueue_style( 'nrn-fixes', NRN_URL . 'assets/css/fixes.css', array( 'nrn-desktop', 'nrn-mobile' ), $ver );
 
 	$bp  = max( 320, min( 1400, (int) $c->setting( 'breakpoint' ) ) );
 	$css = '@media (max-width:' . ( $bp - 1 ) . 'px){.nrn-d{display:none!important}.nrn-m{display:block!important}}';
@@ -81,7 +82,7 @@ function nrn_strip_styles() {
 	if ( ! $wp_styles instanceof WP_Styles ) {
 		return;
 	}
-	$keep = array( 'nrn-base', 'nrn-desktop', 'nrn-mobile', 'admin-bar', 'dashicons', 'wp-img-auto-sizes-contain' );
+	$keep = array( 'nrn-base', 'nrn-desktop', 'nrn-mobile', 'nrn-fixes', 'admin-bar', 'dashicons', 'wp-img-auto-sizes-contain' );
 	$core = array( 'wp-block-library', 'wp-block-library-theme', 'global-styles', 'classic-theme-styles', 'core-block-supports', 'core-block-supports-duotone', 'wp-emoji-styles', 'wp-block-template-skip-link' );
 	foreach ( (array) $wp_styles->queue as $handle ) {
 		if ( in_array( $handle, $keep, true ) ) {

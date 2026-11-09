@@ -146,6 +146,29 @@ return array(
       ),
     ),
   ),
+  'badges' => array(
+    array(
+      'label' => 'اینماد',
+      'img' => 'img/placeholder-badge.svg',
+      'alt' => 'جایگاه نماد اینماد',
+      'link' => '',
+      'code' => '',
+    ),
+    array(
+      'label' => 'ساماندهی',
+      'img' => 'img/placeholder-badge.svg',
+      'alt' => 'جایگاه نماد ساماندهی',
+      'link' => '',
+      'code' => '',
+    ),
+    array(
+      'label' => 'دانش‌بنیان',
+      'img' => 'img/placeholder-badge.svg',
+      'alt' => 'جایگاه نشان دانش‌بنیان',
+      'link' => '',
+      'code' => '',
+    ),
+  ),
   'provinces' => array(
     array(
       'slug' => 'razavi-khorasan',

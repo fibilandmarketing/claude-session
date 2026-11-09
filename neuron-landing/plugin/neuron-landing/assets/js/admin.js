@@ -25,45 +25,48 @@
   if (location.hash.length > 1) openTab(location.hash.slice(1));
 
   /* --------------------------------------------- field state markers */
-  function markField($f) {
-    var t = $f.data('type'), changed;
-    if (t === 'img') {
-      var $i = $f.find('.nrn-img');
-      changed = !!$f.find('.nrn-v-url').val() || $f.find('.nrn-v-alt').val() !== String($i.data('default-alt'));
-    } else {
-      var $v = $f.find('.nrn-v');
-      changed = $v.val() !== String($v.data('default'));
-    }
-    $f.toggleClass('is-changed', changed);
+  function rowChanged($r) {
+    var changed = false;
+    $r.find('.nrn-in').each(function () { if ($(this).val() !== String($(this).data('default'))) changed = true; });
+    $r.find('.nrn-imgf').each(function () {
+      if ($(this).find('.nrn-v-url').val() || $(this).find('.nrn-v-alt').val() !== String($(this).data('default-alt'))) changed = true;
+    });
+    $r.toggleClass('is-changed', changed);
   }
+  $('.nrn-fr').each(function () { rowChanged($(this)); });
   $form.on('input change', 'input, textarea, select', function () {
     setDirty();
-    var $f = $(this).closest('.nrn-field');
-    if ($f.length) markField($f);
+    var $r = $(this).closest('.nrn-fr');
+    if ($r.length) rowChanged($r);
     var $sw = $(this).filter('[data-scope="sections"]');
     if ($sw.length) $('.nrn-tab[data-tab="' + $sw.data('k') + '"]').toggleClass('is-off', !$sw.prop('checked'));
   });
 
-  function resetField($f) {
-    if ($f.data('type') === 'img') {
-      var $i = $f.find('.nrn-img');
-      $f.find('.nrn-v-url').val(''); $f.find('.nrn-v-id').val('0');
-      $f.find('.nrn-v-alt').val($i.data('default-alt'));
-      $f.find('.nrn-img-prev').attr('src', $i.data('default-src'));
-    } else {
-      var $v = $f.find('.nrn-v'); $v.val($v.data('default'));
-    }
-    markField($f); setDirty();
+  function resetRow($r) {
+    $r.find('.nrn-in').each(function () { $(this).val($(this).data('default')); });
+    $r.find('.nrn-imgf').each(function () {
+      var $i = $(this);
+      $i.find('.nrn-v-url').val(''); $i.find('.nrn-v-id').val('0');
+      $i.find('.nrn-v-alt').val($i.data('default-alt'));
+      $i.find('.nrn-img-prev').attr('src', $i.data('default-src'));
+    });
+    rowChanged($r); setDirty();
   }
-  $form.on('click', '.nrn-reset-field', function () { resetField($(this).closest('.nrn-field')); });
+  $form.on('click', '.nrn-reset-field', function () { resetRow($(this).closest('.nrn-fr')); });
 
   /* ------------------------------------------------- per-tab search */
   $form.on('input', '.nrn-filter', function () {
     var q = $.trim($(this).val()).toLowerCase();
-    $(this).closest('.nrn-card').find('.nrn-field').each(function () {
-      var $f = $(this);
-      var text = ($f.find('label').text() + ' ' + $f.find('.nrn-def').text() + ' ' + ($f.find('.nrn-v').val() || '')).toLowerCase();
-      $f.toggle(!q || text.indexOf(q) >= 0);
+    var $p = $(this).closest('.nrn-panel');
+    $p.find('.nrn-fr').each(function () {
+      var $r = $(this), text = $r.find('.nrn-fr-label').text() + ' ';
+      $r.find('.nrn-in, .nrn-v-alt').each(function () { text += ' ' + ($(this).val() || ''); });
+      $r.toggle(!q || text.toLowerCase().indexOf(q) >= 0);
+    });
+    $p.find('.nrn-box').each(function () {
+      var $b = $(this), any = $b.find('.nrn-fr').filter(function () { return $(this).css('display') !== 'none'; }).length;
+      $b.toggle(!q || any > 0 || $b.find('.nrn-box-t').text().toLowerCase().indexOf(q) >= 0);
+      if (q && any) $b.prop('open', true);
     });
   });
 
@@ -81,7 +84,7 @@
         $target.find('.nrn-img-prev').attr('src', (a.sizes && a.sizes.medium ? a.sizes.medium.url : a.url)).prop('hidden', false);
         var $alt = $target.find('.nrn-v-alt');
         if ($alt.length && a.alt) $alt.val(a.alt);
-        var $f = $target.closest('.nrn-field'); if ($f.length) markField($f);
+        var $r = $target.closest('.nrn-fr'); if ($r.length) rowChanged($r);
         refreshTitles($target.closest('.nrn-list'));
         setDirty();
       });
@@ -100,7 +103,7 @@
       $(this).children('.nrn-row').each(function (i) {
         var $r = $(this);
         $r.find('.nrn-row-n').text(i + 1);
-        var t = $r.find('[data-f="q"], [data-f="name"], [data-f="title"]').first().val() || '';
+        var t = $r.find('[data-f="q"], [data-f="name"], [data-f="title"], [data-f="label"]').first().val() || '';
         $r.find('.nrn-row-title').text(t);
       });
     });
@@ -148,11 +151,12 @@
   $form.on('click', '.nrn-reset-group', function () {
     if (!window.confirm(L.sure)) return;
     var $p = $(this).closest('.nrn-panel'), gid = $p.data('panel');
-    $p.find('.nrn-field').each(function () { resetField($(this)); });
+    $p.find('.nrn-fr').each(function () { resetRow($(this)); });
     $p.find('[data-scope="sections"]').prop('checked', true).trigger('change');
     if (gid === 'why') renderList('orgs', DEF.orgs);
     if (gid === 'videos') renderList('videos', DEF.videos);
     if (gid === 'faq') renderList('faq', DEF.faq);
+    if (gid === 'footer') renderList('badges', DEF.badges);
     if (gid === 'mag') {
       renderList('mag', DEF.mag.items);
       $p.find('[data-mag-k="source"]').val(DEF.mag.source); $p.find('[data-mag-k="more"]').val(DEF.mag.more); $p.find('.nrn-mag-cat').val('0');
@@ -174,20 +178,17 @@
   /* --------------------------------------------------------- submit */
   $form.on('submit', function () {
     var p = { fields: {}, sections: {}, settings: {}, map: {}, mag: { items: [] } };
-    $('.nrn-field').each(function () {
-      var $f = $(this), key = $f.data('key');
-      if ($f.data('type') === 'img') {
-        p.fields[key] = { url: $f.find('.nrn-v-url').val(), id: $f.find('.nrn-v-id').val(), alt: $f.find('.nrn-v-alt').val() };
-      } else {
-        p.fields[key] = $f.find('.nrn-v').val();
-      }
+    $('.nrn-in').each(function () { p.fields[$(this).data('key')] = $(this).val(); });
+    $('.nrn-imgf').each(function () {
+      var $i = $(this);
+      p.fields[$i.data('key')] = { url: $i.find('.nrn-v-url').val(), id: $i.find('.nrn-v-id').val(), alt: $i.find('.nrn-v-alt').val() };
     });
     $('[data-scope="sections"]').each(function () { p.sections[$(this).data('k')] = $(this).prop('checked') ? 1 : 0; });
     $('[data-scope="settings"]').each(function () {
       var $i = $(this);
       p.settings[$i.data('k')] = $i.is(':checkbox') ? ($i.prop('checked') ? 1 : 0) : $i.val();
     });
-    ['faq', 'orgs', 'videos'].forEach(function (l) { p[l] = rowsOf(l); });
+    ['faq', 'orgs', 'videos', 'badges'].forEach(function (l) { p[l] = rowsOf(l); });
     p.mag = { source: $('[data-mag-k="source"]').val(), cat: $('.nrn-mag-cat').val(), more: $('[data-mag-k="more"]').val(), items: rowsOf('mag') };
     $('[data-map-k]').each(function () { p.map[$(this).data('map-k')] = $(this).val(); });
     p.provinces = $('.nrn-prov tr[data-slug]').map(function () {

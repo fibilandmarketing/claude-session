@@ -9,12 +9,12 @@ function nrn_tpl() {
 			'faq_d' => '<details{OPEN} class="neo-sm reveal" style="border-radius: 24px; padding: 22px 26px"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 17px; font-weight: 500">{Q}<span class="neo-in chev" style="width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span></summary><div class="neo-in" style="margin-top: 16px; border-radius: 18px; padding: 16px 18px"><p style="margin: 0; font-size: 15px; line-height: 1.95; color: #3E434A">{A}</p></div></details>',
 			'faq_sep_d' => '
 ',
-			'org_d' => '<div class="org"{HID}><span class="org-logo"><img src="{SRC}" alt="{ALT}"></span><span class="org-name">{NAME}</span></div>',
+			'org_d' => '<div class="org"{HID}><span class="org-logo"><img loading="lazy" decoding="async" src="{SRC}" alt="{ALT}"></span><span class="org-name">{NAME}</span></div>',
 			'badge_d' => '<div class="org"{HID}><span class="org-logo"><span class="org-badge">★</span></span><span class="org-name">{NAME}</span></div>',
 			'vid_d' => '<article class="neo lift reveal" style="border-radius: 34px; padding: 14px; display: flex; flex-direction: column; gap: 16px">
 <button type="button" aria-label="{ARIA}"{VID} style="position: relative; aspect-ratio: 16 / 10; border-radius: 26px; border: 0; padding: 0; overflow: hidden; cursor: pointer; background: #E2E5EA; font-family: Vazir, Tahoma, sans-serif">
 {LABEL}
-<img src="{SRC}" alt="{ALT}" style="width: 100%; height: 100%; object-fit: cover; display: block">
+<img loading="lazy" decoding="async" src="{SRC}" alt="{ALT}" style="width: 100%; height: 100%; object-fit: cover; display: block">
 <span class="glass" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 76px; height: 76px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(23,25,28,0.55)">{RING}<svg width="26" height="26" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M17 12L8 6.5v11z"></path></svg></span>
 </button>
 <div style="padding: 0 10px 10px; display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-size: 18px; font-weight: 700">{TITLE}</h3>{SUB}</div>
@@ -26,7 +26,7 @@ function nrn_tpl() {
 			'vid_ring_d' => '<span class="pin" style="position: absolute; inset: 0; width: auto; height: auto; background: transparent; box-shadow: none"></span>',
 			'vid_ring_all_d' => true,
 			'mag_d' => '<a href="{URL}" class="neo lift zoom reveal" style="border-radius: 32px; padding: 12px; text-decoration: none; color: #17191C; display: flex; flex-direction: column; gap: 16px">
-<div style="position: relative; aspect-ratio: 16 / 10; border-radius: 24px; overflow: hidden">{PHB}<img src="{SRC}" alt="{ALT}" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div style="position: relative; aspect-ratio: 16 / 10; border-radius: 24px; overflow: hidden">{PHB}<img loading="lazy" decoding="async" src="{SRC}" alt="{ALT}" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
 <div style="padding: 4px 12px 14px; display: flex; flex-direction: column; gap: 10px">{LABEL}<h3 style="margin: 0; font-size: 19px; line-height: 1.7; font-weight: 700">{TITLE}</h3>{MORE}</div>
 </a>',
 			'mag_sep_d' => '
@@ -34,13 +34,18 @@ function nrn_tpl() {
 			'mag_label_d' => '<span style="font-size: 13px; font-weight: 500; color: #A3490B">',
 			'mag_more_d' => '<span style="font-size: 14px; color: #4A4F57">',
 			'path_d' => '<path class="{CLS}" data-province="{SLUG}" data-name="{NAME}"{URL} data-n="{N}" fill="{FILL}" d="{D}" tabindex="0" role="button" aria-pressed="false" aria-label="{ARIA}"></path>',
+			'seal_d' => '<div style="position: relative; width: 76px; height: 76px; border-radius: 18px; overflow: hidden"><img src="{SRC}" alt="{ALT}" style="width: 100%; height: 100%; object-fit: cover; display: block" loading="lazy" decoding="async">{LABEL}</div>',
+			'seal_sep_d' => '
+',
+			'seal_label_d' => '<span style="position: absolute; bottom: 6px; inset-inline: 0; text-align: center; font-size: 11px; color: #D0D4DA">',
+			'seal_box_d' => 'position: relative; width: 76px; height: 76px; border-radius: 18px; overflow: hidden',
 			'faq_m' => '<details{OPEN} class="neo-sm" style="border-radius: 22px; padding: 16px 18px"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 15px; font-weight: 500; line-height: 1.8">{Q}<span class="neo-in chev" style="width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span></summary><div class="neo-in" style="margin-top: 12px; border-radius: 16px; padding: 12px 14px"><p style="margin: 0; font-size: 14px; line-height: 1.95; color: #3E434A">{A}</p></div></details>',
 			'faq_sep_m' => '
 ',
-			'org_m' => '<div class="org"{HID}><span class="org-logo"><img src="{SRC}" alt="{ALT}"></span><span class="org-name">{NAME}</span></div>',
+			'org_m' => '<div class="org"{HID}><span class="org-logo"><img loading="lazy" decoding="async" src="{SRC}" alt="{ALT}"></span><span class="org-name">{NAME}</span></div>',
 			'badge_m' => '<div class="org"{HID}><span class="org-logo"><span class="org-badge">★</span></span><span class="org-name">{NAME}</span></div>',
 			'vid_m' => '<article class="neo" style="flex: 0 0 290px; border-radius: 28px; padding: 10px; display: flex; flex-direction: column; gap: 12px">
-<button type="button" aria-label="{ARIA}"{VID} style="position: relative; height: 180px; border-radius: 20px; border: 0; padding: 0; overflow: hidden; cursor: pointer; background: #E2E5EA; font-family: Vazir, Tahoma, sans-serif">{LABEL}<img src="{SRC}" alt="{ALT}" style="width: 100%; height: 100%; object-fit: cover; display: block"><span class="glass" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 62px; height: 62px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(23,25,28,0.55)">{RING}<svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M17 12L8 6.5v11z"></path></svg></span></button>
+<button type="button" aria-label="{ARIA}"{VID} style="position: relative; height: 180px; border-radius: 20px; border: 0; padding: 0; overflow: hidden; cursor: pointer; background: #E2E5EA; font-family: Vazir, Tahoma, sans-serif">{LABEL}<img loading="lazy" decoding="async" src="{SRC}" alt="{ALT}" style="width: 100%; height: 100%; object-fit: cover; display: block"><span class="glass" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 62px; height: 62px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(23,25,28,0.55)">{RING}<svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M17 12L8 6.5v11z"></path></svg></span></button>
 <h3 style="margin: 0 6px 8px; font-size: 15px; font-weight: 700">{TITLE}</h3>
 </article>',
 			'vid_sep_m' => '
@@ -49,12 +54,17 @@ function nrn_tpl() {
 			'vid_sub_m' => '',
 			'vid_ring_m' => '<span class="pin" style="position: absolute; inset: 0; width: auto; height: auto; background: transparent; box-shadow: none"></span>',
 			'vid_ring_all_m' => false,
-			'mag_m' => '<a href="{URL}" class="neo reveal" style="border-radius: 24px; padding: 10px; text-decoration: none; color: #17191C; display: flex; gap: 12px; align-items: center"><div style="position: relative; width: 120px; height: 88px; flex-shrink: 0; border-radius: 18px; overflow: hidden"><img src="{SRC}" alt="{ALT}" style="width: 100%; height: 100%; object-fit: cover; display: block"></div><div style="display: flex; flex-direction: column; gap: 4px">{LABEL}<h3 style="margin: 0; font-size: 15px; line-height: 1.7; font-weight: 700">{TITLE}</h3></div></a>',
+			'mag_m' => '<a href="{URL}" class="neo reveal" style="border-radius: 24px; padding: 10px; text-decoration: none; color: #17191C; display: flex; gap: 12px; align-items: center"><div style="position: relative; width: 120px; height: 88px; flex-shrink: 0; border-radius: 18px; overflow: hidden"><img loading="lazy" decoding="async" src="{SRC}" alt="{ALT}" style="width: 100%; height: 100%; object-fit: cover; display: block"></div><div style="display: flex; flex-direction: column; gap: 4px">{LABEL}<h3 style="margin: 0; font-size: 15px; line-height: 1.7; font-weight: 700">{TITLE}</h3></div></a>',
 			'mag_sep_m' => '
 ',
 			'mag_label_m' => '<span style="font-size: 12px; font-weight: 500; color: #A3490B">',
 			'mag_more_m' => '',
 			'path_m' => '<path class="{CLS}" data-province="{SLUG}" data-name="{NAME}"{URL} data-n="{N}" fill="{FILL}" d="{D}" tabindex="0" role="button" aria-pressed="false" aria-label="{ARIA}"></path>',
+			'seal_m' => '<div style="position: relative; width: 70px; height: 70px; border-radius: 16px; overflow: hidden"><img src="{SRC}" alt="{ALT}" style="width: 100%; height: 100%; object-fit: cover; display: block" loading="lazy" decoding="async">{LABEL}</div>',
+			'seal_sep_m' => '
+',
+			'seal_label_m' => '<span style="position: absolute; bottom: 5px; inset-inline: 0; text-align: center; font-size: 10px; color: #D0D4DA">',
+			'seal_box_m' => 'position: relative; width: 70px; height: 70px; border-radius: 16px; overflow: hidden',
 		);
 	}
 	return $t;
@@ -198,4 +208,33 @@ function nrn_partial_map_options( NRN_Content $c, $layout ) {
 		$out .= '<option value="' . esc_attr( $slug ) . '">' . esc_html( $provs[ $slug ]['name'] ) . '</option>';
 	}
 	echo $out; // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above
+}
+
+function nrn_partial_badges( NRN_Content $c, $layout ) {
+	$t     = nrn_tpl();
+	$parts = array();
+	foreach ( (array) $c->items( 'badges' ) as $it ) {
+		$code = isset( $it['code'] ) ? trim( (string) $it['code'] ) : '';
+		$link = isset( $it['link'] ) ? trim( (string) $it['link'] ) : '';
+		$img  = isset( $it['img'] ) ? trim( (string) $it['img'] ) : '';
+		if ( '' !== $code ) {
+			// trust-seal code (eNamad, Samandehi...): stored by an administrator, printed as is
+			$parts[] = '<div class="nrn-seal" style="' . esc_attr( $t[ 'seal_box_' . $layout ] ) . '">' . $code . '</div>';
+			continue;
+		}
+		if ( '' === $img && '' === trim( (string) ( $it['label'] ?? '' ) ) ) {
+			continue;
+		}
+		$label = isset( $it['label'] ) ? trim( $it['label'] ) : '';
+		$html  = strtr( $t[ 'seal_' . $layout ], array(
+			'{SRC}'   => esc_url( NRN_Content::asset( '' !== $img ? $img : 'img/placeholder-badge.svg' ) ),
+			'{ALT}'   => esc_attr( isset( $it['alt'] ) ? $it['alt'] : '' ),
+			'{LABEL}' => '' !== $label ? $t[ 'seal_label_' . $layout ] . esc_html( $label ) . '</span>' : '',
+		) );
+		if ( '' !== $link ) {
+			$html = '<a href="' . esc_url( $link ) . '" target="_blank" rel="noopener" style="display: block; border-radius: inherit">' . $html . '</a>';
+		}
+		$parts[] = $html;
+	}
+	echo implode( $t[ 'seal_sep_' . $layout ], $parts ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above / admin-provided seal code
 }

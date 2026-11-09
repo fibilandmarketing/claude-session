@@ -40,7 +40,24 @@ class NRN_Content {
 		$this->lists  = require NRN_DIR . 'includes/defaults-lists.php';
 		$this->geo    = require NRN_DIR . 'includes/map-geometry.php';
 		$saved        = get_option( NRN_OPTION, array() );
-		$this->data   = is_array( $saved ) ? $saved : array();
+		$this->data   = is_array( $saved ) ? self::migrate( $saved ) : array();
+	}
+
+	/** Version 1.0 stored one field per word run; carry its edits over to the current keys. */
+	private static function migrate( array $d ) {
+		if ( ! empty( $d['v'] ) || empty( $d['fields'] ) ) {
+			return $d;
+		}
+		$map    = require NRN_DIR . 'includes/migrate-v1.php';
+		$fields = array();
+		foreach ( $d['fields'] as $k => $v ) {
+			if ( isset( $map[ $k ] ) ) {
+				$fields[ $map[ $k ] ] = $v;
+			}
+		}
+		$d['fields'] = $fields;
+		$d['v']      = 2;
+		return $d;
 	}
 
 	/* ------------------------------------------------------------ groups */
@@ -74,7 +91,17 @@ class NRN_Content {
 
 	public function field_def( $key ) {
 		$gid = strstr( $key, '.', true );
-		return isset( $this->schema[ $gid ][ $key ] ) ? $this->schema[ $gid ][ $key ] : null;
+		return isset( $this->schema['fields'][ $gid ][ $key ] ) ? $this->schema['fields'][ $gid ][ $key ] : null;
+	}
+
+	/** Fields of a page section. */
+	public function fields_of( $gid ) {
+		return isset( $this->schema['fields'][ $gid ] ) ? $this->schema['fields'][ $gid ] : array();
+	}
+
+	/** Cards (boxes) of a page section: card key => title. */
+	public function cards_of( $gid ) {
+		return isset( $this->schema['cards'][ $gid ] ) ? $this->schema['cards'][ $gid ] : array();
 	}
 
 	public function raw( $key ) {
@@ -98,6 +125,38 @@ class NRN_Content {
 
 	public function t( $key ) {
 		echo esc_html( $this->text( $key ) );
+	}
+
+	/**
+	 * Text with highlighted parts: "[...]" is drawn with the design's inline tag
+	 * at that position (coloured / bold part), a new line becomes <br>.
+	 */
+	public function rich( $key ) {
+		$v    = str_replace( "\r", '', $this->text( $key ) );
+		$def  = $this->field_def( $key );
+		$tags = $def && ! empty( $def['tags'] ) ? $def['tags'] : array();
+		$out  = '';
+		$i    = 0;
+		$len  = strlen( $v );
+		$pos  = 0;
+		while ( $pos < $len ) {
+			$o = $tags ? strpos( $v, '[', $pos ) : false;
+			$c = false !== $o ? strpos( $v, ']', $o + 1 ) : false;
+			if ( false === $o || false === $c ) {
+				$out .= self::esc_lines( substr( $v, $pos ) );
+				break;
+			}
+			$out .= self::esc_lines( substr( $v, $pos, $o - $pos ) );
+			$tag  = $tags[ min( $i, count( $tags ) - 1 ) ];
+			$out .= $tag[0] . self::esc_lines( substr( $v, $o + 1, $c - $o - 1 ) ) . $tag[1];
+			$i++;
+			$pos = $c + 1;
+		}
+		echo $out; // phpcs:ignore WordPress.Security.EscapeOutput -- text escaped, tags come from the design
+	}
+
+	private static function esc_lines( $s ) {
+		return implode( '<br>', array_map( 'esc_html', explode( "\n", $s ) ) );
 	}
 
 	public function has( $key ) {
@@ -130,8 +189,25 @@ class NRN_Content {
 		echo esc_attr( $alt );
 	}
 
-	public function url( $key ) {
-		$v = $this->text( $key );
+	/** Link of the given layout: the saved one, else the design's link of that layout. */
+	public function link( $key, $layout = 'd' ) {
+		$def = $this->field_def( $key );
+		if ( isset( $this->data['fields'][ $key ] ) && is_string( $this->data['fields'][ $key ] ) ) {
+			$v = $this->data['fields'][ $key ];
+			// in-page anchors: the mobile design prefixes its section ids with "m-"
+			if ( 'm' === $layout && preg_match( '/^#(top|choose|compare|personal|heavy|cold|city|fleet|mag)$/', $v ) ) {
+				$v = '#m-' . substr( $v, 1 );
+			}
+			return $v;
+		}
+		if ( $def && isset( $def['defaults'][ $layout ] ) ) {
+			return $def['defaults'][ $layout ];
+		}
+		return $def ? $def['default'] : '';
+	}
+
+	public function url( $key, $layout = 'd' ) {
+		$v = $this->link( $key, $layout );
 		// "View all" of the magazine: follow the blog / chosen category while it is still the design's "#"
 		if ( '#' === $v && 0 === strpos( $key, 'mag.' ) ) {
 			$m = $this->mag();

@@ -3,7 +3,7 @@
  * Plugin Name:       لندینگ نورون (صفحهٔ اصلی)
  * Plugin URI:        https://noroncar.ir/
  * Description:       صفحهٔ اصلی طراحی‌شدهٔ نورون با ماشین متحرک روی مسیر، نقشهٔ نمایندگی‌ها، نسخهٔ دسکتاپ و موبایل، و پنل مدیریت کامل برای ویرایش همهٔ بخش‌ها.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            Neuron
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'NRN_VERSION', '1.0.0' );
+define( 'NRN_VERSION', '1.1.0' );
 define( 'NRN_FILE', __FILE__ );
 define( 'NRN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NRN_URL', plugin_dir_url( __FILE__ ) );

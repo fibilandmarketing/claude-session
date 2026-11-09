@@ -25,6 +25,7 @@ SRC = os.path.join(ROOT, 'source', 'design')
 BLOBS = os.path.join(ROOT, 'source', 'blobs')
 PLUGIN = os.path.join(ROOT, 'plugin', 'neuron-landing')
 ASSET_MAP = json.load(open(os.path.join(ROOT, 'build', 'assets_map.json')))
+IMG_SIZES = json.load(open(os.path.join(ROOT, 'build', 'image_sizes.json')))
 
 VOID = {'img', 'br', 'input', 'meta', 'link', 'hr', 'source', 'wbr', 'area', 'col', 'embed', 'param', 'track'}
 
@@ -194,10 +195,19 @@ def blob_to_rel(css, from_css=True):
 
 # ------------------------------------------------------------- the schema
 class Schema:
+    """Editable fields, grouped by page section (gid) and, inside it, by card."""
+
     def __init__(self):
-        self.groups = OrderedDict()  # gid -> OrderedDict(key -> field)
-        self.match = {}              # (gid, kind, sig, occ) -> key
+        self.groups = OrderedDict()   # gid -> OrderedDict(key -> field)
+        self.cards = OrderedDict()    # gid -> OrderedDict(card_key -> title)
+        self.match = {}               # (gid, kind, sig, occ) -> key
         self.counters = defaultdict(int)
+
+    def card(self, gid, ckey, title):
+        c = self.cards.setdefault(gid, OrderedDict())
+        if ckey not in c:
+            c[ckey] = title
+        return ckey
 
     def field(self, layout, gid, kind, sig, occ, default, role, extra=None):
         mk = (gid, kind, sig, occ)
@@ -207,10 +217,15 @@ class Schema:
             f = g[key]
             if layout not in f['layouts']:
                 f['layouts'].append(layout)
+            if kind == 'url':
+                f['defaults'][layout] = extra['href']
             return key
         self.counters[gid] += 1
         key = '%s.%s%d' % (gid, {'text': 't', 'img': 'i', 'url': 'u'}[kind], self.counters[gid])
         f = OrderedDict(type=kind, role=role, default=default, layouts=[layout])
+        if kind == 'url':
+            f['defaults'] = OrderedDict([(layout, extra['href'])])
+            extra = {k: v for k, v in extra.items() if k != 'href'}
         if extra:
             f.update(extra)
         g[key] = f
@@ -222,44 +237,446 @@ def norm_text(t):
     return re.sub(r'\s+', ' ', html.unescape(t)).strip()
 
 
+# ----------------------------------------------------------- the tree
+class Node:
+    __slots__ = ('tag', 'raw', 'attrs', 'children', 'close', 'parent')
+
+    def __init__(self, tag, raw, attrs, close=''):
+        self.tag, self.raw, self.attrs, self.close = tag, raw, attrs, close
+        self.children = []
+        self.parent = None
+
+    @property
+    def cls(self):
+        return set((self.attrs.get('class') or '').split())
+
+
+class Text:
+    __slots__ = ('raw', 'parent')
+
+    def __init__(self, raw):
+        self.raw = raw
+        self.parent = None
+
+
+class Partial:
+    __slots__ = ('name', 'parent')
+
+    def __init__(self, name):
+        self.name = name
+        self.parent = None
+
+
+def build_tree(pieces):
+    root = Node('#root', '', {})
+    stack = [root]
+
+    def add(n):
+        n.parent = stack[-1]
+        stack[-1].children.append(n)
+
+    for piece in pieces:
+        if piece[0] == 'partial':
+            add(Partial(piece[1]))
+            continue
+        for tok in tokenize(piece[1]):
+            if tok[0] == 'text':
+                add(Text(tok[1]))
+            elif tok[0] == 'end':
+                if tok[1] in VOID:
+                    continue
+                if stack[-1].tag != tok[1]:
+                    raise ValueError('unbalanced </%s> in <%s>' % (tok[1], stack[-1].tag))
+                stack[-1].close = tok[2]
+                stack.pop()
+            else:
+                _, name, raw, attrs, selfclose = tok
+                n = Node(name, raw, attrs)
+                add(n)
+                if name not in VOID and not selfclose:
+                    stack.append(n)
+    if len(stack) != 1:
+        raise ValueError('unclosed: ' + ','.join(n.tag for n in stack[1:]))
+    return root
+
+
+INLINE_FMT = {'span', 'b', 'strong', 'em', 'i', 'small', 'bdi', 'sup', 'sub', 'u'}
+CARD_CLASSES = {'neo', 'neo-sm', 'glass', 'glass-l', 'dark', 'mapp', 'org'}
+HEAD_TAGS = ('h3', 'h4', 'h2', 'b', 'strong', 'label', 'summary')
+NO_REMOVE = {'option', 'text', 'title', 'summary', 'textarea', 'select'}
+
+
+def has_text(n):
+    if isinstance(n, Text):
+        return bool(n.raw.strip())
+    if isinstance(n, Partial):
+        return True
+    if n.tag in ('style', 'script'):
+        return False
+    return any(has_text(c) for c in n.children)
+
+
+def has_field_img(n):
+    if isinstance(n, Node):
+        if n.tag == 'img' and (n.attrs.get('src') or '').startswith('/_blob/'):
+            return True
+        return any(has_field_img(c) for c in n.children)
+    return False
+
+
+def is_inline(n):
+    """An inline formatting element holding only text (one bracketed part of a field)."""
+    if not isinstance(n, Node) or n.tag not in INLINE_FMT:
+        return False
+    if n.cls & {'tbd', 'phb', 'phb-d', 'kicker'}:
+        return False  # badges / labels are separate fields
+    if any(k.startswith('data-') for k in n.attrs) or 'ref' in n.attrs:
+        return False
+    for c in n.children:
+        if isinstance(c, Text):
+            continue
+        return False
+    return has_text(n)
+
+
+def is_decor(n):
+    """Elements without text or editable images: kept verbatim (icons, dots, svg...)."""
+    return isinstance(n, Node) and n.tag not in ('br',) and not has_text(n) and not has_field_img(n) \
+        and not (n.tag == 'a' and 'href' in n.attrs)
+
+
+def text_of(n):
+    if isinstance(n, Text):
+        return n.raw
+    if isinstance(n, Partial):
+        return ''
+    if n.tag in ('style', 'script', 'svg'):
+        return ''
+    return ' '.join(text_of(c) for c in n.children)
+
+
+def card_title(n):
+    for tag in HEAD_TAGS:
+        found = find_first(n, tag)
+        if found is not None:
+            t = norm_text(text_of(found))
+            if t:
+                return t
+    t = norm_text(text_of(n))
+    return t[:60] if t else 'کارت'
+
+
+def find_first(n, tag):
+    for c in n.children:
+        if isinstance(c, Node):
+            if c.tag == tag and has_text(c):
+                return c
+            r = find_first(c, tag)
+            if r is not None:
+                return r
+    return None
+
+
+def is_card(n):
+    if not isinstance(n, Node):
+        return False
+    if n.tag in ('section', 'footer', 'header', 'aside', 'svg', 'nav', 'ol', 'ul'):
+        return False
+    if n.tag in ('article', 'details'):
+        return True
+    return bool(n.cls & CARD_CLASSES) and n.tag in ('div', 'a', 'li', 'article', 'aside', 'label', 'form')
+
+
 # ----------------------------------------------------------- conversion
 SOCIAL_LABELS = {'تلگرام نورون', 'اینستاگرام نورون', 'واتس‌اپ نورون', 'ایتا نورون'}
 SPECIAL_ATTR_TEXT = {'data-mname': "<?php $nl->map_name(); ?>", 'data-mcount': "<?php $nl->map_count(); ?>"}
+PATCHES = {
+    # mobile: the fleet card becomes a full card like the S350 / S600 cards (dark, as on desktop)
+    'm': [('<article class="dark reveal" style="border-radius: 30px; padding: 12px; display: flex; gap: 14px', 'm-fleet-card.html')],
+}
 
 
 def find_regions(body, layout):
     """Regions replaced by hand-written PHP partials: list of (start, end, partial_name)."""
     regions = []
-    # FAQ: the run of <details> elements
     i = body.find('<details')
     n = len(re.findall(r'<details[\s>]', body))
     regions.append(sibling_run(body, i, n) + ('faq',))
-    # organisations marquee: inner of .mtrack
     i = body.find('<div class="mtrack">')
     e = element_end(body, i)
-    inner_s = body.find('>', i) + 1
-    inner_e = body.rfind('</div>', i, e)
-    regions.append((inner_s, inner_e, 'orgs'))
-    # videos: the 3 <article> cards containing "پخش ویدئوی مشتری"
-    i = body.find('پخش ویدئوی مشتری ۱')
-    i = body.rfind('<article', 0, i)
+    regions.append((body.find('>', i) + 1, body.rfind('</div>', i, e), 'orgs'))
+    i = body.rfind('<article', 0, body.find('پخش ویدئوی مشتری ۱'))
     regions.append(sibling_run(body, i, 3) + ('videos',))
-    # magazine cards: the 3 <a> elements holding "جایگاه تصویر مقاله"
     j = body.find('alt="جایگاه تصویر مقاله"')
     i = body.rfind('<a href="#" class="neo', 0, j)
     regions.append(sibling_run(body, i, 3) + ('mag',))
-    # province paths inside the map
     i = body.find('<path class="prv')
     n = len(re.findall(r'<path class="prv', body))
     regions.append(sibling_run(body, i, n) + ('map_paths',))
-    # province select options (after the first placeholder option)
     i = body.find('<select')
     first = body.find('<option', i)
     second = body.find('<option', first + 1)
     n = len(re.findall(r'<option ', body[i:element_end(body, i)])) - 1
     regions.append(sibling_run(body, second, n) + ('map_options',))
+    # footer trust badges (eNamad, Samandehi, knowledge-based): image / link / HTML code
+    j = body.find('alt="جایگاه نماد اینماد"')
+    i = body.rfind('<div style="position: relative; width:', 0, j)
+    regions.append(sibling_run(body, i, 3) + ('badges',))
     regions.sort()
     return regions
+
+
+class Converter:
+    def __init__(self, layout, schema):
+        self.L = layout
+        self.schema = schema
+        self.occ = defaultdict(int)
+        self.sec_list = SECTIONS[layout]
+        self.sec_idx = -1
+        self.root_node = None
+
+    # -- context helpers
+    def gid_of(self, n):
+        while n is not None and isinstance(n, (Node, Text, Partial)):
+            if isinstance(n, Node) and n.tag == 'header':
+                return 'header'
+            n = n.parent
+        return self.sec_list[self.sec_idx] if self.sec_idx >= 0 else 'global'
+
+    def card_of(self, n, gid):
+        """Outermost card-like ancestor inside the current section."""
+        card = None
+        p = n
+        while p is not None and isinstance(p, Node) and p.tag not in ('section', 'footer', 'aside', '#root'):
+            if p.tag == 'header':
+                break
+            if is_card(p):
+                card = p
+            if p.parent is not None and isinstance(p.parent, Node) and 'data-drawer' in p.parent.attrs:
+                break
+            p = p.parent
+        if card is None:
+            return ''
+        title = card_title(card)
+        ckey = '%s|%s' % (gid, title)
+        return self.schema.card(gid, ckey, title)
+
+    def next_occ(self, gid, kind, sig):
+        k = (gid, kind, sig)
+        self.occ[k] += 1
+        return self.occ[k]
+
+    # -- rendering
+    def render(self, n):
+        if isinstance(n, Partial):
+            return "<?php $nl->partial('%s', '%s'); ?>" % (n.name, self.L)
+        if isinstance(n, Text):
+            return n.raw
+        if n.tag == '#root':
+            return ''.join(self.render(c) for c in n.children)
+        out = []
+        wrapper = False
+        if self.root_node is None and n.attrs.get('ref') == '{{rootRef}}':
+            self.root_node = n
+        if self.root_node is not None and n.parent is self.root_node and (
+                n.tag in ('section', 'footer', 'aside') or (n.tag == 'div' and 'data-drawer' in n.attrs)):
+            self.sec_idx += 1
+            gid = self.sec_list[self.sec_idx]
+            if gid not in ('hero', 'footer'):
+                out.append("<?php if ($nl->on('%s')): ?>" % gid)
+                wrapper = True
+        gid = self.gid_of(n)
+        open_raw = self.open_tag(n, gid)
+        if n.tag in VOID or not n.close and not n.children and n.raw.rstrip().endswith('/>'):
+            out.append(open_raw)
+            if wrapper:
+                out.append('<?php endif; ?>')
+            return ''.join(out)
+
+        if n.tag in ('style', 'script'):
+            inner = ''.join(c.raw if isinstance(c, Text) else self.render(c) for c in n.children)
+            out.append(open_raw + inner + n.close)
+            return ''.join(out)
+
+        special = next((sp for sp in SPECIAL_ATTR_TEXT if sp in n.attrs), None)
+        runs_made = []
+        if special:
+            inner = SPECIAL_ATTR_TEXT[special]
+        else:
+            inner, runs_made = self.render_children(n, gid)
+
+        html_el = open_raw + inner + n.close
+        # links: create the URL field now that the visible text is known
+        if '\x00URL\x00' in html_el:
+            label = norm_text(n.attrs.get('aria-label') or '') or self.link_label(n)
+            lgid = 'social' if label in SOCIAL_LABELS else gid
+            href = n.attrs['href']
+            sig = label or href
+            occ = 1 if lgid == 'social' else self.next_occ(lgid, 'url', sig)
+            key = self.schema.field(self.L, lgid, 'url', sig, occ, href, 'لینک',
+                                    {'label': label, 'href': href, 'card': self.card_of(n, lgid) if lgid != 'social' else ''})
+            if len(runs_made) == 1:
+                tf = self.schema.groups[gid][runs_made[0]]
+                tf['link'] = key
+                self.schema.groups[lgid][key]['attached'] = runs_made[0]
+            html_el = html_el.replace('\x00URL\x00', "<?php $nl->url('%s', '%s'); ?>" % (key, self.L), 1)
+        # an element holding a single text field disappears when that field is emptied
+        sole = self.sole_run(n)
+        if sole and runs_made and n.tag not in NO_REMOVE:
+            html_el = "<?php if ($nl->has('%s')): ?>%s<?php endif; ?>" % (runs_made[0], html_el)
+        out.append(html_el)
+        if wrapper:
+            out.append('<?php endif; ?>')
+        return ''.join(out)
+
+    def link_label(self, n):
+        return norm_text(text_of(n))[:80]
+
+    def sole_run(self, n):
+        """True when n's content is one text run plus decoration only."""
+        runs = 0
+        in_run = False
+        for c in n.children:
+            if isinstance(c, Text):
+                if c.raw.strip():
+                    if not in_run:
+                        runs += 1
+                    in_run = True
+                continue
+            if isinstance(c, Partial):
+                return False
+            if c.tag == 'br' or is_inline(c):
+                if not in_run:
+                    runs += 1
+                in_run = True
+                continue
+            if is_decor(c):
+                in_run = False
+                continue
+            return False
+        return runs == 1
+
+    def render_children(self, n, gid):
+        out = []
+        made = []
+        buf = []
+
+        def flush():
+            if not buf:
+                return
+            if any((isinstance(x, Text) and x.raw.strip()) or (isinstance(x, Node) and x.tag != 'br') for x in buf):
+                s, key = self.make_run(buf, n, gid)
+                out.append(s)
+                if key:
+                    made.append(key)
+            else:
+                out.append(''.join(x.raw if isinstance(x, Text) else x.raw for x in buf))
+            buf.clear()
+
+        for c in n.children:
+            if isinstance(c, Text) or (isinstance(c, Node) and (c.tag == 'br' or is_inline(c))):
+                buf.append(c)
+                continue
+            flush()
+            out.append(self.render(c))
+        flush()
+        return ''.join(out), made
+
+    def make_run(self, items, parent, gid):
+        # leading / trailing whitespace stays outside the field
+        lead = trail = ''
+        if isinstance(items[0], Text):
+            lead = items[0].raw[:len(items[0].raw) - len(items[0].raw.lstrip())]
+        if isinstance(items[-1], Text):
+            trail = items[-1].raw[len(items[-1].raw.rstrip()):]
+        # a run that is just one inline element (e.g. <span class="md-t">text</span>): plain field inside it
+        core = [x for x in items if not (isinstance(x, Text) and not x.raw.strip())]
+        if len(core) == 1 and isinstance(core[0], Node) and core[0].tag != 'br':
+            el = core[0]
+            before = ''.join(x.raw for x in items[:items.index(el)])
+            after = ''.join(x.raw for x in items[items.index(el) + 1:])
+            s, key = self.make_run(list(el.children), el, gid)
+            if key and self.sole_run(el) and el.tag not in NO_REMOVE:
+                return "%s<?php if ($nl->has('%s')): ?>%s%s%s<?php endif; ?>%s" % (before, key, el.raw, s, el.close, after), key
+            return before + el.raw + s + el.close + after, key
+        # several inline elements with no plain text between them: one field each
+        inl = [x for x in core if isinstance(x, Node) and x.tag != 'br']
+        if len(inl) > 1 and len(inl) == len(core):
+            parts, first = [], None
+            for x in items:
+                if isinstance(x, Node) and x.tag != 'br':
+                    s2, k2 = self.make_run([x], parent, gid)
+                    parts.append(s2)
+                    first = first or k2
+                else:
+                    parts.append(x.raw)
+            return ''.join(parts), first
+        value, tags, has_br = '', [], False
+        for x in items:
+            if isinstance(x, Text):
+                value += re.sub(r'\s+', ' ', html.unescape(x.raw))
+            elif x.tag == 'br':
+                value += '\n'
+                has_br = True
+            else:
+                tags.append([x.raw, x.close])
+                value += '[' + norm_text(text_of(x)) + ']'
+        value = '\n'.join(line.strip() for line in value.strip().split('\n'))
+        if not value:
+            return ''.join(x.raw for x in items), None
+        cls = parent.cls
+        role = ROLE.get(parent.tag, 'متن')
+        note = bool(cls & {'tbd', 'phb', 'phb-d'})
+        if 'kicker' in cls:
+            role = 'برچسب بالای تیتر'
+        elif 'tbd' in cls:
+            role = 'نشان «نیازمند تأیید»'
+        elif cls & {'phb', 'phb-d'}:
+            role = 'برچسب جایگاه تصویر'
+        elif parent.tag == 'a' or 'btn' in cls:
+            role = 'دکمه / لینک'
+        if re.fullmatch(r'[+\-]?[۰-۹0-9٬,.]+\+?', value):
+            role = 'عدد / قیمت'
+        elif 'تومان' in value and re.search(r'[۰-۹0-9][۰-۹0-9٬,]{3,}', value):
+            role = 'قیمت'
+        card = '' if note else self.card_of(parent, gid)
+        extra = {'long': len(value) > 90 or has_br, 'card': '_notes' if note else card}
+        if tags:
+            extra['tags'] = tags
+        if has_br:
+            extra['br'] = True
+        key = self.schema.field(self.L, gid, 'text', value, self.next_occ(gid, 'text', value), value, role, extra)
+        fn = 'rich' if (tags or has_br) else 't'
+        return "%s<?php $nl->%s('%s'); ?>%s" % (lead, fn, key, trail), key
+
+    def open_tag(self, n, gid):
+        raw = n.raw
+        m = re.search(r'\sref="\{\{(\w+)Ref\}\}"', raw)
+        if m:
+            raw = raw.replace(m.group(0), ' data-ref="%s"' % m.group(1))
+        if n.tag == 'img' and (n.attrs.get('src') or '').startswith('/_blob/'):
+            rel = asset_rel(n.attrs['src'][7:])
+            alt = html.unescape(n.attrs.get('alt') or '')
+            igid = 'brand' if rel == 'img/logo.png' else ('social' if rel.startswith('img/social-') else gid)
+            occ = 1 if igid in ('brand', 'social') else self.next_occ(igid, 'img', rel)
+            key = self.schema.field(self.L, igid, 'img', rel, occ, rel, 'تصویر',
+                                    {'alt': alt, 'card': self.card_of(n, igid) if igid not in ('brand', 'social') else ''})
+            raw = raw.replace('src="%s"' % n.attrs['src'], "src=\"<?php $nl->img('%s'); ?>\"" % key)
+            if alt:
+                raw = raw.replace('alt="%s"' % n.attrs['alt'], "alt=\"<?php $nl->alt('%s'); ?>\"" % key)
+            # intrinsic size reserves the space before a lazy image arrives (no layout jump)
+            if rel in IMG_SIZES and 'width=' not in raw:
+                raw = raw[:-1] + ' width="%d" height="%d">' % tuple(IMG_SIZES[rel])
+            # below-the-fold images load lazily (the hero and header stay eager)
+            if gid not in ('hero', 'header') and 'loading=' not in raw:
+                raw = raw[:-1] + ' loading="lazy" decoding="async">'
+            elif gid == 'hero' and 'hero-car' in (n.attrs.get('class') or ''):
+                raw = raw[:-1] + ' fetchpriority="high">'
+        if n.tag == 'a' and 'href' in n.attrs:
+            raw = raw.replace('href="%s"' % n.attrs['href'], 'href="\x00URL\x00"', 1)
+        if self.L == 'm' and 'data-ref="root"' in raw:
+            raw = raw.replace('width: 390px;', 'width: 100%;')
+        return raw
 
 
 def convert_layout(layout, fname, schema):
@@ -273,182 +690,37 @@ def convert_layout(layout, fname, schema):
     # ---- CSS
     prefix = 'n%s-' % layout
     kf = re.findall(r'@keyframes\s+([\w-]+)', helmet)
-    scope = '.nrn-%s' % layout
-    css = scope_css(blob_to_rel(helmet), scope, prefix, kf)
+    css = scope_css(blob_to_rel(helmet), '.nrn-%s' % layout, prefix, kf)
     write(os.path.join(PLUGIN, 'assets', 'css', '%s.css' % {'d': 'desktop', 'm': 'mobile'}[layout]),
           '/* generated by build/convert.py from source/design/%s; do not edit by hand */\n%s\n' % (fname, css))
 
-    # ---- markup: template holes of the design runtime -> static initial values
+    # ---- design fixes requested after review
+    for start, patch in PATCHES.get(layout, []):
+        i = body.find(start)
+        if i < 0:
+            raise ValueError('patch anchor not found: ' + start)
+        body = body[:i] + open(os.path.join(ROOT, 'build', 'patches', patch), encoding='utf-8').read().strip() + body[element_end(body, i):]
+
+    # ---- template holes of the design runtime -> static initial values
     body = re.sub(r'<sc-for list="\{\{stops\}\}".*?</sc-for>', '', body, flags=re.S)
     body = body.replace('d="{{dr}}"', 'data-road="1" d="M-20 -20"')
     body = re.sub(r'd="\{\{(leg\d|d)\}\}"', 'd="M-20 -20"', body)
     body = body.replace('{{vb}}', '0 0 100 100').replace('{{clipY}}', '-100000')
-    left = re.findall(r'\{\{[^}]*\}\}', body)
-    left = [x for x in left if not x.endswith('Ref}}')]
+    left = [x for x in re.findall(r'\{\{[^}]*\}\}', body) if not x.endswith('Ref}}')]
     if left:
         raise ValueError('unhandled template holes: %r' % left)
+
     regions = find_regions(body, layout)
-    pieces = []
-    pos = 0
+    pieces, pos = [], 0
     for s, e, name in regions:
         pieces.append(('markup', body[pos:s]))
         pieces.append(('partial', name, body[s:e]))
+        write(os.path.join(ROOT, 'build', 'regions', '%s-%s.html' % (layout, name)), body[s:e])
         pos = e
     pieces.append(('markup', body[pos:]))
-
-    out = []
-    sec_list = SECTIONS[layout]
-    state = {'sec_idx': -1, 'in_header': 0}
-    stack = []
-    occ = defaultdict(int)
-
-    def cur_gid():
-        if state['in_header']:
-            return 'header'
-        if state['sec_idx'] < 0:
-            return 'global'
-        return sec_list[state['sec_idx']]
-
-    def next_occ(kind, sig):
-        k = (cur_gid(), kind, sig)
-        occ[k] += 1
-        return occ[k]
-
-    def next_occ_g(gid, kind, sig):
-        if gid in ('brand', 'social'):
-            return 1  # one shared field for every use
-        return next_occ(kind, sig)
-
-    root_depth = None
-    for piece in pieces:
-        if piece[0] == 'partial':
-            name = piece[1]
-            out.append("<?php $nl->partial('%s', '%s'); ?>" % (name, layout))
-            write(os.path.join(ROOT, 'build', 'regions', '%s-%s.html' % (layout, name)), piece[2])
-            if stack:
-                stack[-1]['kids'] = True
-            continue
-        for tok in tokenize(piece[1]):
-            if tok[0] == 'text':
-                raw = tok[1]
-                top = stack[-1] if stack else None
-                for el in stack:
-                    el['textbuf'].append(raw)
-                special = next((sp for sp in SPECIAL_ATTR_TEXT if top and sp in top['attrs']), None)
-                if special:
-                    if raw.strip():
-                        out.append(SPECIAL_ATTR_TEXT[special])
-                    continue
-                t = norm_text(raw)
-                if not t:
-                    out.append(raw)
-                    continue
-                parent = top['name'] if top else 'div'
-                role = ROLE.get(parent, 'متن')
-                cls = (top['attrs'].get('class') or '') if top else ''
-                if 'kicker' in cls:
-                    role = 'برچسب بالای تیتر'
-                elif 'tbd' in cls:
-                    role = 'نشان «نیازمند تأیید»'
-                elif 'phb' in cls:
-                    role = 'برچسب جایگاه تصویر'
-                elif 'grad' in cls:
-                    role = 'بخش رنگی تیتر'
-                elif 'btn' in cls:
-                    role = 'متن دکمه'
-                if re.fullmatch(r'[+\-]?[۰-۹0-9٬,.]+\+?', t):
-                    role = 'عدد / قیمت'
-                key = schema.field(layout, cur_gid(), 'text', t, next_occ('text', t), t, role, {'long': len(t) > 90})
-                lead = raw[:len(raw) - len(raw.lstrip())]
-                trail = raw[len(raw.rstrip()):]
-                out.append("%s<?php $nl->t('%s'); ?>%s" % (lead, key, trail))
-                if top:
-                    top['fields'].append(key)
-                continue
-            if tok[0] == 'end':
-                name = tok[1]
-                if name in VOID:
-                    continue
-                if not stack or stack[-1]['name'] != name:
-                    raise ValueError('unbalanced </%s> (open: %s)' % (name, stack[-1]['name'] if stack else None))
-                el = stack.pop()
-                out.append(tok[2])
-                if el['url_idx'] is not None:
-                    vis = norm_text(''.join(el['textbuf']))
-                    lab = el['aria'] or vis
-                    href = el['attrs']['href']
-                    gid = 'social' if lab in SOCIAL_LABELS else el['gid']
-                    sig = href + '|' + lab
-                    k = (gid, 'url', sig)
-                    occ[k] += 1
-                    key = schema.field(layout, gid, 'url', sig, 1 if gid == 'social' else occ[k], href, 'لینک', {'label': lab})
-                    out[el['url_idx']] = out[el['url_idx']].replace('\x00URL\x00', "<?php $nl->url('%s'); ?>" % key)
-                if el['name'] == 'header':
-                    state['in_header'] -= 1
-                if not el['kids'] and len(el['fields']) == 1 and el['name'] not in ('option', 'text', 'textarea', 'title', 'summary'):
-                    out.insert(el['idx'], "<?php if ($nl->has('%s')): ?>" % el['fields'][0])
-                    out.append('<?php endif; ?>')
-                if el['wrapper']:
-                    out.append('<?php endif; ?>')
-                if stack:
-                    stack[-1]['kids'] = True
-                    stack[-1]['fields'].extend(el['fields'])
-                continue
-            # start tag
-            _, name, raw, attrs, selfclose = tok
-            if attrs.get('ref') == '{{rootRef}}':
-                root_depth = len(stack)
-            wrapper = False
-            if root_depth is not None and len(stack) == root_depth + 1 and (
-                    name in ('section', 'footer', 'aside') or (name == 'div' and 'data-drawer' in attrs)):
-                state['sec_idx'] += 1
-                gid = sec_list[state['sec_idx']]
-                if gid not in ('hero', 'footer'):
-                    out.append("<?php if ($nl->on('%s')): ?>" % gid)
-                    wrapper = True
-            if name == 'header':
-                state['in_header'] += 1
-            raw, url_pending = rewrite_tag(raw, attrs, name, layout, schema, cur_gid, next_occ_g)
-            idx = len(out)
-            out.append(raw)
-            if name in VOID or selfclose:
-                if wrapper:
-                    out.append('<?php endif; ?>')
-                if stack and name != 'br':
-                    stack[-1]['kids'] = True
-                continue
-            stack.append({'name': name, 'attrs': attrs, 'idx': idx, 'wrapper': wrapper, 'fields': [], 'kids': False,
-                          'textbuf': [], 'url_idx': idx if url_pending else None,
-                          'aria': html.unescape(attrs.get('aria-label') or ''), 'gid': cur_gid()})
-    if stack:
-        raise ValueError('unclosed: ' + ','.join(e['name'] for e in stack))
-    return ''.join(out), script, css
-
-
-def rewrite_tag(raw, attrs, name, layout, schema, cur_gid, next_occ_g):
-    gid = cur_gid()
-    url_pending = False
-    m = re.search(r'\sref="\{\{(\w+)Ref\}\}"', raw)
-    if m:
-        raw = raw.replace(m.group(0), ' data-ref="%s"' % m.group(1))
-    if name == 'img' and (attrs.get('src') or '').startswith('/_blob/'):
-        bid = attrs['src'][7:]
-        rel = asset_rel(bid)
-        alt = html.unescape(attrs.get('alt') or '')
-        if rel == 'img/logo.png':
-            gid = 'brand'
-        elif rel.startswith('img/social-'):
-            gid = 'social'
-        key = schema.field(layout, gid, 'img', rel, next_occ_g(gid, 'img', rel), rel, 'تصویر', {'alt': alt})
-        raw = raw.replace('src="%s"' % attrs['src'], "src=\"<?php $nl->img('%s'); ?>\"" % key)
-        if alt:
-            raw = raw.replace('alt="%s"' % attrs['alt'], "alt=\"<?php $nl->alt('%s'); ?>\"" % key)
-    if name == 'a' and 'href' in attrs and not re.match(r'#[A-Za-z]', attrs['href']):
-        raw = raw.replace('href="%s"' % attrs['href'], 'href="\x00URL\x00"', 1)
-        url_pending = True
-    if layout == 'm' and 'data-ref="root"' in raw:
-        raw = raw.replace('width: 390px;', 'width: 100%;')
-    return raw, url_pending
+    tree = build_tree(pieces)
+    php = Converter(layout, schema).render(tree)
+    return php, script, css
 
 
 def write(path, content):
@@ -459,20 +731,18 @@ def write(path, content):
 
 def main():
     schema = Schema()
-    results = {}
     for layout, fname in (('d', 'Main.dc.html'), ('m', 'Mobile.dc.html')):
         php, script, css = convert_layout(layout, fname, schema)
-        results[layout] = php
+        if '\x00' in php:
+            raise ValueError('unresolved link placeholder')
         write(os.path.join(PLUGIN, 'templates', 'layout-%s.php' % {'d': 'desktop', 'm': 'mobile'}[layout]),
               "<?php\n/* generated by build/convert.py from source/design/%s; do not edit by hand */\ndefined('ABSPATH') || exit;\n?>%s" % (fname, php))
         write(os.path.join(ROOT, 'build', 'regions', '%s-script.js' % layout), script)
-    # assets
     for bid, rel in ASSET_MAP.items():
         srcf = next(f for f in os.listdir(BLOBS) if f.startswith(bid))
         dst = os.path.join(PLUGIN, 'assets', rel)
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         shutil.copyfile(os.path.join(BLOBS, srcf), dst)
-    # WOFF2 copies of the fonts (about half the size of the design's TTF files)
     try:
         from fontTools.ttLib import TTFont
         for w in (400, 500, 700):
@@ -481,43 +751,77 @@ def main():
             f.save(os.path.join(PLUGIN, 'assets', 'fonts', 'vazir-%d.woff2' % w))
     except ImportError:
         print('fontTools/brotli not installed: WOFF2 fonts not regenerated (pip install fonttools brotli)')
-    # schema -> php
     write(os.path.join(PLUGIN, 'includes', 'schema-generated.php'), schema_php(schema))
-    # report
+    write(os.path.join(PLUGIN, 'includes', 'migrate-v1.php'), migration_php(schema))
     lines = []
     for gid, fields in schema.groups.items():
         for k, f in fields.items():
-            if len(f['layouts']) == 1:
-                lines.append('%-10s %-14s only-%s %-5s %s' % (gid, k, f['layouts'][0], f['type'], str(f['default'])[:70]))
+            lines.append('%-9s %-12s %-3s %-4s %-28s %s' % (gid, k, ''.join(f['layouts']), f['type'], (f.get('card') or '-')[:28], str(f['default'])[:60].replace('\n', '⏎')))
     write(os.path.join(ROOT, 'build', 'report.txt'), '\n'.join(lines) + '\n')
     total = sum(len(f) for f in schema.groups.values())
-    print('fields:', total, 'single-layout:', len(lines))
+    print('fields:', total, 'cards:', sum(len(c) for c in schema.cards.values()))
     for gid, fields in schema.groups.items():
-        print('  %-10s %d' % (gid, len(fields)))
+        print('  %-9s %3d fields  %2d cards' % (gid, len(fields), len(schema.cards.get(gid, {}))))
+
+
+def migration_php(schema):
+    """Maps the field keys of version 1.0 to the new ones where the design value is the same."""
+    import subprocess
+    v1 = os.path.join(ROOT, 'build', 'schema-v1.php')
+    if not os.path.exists(v1):
+        return "<?php defined('ABSPATH') || exit; return array();\n"
+    js = subprocess.run(['php', '-r', 'define("ABSPATH",1); echo json_encode(require $argv[1]);', v1], capture_output=True, text=True).stdout
+    old = json.loads(js)
+    mapping = {}
+    used = set()
+    for gid, fields in old.items():
+        for ok, of in fields.items():
+            for nk, nf in schema.groups.get(gid, {}).items():
+                if nk in used or nf['type'] != of['type']:
+                    continue
+                if of['type'] == 'url':
+                    same = of.get('label', '') and nf.get('label') == of.get('label') and nf['default'] == of['default']
+                else:
+                    same = nf['default'] == of['default']
+                if same:
+                    mapping[ok] = nk
+                    used.add(nk)
+                    break
+    return "<?php\n/* generated by build/convert.py: version-1.0 field keys -> current keys */\ndefined('ABSPATH') || exit;\nreturn " + \
+        'array(' + ', '.join('%s => %s' % (php_str(a), php_str(b)) for a, b in mapping.items()) + ');\n'
 
 
 def php_str(s):
     return "'" + str(s).replace('\\', '\\\\').replace("'", "\\'") + "'"
 
 
+def php_val(v):
+    if isinstance(v, bool):
+        return 'true' if v else 'false'
+    if isinstance(v, (int, float)):
+        return str(v)
+    if isinstance(v, str):
+        return php_str(v)
+    if isinstance(v, dict):
+        return 'array(' + ', '.join('%s => %s' % (php_str(k), php_val(x)) for k, x in v.items()) + ')'
+    if isinstance(v, (list, tuple)):
+        return 'array(' + ', '.join(php_val(x) for x in v) + ')'
+    raise TypeError(type(v))
+
+
 def schema_php(schema):
-    out = ["<?php\n/* generated by build/convert.py; do not edit by hand */\ndefined('ABSPATH') || exit;\nreturn array(\n"]
+    out = ["<?php\n/* generated by build/convert.py; do not edit by hand */\ndefined('ABSPATH') || exit;\nreturn array(\n'fields' => array(\n"]
     for gid, fields in schema.groups.items():
         out.append('  %s => array(\n' % php_str(gid))
         for k, f in fields.items():
-            parts = ["'type' => %s" % php_str(f['type']), "'role' => %s" % php_str(f['role']),
-                     "'default' => %s" % php_str(f['default']), "'layouts' => %s" % php_str(''.join(f['layouts']))]
-            if f.get('long'):
-                parts.append("'long' => true")
-            if 'alt' in f:
-                parts.append("'alt' => %s" % php_str(f['alt']))
-            if f.get('label'):
-                parts.append("'label' => %s" % php_str(f['label']))
-            if f.get('text'):
-                parts.append("'text' => %s" % php_str(f['text']))
-            out.append('    %s => array(%s),\n' % (php_str(k), ', '.join(parts)))
+            g = OrderedDict(f)
+            g['layouts'] = ''.join(f['layouts'])
+            out.append('    %s => %s,\n' % (php_str(k), php_val(g)))
         out.append('  ),\n')
-    out.append(');\n')
+    out.append("),\n'cards' => array(\n")
+    for gid, cards in schema.cards.items():
+        out.append('  %s => %s,\n' % (php_str(gid), php_val(cards)))
+    out.append('),\n);\n')
     return ''.join(out)
 
 

@@ -1,0 +1,11 @@
+/* Design fixes requested after review (kept apart from the generated design CSS) */
+
+/* App section ("اگر خودرو دزدیده شود"): equal-height cards, media that scales with the card,
+   the app screenshot shown whole, 2 x 2 when the row gets narrow */
+.nrn-d section[data-stop="سناریوی سرقت"] ol > li > .glass{flex:1 1 auto}
+.nrn-d section[data-stop="سناریوی سرقت"] ol > li > .glass > div:first-child{height:auto !important;aspect-ratio:4 / 5}
+.nrn-d section[data-stop="سناریوی سرقت"] ol > li:nth-child(3) > .glass > div:first-child img{object-fit:contain !important;object-position:50% 50% !important}
+@media (max-width:1180px){
+  .nrn-d:not(.nrn-scaled) section[data-stop="سناریوی سرقت"] ol{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+  .nrn-d:not(.nrn-scaled) section[data-stop="سناریوی سرقت"] .flow{display:none}
+}

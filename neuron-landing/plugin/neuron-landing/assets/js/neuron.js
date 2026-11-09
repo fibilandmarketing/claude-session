@@ -70,7 +70,6 @@
     this.timers = [setTimeout(function () { self.measure(); }, 60), setTimeout(function () { self.measure(); }, 1000), setTimeout(function () { self.measure(); }, 2800)];
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { self.schedule(); });
     if (window.ResizeObserver && this.root) { this.ro = new ResizeObserver(function () { self.schedule(); }); this.ro.observe(this.root); }
-    window.addEventListener('load', function () { self.schedule(); });
   };
 
   P.schedule = function () { var self = this; clearTimeout(this.mt); this.mt = setTimeout(function () { self.measure(); }, 140); };
@@ -300,16 +299,46 @@
     }
   };
 
+  /* The route is our own M/L/C path: flatten it once and sample it by arc length.
+     (SVG getPointAtLength() costs ~0.5 ms per call — 3200 calls froze the page on load.) */
+  function flatten(d) {
+    var px = [], py = [], cx = 0, cy = 0, re = /([MLC])([^MLC]*)/g, m;
+    while ((m = re.exec(d))) {
+      var v = m[2].trim().split(/[\s,]+/).map(Number), j;
+      if (m[1] === 'M') { cx = v[0]; cy = v[1]; px.push(cx); py.push(cy); }
+      else if (m[1] === 'L') { for (j = 0; j + 1 < v.length; j += 2) { cx = v[j]; cy = v[j + 1]; px.push(cx); py.push(cy); } }
+      else {
+        for (j = 0; j + 5 < v.length; j += 6) {
+          var x1 = v[j], y1 = v[j + 1], x2 = v[j + 2], y2 = v[j + 3], x3 = v[j + 4], y3 = v[j + 5];
+          var steps = Math.max(8, Math.min(200, Math.ceil((Math.abs(x1 - cx) + Math.abs(y1 - cy) + Math.abs(x2 - x1) + Math.abs(y2 - y1) + Math.abs(x3 - x2) + Math.abs(y3 - y2)) / 3)));
+          for (var k = 1; k <= steps; k++) {
+            var t = k / steps, u = 1 - t, a = u * u * u, b = 3 * u * u * t, c = 3 * u * t * t, e = t * t * t;
+            px.push(a * cx + b * x1 + c * x2 + e * x3); py.push(a * cy + b * y1 + c * y2 + e * y3);
+          }
+          cx = x3; cy = y3;
+        }
+      }
+    }
+    var cum = new Float64Array(px.length);
+    for (var i = 1; i < px.length; i++) cum[i] = cum[i - 1] + Math.hypot(px[i] - px[i - 1], py[i] - py[i - 1]);
+    return { px: px, py: py, cum: cum, L: cum[cum.length - 1] || 0 };
+  }
+
   P.buildTable = function () {
     var p = this.pathEl, s = this.state || {};
     if (!p || !s.d || s.d.length < 12) return;
-    var L = 0;
-    try { L = p.getTotalLength(); } catch (e) { return; }
+    var F = flatten(s.d), L = F.L;
     if (!L) return;
     var n = Math.min(3200, Math.max(300, Math.round(L / 4)));
     var xs = new Float32Array(n), ys = new Float32Array(n), ym = new Float32Array(n), an = new Float32Array(n);
-    var mx = -1e9, i;
-    for (i = 0; i < n; i++) { var q = p.getPointAtLength(L * i / (n - 1)); xs[i] = q.x; ys[i] = q.y; if (q.y > mx) mx = q.y; ym[i] = mx; }
+    var mx = -1e9, i, seg = 1;
+    for (i = 0; i < n; i++) {
+      var target = L * i / (n - 1);
+      while (seg < F.cum.length - 1 && F.cum[seg] < target) seg++;
+      var l0 = F.cum[seg - 1], l1 = F.cum[seg], f = l1 > l0 ? (target - l0) / (l1 - l0) : 0;
+      xs[i] = F.px[seg - 1] + (F.px[seg] - F.px[seg - 1]) * f; ys[i] = F.py[seg - 1] + (F.py[seg] - F.py[seg - 1]) * f;
+      if (ys[i] > mx) mx = ys[i]; ym[i] = mx;
+    }
     var prevA = 0;
     for (i = 0; i < n; i++) {
       var a = Math.max(0, i - 3), b = Math.min(n - 1, i + 3);
@@ -333,6 +362,9 @@
     this.updateTarget();
     if (!this.introDone) {
       this.introDone = true;
+      // road, car and logo strip fade in now that the route is ready
+      var holder = this.root.closest('.nrn');
+      if (holder) holder.classList.add('nrn-go');
       if (this.reduce) { this.cur = this.target; }
       else { this.cur = 0; this.intro = true; this.introStart = 0; }
     }
@@ -530,10 +562,19 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
   }
 
-  function boot() {
+  // The page (text, hero, images) comes first; the car engine starts once everything
+  // has loaded and the browser is idle, so it never competes with the first paint.
+  function startDrives() {
     var roots = document.querySelectorAll('.nrn [data-ref="root"]');
     Array.prototype.forEach.call(roots, function (r) { if (!r.__nrn) r.__nrn = new Drive(r); });
+  }
+  function whenIdle(fn) {
+    if (window.requestIdleCallback) window.requestIdleCallback(fn, { timeout: 1200 }); else setTimeout(fn, 300);
+  }
+  function boot() {
     initVideos();
+    if (document.readyState === 'complete') whenIdle(startDrives);
+    else window.addEventListener('load', function () { whenIdle(startDrives); });
   }
   if (document.readyState !== 'loading') boot(); else document.addEventListener('DOMContentLoaded', boot);
   window.NeuronDrive = Drive;

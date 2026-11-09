@@ -137,3 +137,32 @@ function nrn_partial_map_options( NRN_Content $c, $layout ) {
 	}
 	echo $out; // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above
 }
+
+function nrn_partial_badges( NRN_Content $c, $layout ) {
+	$t     = nrn_tpl();
+	$parts = array();
+	foreach ( (array) $c->items( 'badges' ) as $it ) {
+		$code = isset( $it['code'] ) ? trim( (string) $it['code'] ) : '';
+		$link = isset( $it['link'] ) ? trim( (string) $it['link'] ) : '';
+		$img  = isset( $it['img'] ) ? trim( (string) $it['img'] ) : '';
+		if ( '' !== $code ) {
+			// trust-seal code (eNamad, Samandehi...): stored by an administrator, printed as is
+			$parts[] = '<div class="nrn-seal" style="' . esc_attr( $t[ 'seal_box_' . $layout ] ) . '">' . $code . '</div>';
+			continue;
+		}
+		if ( '' === $img && '' === trim( (string) ( $it['label'] ?? '' ) ) ) {
+			continue;
+		}
+		$label = isset( $it['label'] ) ? trim( $it['label'] ) : '';
+		$html  = strtr( $t[ 'seal_' . $layout ], array(
+			'{SRC}'   => esc_url( NRN_Content::asset( '' !== $img ? $img : 'img/placeholder-badge.svg' ) ),
+			'{ALT}'   => esc_attr( isset( $it['alt'] ) ? $it['alt'] : '' ),
+			'{LABEL}' => '' !== $label ? $t[ 'seal_label_' . $layout ] . esc_html( $label ) . '</span>' : '',
+		) );
+		if ( '' !== $link ) {
+			$html = '<a href="' . esc_url( $link ) . '" target="_blank" rel="noopener" style="display: block; border-radius: inherit">' . $html . '</a>';
+		}
+		$parts[] = $html;
+	}
+	echo implode( $t[ 'seal_sep_' . $layout ], $parts ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above / admin-provided seal code
+}

@@ -10,7 +10,12 @@ async function shot(b, url, w, out, ref) {
     r.fulfill({ status: 200, contentType: 'application/javascript', headers: { 'access-control-allow-origin': '*' }, body: fs.readFileSync(f) });
   });
   await p.goto(url, { waitUntil: 'networkidle' });
-  await p.waitForTimeout(4000);
+  await p.waitForTimeout(1500);
+  // scroll through once like a visitor so lazy images load, then back to the top
+  const H = await p.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y < H; y += 700) { await p.evaluate(y => window.scrollTo(0, y), y); await p.waitForTimeout(60); }
+  await p.evaluate(() => window.scrollTo(0, 0));
+  await p.waitForTimeout(3500);
   await p.screenshot({ path: out, fullPage: true, animations: 'disabled' });
   await p.close();
 }

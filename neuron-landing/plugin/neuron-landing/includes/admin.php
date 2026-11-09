@@ -116,13 +116,15 @@ function nrn_sanitize_all( array $in ) {
 				}
 				continue;
 			}
-			$val = is_string( $val ) ? $val : '';
+			$val = is_string( $val ) ? str_replace( "\r", '', $val ) : '';
 			if ( 'url' === $def['type'] ) {
 				$val = nrn_clean_url( $val );
-			} elseif ( ! empty( $def['long'] ) ) {
-				$val = sanitize_textarea_field( $val );
+				// unchanged design link: keep each layout's own (desktop / mobile anchors differ)
+				if ( in_array( $val, array_values( (array) ( $def['defaults'] ?? array() ) ), true ) ) {
+					continue;
+				}
 			} else {
-				$val = sanitize_text_field( $val );
+				$val = sanitize_textarea_field( $val );
 			}
 			if ( $val !== $def['default'] ) {
 				$out['fields'][ $key ] = $val;
@@ -144,6 +146,7 @@ function nrn_sanitize_all( array $in ) {
 		'faq'    => array( 'q' => 'text', 'a' => 'textarea', 'open' => 'bool' ),
 		'orgs'   => array( 'name' => 'text', 'logo' => 'url', 'alt' => 'text' ),
 		'videos' => array( 'label' => 'text', 'cover' => 'url', 'alt' => 'text', 'title' => 'text', 'sub' => 'text', 'aria' => 'text', 'video' => 'url' ),
+		'badges' => array( 'label' => 'text', 'img' => 'url', 'alt' => 'text', 'link' => 'url', 'code' => 'code' ),
 	);
 	foreach ( $list_fields as $list => $spec ) {
 		if ( ! isset( $in[ $list ] ) || ! is_array( $in[ $list ] ) ) {
@@ -222,6 +225,7 @@ function nrn_sanitize_all( array $in ) {
 	}
 
 	// settings
+	$out['v'] = 2;
 	$s = isset( $in['settings'] ) && is_array( $in['settings'] ) ? $in['settings'] : array();
 	$out['settings'] = array(
 		'enabled'    => empty( $s['enabled'] ) ? 0 : 1,
@@ -257,6 +261,10 @@ function nrn_clean_row( array $row, array $spec ) {
 				break;
 			case 'textarea':
 				$o[ $k ] = sanitize_textarea_field( (string) $v );
+				break;
+			case 'code':
+				// trust-seal snippets (eNamad, Samandehi) need their own attributes: administrators may paste them as is
+				$o[ $k ] = current_user_can( 'unfiltered_html' ) ? trim( (string) $v ) : wp_kses_post( trim( (string) $v ) );
 				break;
 			default:
 				$o[ $k ] = sanitize_text_field( (string) $v );
@@ -351,7 +359,7 @@ function nrn_admin_page() {
 						if ( 'settings' === $gid ) {
 							nrn_render_settings( $c, $preview );
 						} else {
-							nrn_render_lists_for( $gid, $c );
+							echo '<input type="search" class="nrn-filter" placeholder="جست‌وجو در این بخش…">';
 							nrn_render_fields( $gid, $c );
 						}
 						echo '</section>';
@@ -378,59 +386,126 @@ function nrn_toggle_row( $scope, $key, $on, $label, $desc = '' ) {
 }
 
 function nrn_layout_badge( $layouts ) {
-	if ( 'dm' === $layouts || 'md' === $layouts ) {
-		return '<span class="nrn-badge nrn-b-both" title="در هر دو نسخه نمایش داده می‌شود"><span class="dashicons dashicons-desktop"></span><span class="dashicons dashicons-smartphone"></span></span>';
-	}
 	if ( 'd' === $layouts ) {
-		return '<span class="nrn-badge nrn-b-d"><span class="dashicons dashicons-desktop"></span> فقط دسکتاپ</span>';
+		return '<span class="nrn-badge nrn-b-d" title="این مورد فقط در نسخهٔ دسکتاپ هست"><span class="dashicons dashicons-desktop"></span> فقط دسکتاپ</span>';
 	}
-	return '<span class="nrn-badge nrn-b-m"><span class="dashicons dashicons-smartphone"></span> فقط موبایل</span>';
+	if ( 'm' === $layouts ) {
+		return '<span class="nrn-badge nrn-b-m" title="این مورد فقط در نسخهٔ موبایل هست"><span class="dashicons dashicons-smartphone"></span> فقط موبایل</span>';
+	}
+	return '';
 }
 
-function nrn_render_fields( $gid, NRN_Content $c ) {
-	if ( empty( $c->schema[ $gid ] ) ) {
-		return;
+/** One row: a text (with its link beside it), a lone link, or an image. */
+function nrn_field_row( $key, $f, NRN_Content $c, $gid ) {
+	if ( 'url' === $f['type'] && ! empty( $f['attached'] ) ) {
+		return; // shown beside its text
 	}
-	$fields = $c->schema[ $gid ];
-	echo '<div class="nrn-card"><div class="nrn-card-head"><h3>متن‌ها، تصاویر و لینک‌ها</h3><input type="search" class="nrn-filter" placeholder="جست‌وجو در فیلدهای این بخش…"></div><div class="nrn-fields">';
-	foreach ( $fields as $key => $f ) {
-		$raw   = $c->raw( $key );
-		$isdef = ! isset( $c->data['fields'][ $key ] );
-		echo '<div class="nrn-field nrn-t-' . esc_attr( $f['type'] ) . ( $isdef ? '' : ' is-changed' ) . '" data-key="' . esc_attr( $key ) . '" data-type="' . esc_attr( $f['type'] ) . '">';
-		echo '<div class="nrn-field-top"><label for="f-' . esc_attr( $key ) . '">' . esc_html( $f['role'] );
-		if ( 'url' === $f['type'] && ! empty( $f['label'] ) ) {
-			echo ' <em>«' . esc_html( mb_substr( $f['label'], 0, 60 ) ) . '»</em>';
+	$badge = nrn_layout_badge( $f['layouts'] );
+	echo '<div class="nrn-fr nrn-t-' . esc_attr( $f['type'] ) . '">';
+	if ( 'img' === $f['type'] ) {
+		$raw  = $c->raw( $key );
+		$url  = is_array( $raw ) && ! empty( $raw['url'] ) ? $raw['url'] : '';
+		$alt  = is_array( $raw ) && isset( $raw['alt'] ) ? $raw['alt'] : ( $f['alt'] ?? '' );
+		$id   = is_array( $raw ) && ! empty( $raw['id'] ) ? (int) $raw['id'] : 0;
+		$dsrc = NRN_Content::asset( $f['default'] );
+		echo '<div class="nrn-fr-label">تصویر ' . $badge . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput
+		echo '<div class="nrn-img nrn-imgf" data-key="' . esc_attr( $key ) . '" data-default-src="' . esc_url( $dsrc ) . '" data-default-alt="' . esc_attr( $f['alt'] ?? '' ) . '">';
+		echo '<img class="nrn-img-prev" src="' . esc_url( $url ? $url : $dsrc ) . '" alt="">';
+		echo '<div class="nrn-img-ctl"><input type="hidden" class="nrn-v-url" value="' . esc_attr( $url ) . '"><input type="hidden" class="nrn-v-id" value="' . esc_attr( $id ) . '">';
+		echo '<button type="button" class="button nrn-pick">تغییر تصویر</button>';
+		echo '<input type="text" class="nrn-v-alt" value="' . esc_attr( $alt ) . '" placeholder="متن جایگزین (برای گوگل و نابینایان)" title="متن جایگزین تصویر"></div></div>';
+	} else {
+		$label = $f['role'];
+		if ( 'url' === $f['type'] ) {
+			$label = 'لینک' . ( ! empty( $f['label'] ) ? ' «' . mb_substr( $f['label'], 0, 40 ) . '»' : '' );
 		}
-		echo '</label>' . nrn_layout_badge( $f['layouts'] ); // phpcs:ignore WordPress.Security.EscapeOutput
-		echo '<button type="button" class="nrn-reset-field" title="بازگشت به مقدار طرح"><span class="dashicons dashicons-image-rotate"></span></button></div>';
-		if ( 'img' === $f['type'] ) {
-			$url  = is_array( $raw ) && ! empty( $raw['url'] ) ? $raw['url'] : '';
-			$alt  = is_array( $raw ) && isset( $raw['alt'] ) ? $raw['alt'] : ( $f['alt'] ?? '' );
-			$id   = is_array( $raw ) && ! empty( $raw['id'] ) ? (int) $raw['id'] : 0;
-			$dsrc = NRN_Content::asset( $f['default'] );
-			echo '<div class="nrn-img" data-default-src="' . esc_url( $dsrc ) . '" data-default-alt="' . esc_attr( $f['alt'] ?? '' ) . '">';
-			echo '<img class="nrn-img-prev" src="' . esc_url( $url ? $url : $dsrc ) . '" alt="">';
-			echo '<div class="nrn-img-ctl"><input type="hidden" class="nrn-v-url" value="' . esc_attr( $url ) . '"><input type="hidden" class="nrn-v-id" value="' . esc_attr( $id ) . '">';
-			echo '<button type="button" class="button nrn-pick">انتخاب / بارگذاری تصویر</button>';
-			echo '<label class="nrn-alt">متن جایگزین (alt): <input type="text" class="nrn-v-alt" value="' . esc_attr( $alt ) . '"></label>';
-			echo '<small class="nrn-def">فایل طرح: ' . esc_html( basename( $f['default'] ) ) . '</small></div></div>';
-		} else {
-			$val = is_string( $raw ) ? $raw : '';
-			$dir = 'url' === $f['type'] ? 'ltr' : 'auto';
-			if ( ! empty( $f['long'] ) ) {
-				echo '<textarea id="f-' . esc_attr( $key ) . '" class="nrn-v" rows="3" dir="auto" data-default="' . esc_attr( $f['default'] ) . '">' . esc_textarea( $val ) . '</textarea>';
-			} else {
-				echo '<input id="f-' . esc_attr( $key ) . '" type="text" class="nrn-v" dir="' . esc_attr( $dir ) . '" value="' . esc_attr( $val ) . '" data-default="' . esc_attr( $f['default'] ) . '">';
-			}
-			if ( 'url' !== $f['type'] ) {
-				echo '<small class="nrn-def">طرح: ' . esc_html( mb_substr( $f['default'], 0, 140 ) ) . '</small>';
-			} else {
-				echo '<small class="nrn-def">طرح: <bdi dir="ltr">' . esc_html( $f['default'] ) . '</bdi> — آدرس کامل، <bdi dir="ltr">tel:</bdi> یا <bdi dir="ltr">#بخش</bdi></small>';
+		echo '<div class="nrn-fr-label">' . esc_html( $label ) . ' ' . $badge . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput
+		echo '<div class="nrn-fr-in">';
+		nrn_input( $key, $f, $c );
+		if ( ! empty( $f['link'] ) ) {
+			$lk = $f['link'];
+			$lf = $c->field_def( $lk );
+			if ( $lf ) {
+				echo '<span class="nrn-link-in" title="لینک این دکمه"><span class="dashicons dashicons-admin-links"></span>';
+				nrn_input( $lk, $lf, $c );
+				echo '</span>';
 			}
 		}
 		echo '</div>';
+		if ( ! empty( $f['tags'] ) ) {
+			echo '<small class="nrn-tip">بخشی که داخل [ ] است با رنگ یا وزن متفاوت نمایش داده می‌شود.</small>';
+		}
 	}
-	echo '</div><p class="nrn-hint">اگر متنی را کاملاً خالی کنید، آن جزء (مثلاً یک نشان یا برچسب) از صفحه حذف می‌شود.</p></div>';
+	echo '<button type="button" class="nrn-reset-field" title="برگرداندن به طرح اصلی"><span class="dashicons dashicons-image-rotate"></span></button>';
+	echo '</div>';
+}
+
+function nrn_input( $key, $f, NRN_Content $c ) {
+	if ( 'url' === $f['type'] ) {
+		$val = $c->link( $key, false !== strpos( $f['layouts'], 'd' ) ? 'd' : 'm' );
+		$def = isset( $f['defaults']['d'] ) ? $f['defaults']['d'] : $f['default'];
+		echo '<input type="text" class="nrn-in nrn-url" dir="ltr" data-key="' . esc_attr( $key ) . '" data-default="' . esc_attr( $def ) . '" value="' . esc_attr( $val ) . '" placeholder="https://… یا #بخش یا tel:">';
+		return;
+	}
+	$val = $c->text( $key );
+	if ( ! empty( $f['long'] ) || false !== strpos( $val, "\n" ) ) {
+		$rows = max( 2, min( 6, (int) ceil( mb_strlen( $val ) / 70 ) + substr_count( $val, "\n" ) ) );
+		echo '<textarea class="nrn-in" dir="auto" rows="' . (int) $rows . '" data-key="' . esc_attr( $key ) . '" data-default="' . esc_attr( $f['default'] ) . '">' . esc_textarea( $val ) . '</textarea>';
+	} else {
+		echo '<input type="text" class="nrn-in" dir="auto" data-key="' . esc_attr( $key ) . '" data-default="' . esc_attr( $f['default'] ) . '" value="' . esc_attr( $val ) . '">';
+	}
+}
+
+/** A section: its intro fields, then one box per card, then the design notes (closed). */
+function nrn_render_fields( $gid, NRN_Content $c ) {
+	$fields = $c->fields_of( $gid );
+	if ( ! $fields ) {
+		nrn_render_lists_for( $gid, $c );
+		return;
+	}
+	$cards = $c->cards_of( $gid );
+	$by    = array( '' => array(), '_notes' => array() );
+	foreach ( array_keys( $cards ) as $ck ) {
+		$by[ $ck ] = array();
+	}
+	foreach ( $fields as $key => $f ) {
+		$ck = isset( $f['card'] ) ? $f['card'] : '';
+		if ( ! isset( $by[ $ck ] ) ) {
+			$ck = '';
+		}
+		$by[ $ck ][ $key ] = $f;
+	}
+	// a "card" with a single item (a chip, a badge) reads better inside the section's main box
+	$visible = function ( $list ) {
+		return array_filter( $list, function ( $f ) {
+			return ! ( 'url' === $f['type'] && ! empty( $f['attached'] ) );
+		} );
+	};
+	foreach ( $cards as $ck => $title ) {
+		if ( count( $visible( $by[ $ck ] ) ) <= 1 ) {
+			$by[''] = array_merge( $by[''], $by[ $ck ] );
+			unset( $cards[ $ck ] );
+		}
+	}
+	$box = function ( $title, $list, $open, $cls = '' ) use ( $c, $gid ) {
+		$list = array_filter( $list, function ( $f ) {
+			return ! ( 'url' === $f['type'] && ! empty( $f['attached'] ) );
+		} );
+		if ( ! $list ) {
+			return;
+		}
+		echo '<details class="nrn-box ' . esc_attr( $cls ) . '"' . ( $open ? ' open' : '' ) . '><summary><span class="nrn-box-t">' . esc_html( $title ) . '</span><span class="nrn-box-n">' . count( $list ) . ' مورد</span></summary><div class="nrn-box-body">';
+		foreach ( $list as $key => $f ) {
+			nrn_field_row( $key, $f, $c, $gid );
+		}
+		echo '</div></details>';
+	};
+	$box( $cards ? 'تیتر و متن بالای بخش' : 'محتوای این بخش', $by[''], true, 'nrn-box-intro' );
+	nrn_render_lists_for( $gid, $c );
+	foreach ( $cards as $ck => $title ) {
+		$box( 'کارت' === $title ? 'تصویر و نمادهای بخش' : 'کارت: ' . $title, $by[ $ck ], false );
+	}
+	$box( 'برچسب‌های «جایگاه» و نشان‌های «نیازمند تأیید» طرح', $by['_notes'], false, 'nrn-box-notes' );
 }
 
 /* ------------------------------------------------------------ list editors */
@@ -470,6 +545,18 @@ function nrn_list_spec( $list ) {
 				'aria'  => array( 'text', 'برچسب دسترس‌پذیری دکمهٔ پخش' ),
 			),
 		),
+		'badges' => array(
+			'title'  => 'نمادهای اعتماد فوتر (اینماد، ساماندهی، دانش‌بنیان)',
+			'add'    => 'افزودن نماد',
+			'desc'   => 'برای اینماد و ساماندهی، کد HTML که سایت آن‌ها می‌دهد را در «کد نماد» بچسبانید؛ در این صورت تصویر و برچسب نادیده گرفته می‌شود. بدون کد، تصویر (با لینک دلخواه) نمایش داده می‌شود. برچسب را خالی کنید تا روی کادر متنی نباشد.',
+			'fields' => array(
+				'label' => array( 'text', 'برچسب روی کادر' ),
+				'img'   => array( 'img', 'تصویر' ),
+				'alt'   => array( 'text', 'متن جایگزین تصویر' ),
+				'link'  => array( 'url', 'لینک (اختیاری)' ),
+				'code'  => array( 'code', 'کد نماد (HTML)' ),
+			),
+		),
 		'mag'    => array(
 			'title'  => 'کارت‌های دستی (برای حالت «دستی» یا وقتی نوشته‌ای پیدا نشود)',
 			'add'    => 'افزودن کارت',
@@ -499,6 +586,9 @@ function nrn_render_lists_for( $gid, NRN_Content $c ) {
 			break;
 		case 'mag':
 			nrn_render_mag( $c );
+			break;
+		case 'footer':
+			nrn_render_list( 'badges', $c->items( 'badges' ) );
 			break;
 		case 'city':
 			nrn_render_map( $c );
@@ -538,6 +628,9 @@ function nrn_render_row( $list, $spec, $it ) {
 			case 'textarea':
 				echo '<label>' . esc_html( $label ) . '<textarea data-f="' . esc_attr( $k ) . '" rows="3" dir="auto">' . esc_textarea( $v ) . '</textarea></label>';
 				break;
+			case 'code':
+				echo '<label>' . esc_html( $label ) . '<textarea data-f="' . esc_attr( $k ) . '" rows="3" dir="ltr" class="code" placeholder="&lt;a href=&quot;https://trustseal.enamad.ir/...&quot;&gt;&lt;img ...&gt;&lt;/a&gt;">' . esc_textarea( $v ) . '</textarea></label>';
+				break;
 			case 'img':
 				$src = $v ? NRN_Content::asset( $v ) : '';
 				echo '<label>' . esc_html( $label ) . '</label><div class="nrn-img nrn-img-row"><img class="nrn-img-prev" src="' . esc_url( $src ) . '" alt=""' . ( $src ? '' : ' hidden' ) . '><input type="hidden" data-f="' . esc_attr( $k ) . '" class="nrn-v-url" value="' . esc_attr( $v ) . '"><button type="button" class="button nrn-pick">انتخاب تصویر</button><button type="button" class="button-link nrn-clear-img">حذف تصویر</button></div>';
@@ -554,7 +647,7 @@ function nrn_render_row( $list, $spec, $it ) {
 }
 
 function nrn_render_list_templates() {
-	foreach ( array( 'faq', 'orgs', 'videos', 'mag' ) as $list ) {
+	foreach ( array( 'faq', 'orgs', 'videos', 'mag', 'badges' ) as $list ) {
 		echo '<script type="text/template" id="nrn-tpl-' . esc_attr( $list ) . '">';
 		ob_start();
 		nrn_render_row( $list, nrn_list_spec( $list ), array() );
@@ -566,6 +659,7 @@ function nrn_render_list_templates() {
 		'faq'       => $c->lists['faq'],
 		'orgs'      => $c->lists['orgs'],
 		'videos'    => $c->lists['videos'],
+		'badges'    => $c->lists['badges'],
 		'mag'       => $c->lists['mag'],
 		'provinces' => $c->lists['provinces'],
 		'assetBase' => NRN_URL . 'assets/',
