@@ -85,6 +85,8 @@ defined('ABSPATH') || exit;
 
 
 <section class="hero" data-hero="1" style="padding-bottom: 44px">
+<img class="hero-bg" data-heromap="1" data-ox="0" data-oy="0" src="<?php $nl->img('hero.i1'); ?>" alt="" aria-hidden="true" style="inset: auto; left: -341px; top: -125px; width: 1525px; height: auto; -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.55) 0, #000 22%, #000 86%, transparent 100%); mask-image: linear-gradient(180deg, rgba(0,0,0,0.55) 0, #000 22%, #000 86%, transparent 100%)" width="1672" height="941">
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 0; height: 520px; z-index: 0; pointer-events: none; background: linear-gradient(180deg, rgba(9,9,11,0.45) 0, rgba(9,9,11,0.25) 55%, rgba(9,9,11,0) 100%)"></div>
 <header style="position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.10)">
 <div style="display: flex; align-items: center; gap: 8px">
 <button type="button" aria-label="باز کردن منو" data-menu-open="1" aria-controls="m-menu" aria-expanded="false" class="btn hero-outline" style="width: 48px; min-height: 48px; padding: 0; border-radius: 15px; border-color: rgba(255,255,255,0.35)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
@@ -104,9 +106,8 @@ defined('ABSPATH') || exit;
 <?php if ($nl->has('hero.t8')): ?><a href="<?php $nl->url('hero.u9', 'm'); ?>" class="btn hero-outline" style="min-height: 56px; padding: 0 10px; border-radius: 14px; font-size: 15px"><?php $nl->t('hero.t8'); ?></a><?php endif; ?>
 </div>
 </div>
-<div style="position: relative; z-index: 0; height: 420px; margin-top: 4px; overflow: hidden">
-<img class="hero-bg" data-heromap="1" data-ox="0" data-oy="0" src="<?php $nl->img('hero.i1'); ?>" alt="" aria-hidden="true" style="inset: auto; left: -150px; top: -90px; width: 920px; height: auto; -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 14%, #000 84%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0, #000 14%, #000 84%, transparent 100%)" width="1672" height="941">
-<img class="hero-car hero-in" data-ref="heroCar" data-x="255" data-y="200" data-w="727" src="<?php $nl->img('hero.i2'); ?>" alt="<?php $nl->alt('hero.i2'); ?>" style="animation-delay: .25s; left: -10px; top: 20px; width: 400px" width="1533" height="921" fetchpriority="high">
+<div style="position: relative; z-index: 1; height: 320px; margin-top: 4px">
+<img class="hero-car hero-in" data-ref="heroCar" data-x="255" data-y="200" data-w="727" data-cx="599" data-cy="804" data-pw="350" src="<?php $nl->img('hero.i2'); ?>" alt="<?php $nl->alt('hero.i2'); ?>" style="animation-delay: .25s; left: -10px; top: 20px; width: 400px" width="1619" height="972" fetchpriority="high">
 </div>
 <div style="position: relative; z-index: 3; padding: 4px 18px 0; display: flex; flex-direction: column; align-items: center; gap: 18px">
 <?php if ($nl->has('hero.t10')): ?><a href="<?php $nl->url('hero.u11', 'm'); ?>" style="color: #C9CDD3; font-size: 16px; font-weight: 500; text-decoration: none; border-bottom: 1.5px solid rgba(255,255,255,0.75); padding: 0 4px 10px; display: inline-flex; align-items: center; gap: 22px"><?php $nl->t('hero.t10'); ?> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></a><?php endif; ?>
@@ -150,14 +151,21 @@ defined('ABSPATH') || exit;
 </div>
 <div style="display: flex; flex-direction: column; gap: 6px">
 <?php if ($nl->has('why.t19')): ?><h3 style="margin: 0; font-size: 17px; font-weight: 700"><?php $nl->t('why.t19'); ?></h3><?php endif; ?>
-<div class="marquee" style="margin: 0 -16px">
+<div class="marquee" data-box="1" data-crossel="trust" style="margin: 0 -16px">
 <div class="mtrack"><?php $nl->partial('orgs', 'm'); ?></div>
 </div>
 </div>
 </section><?php endif; ?>
 
 
-<?php if ($nl->on('choose')): ?><section id="m-choose" class="pearl m-sec" data-stop="انتخاب ردیاب" style="padding-top: 16px">
+<?php if ($nl->on('products')): ?><section id="m-products" class="pearl m-sec" data-stop="همهٔ محصولات" data-side="R" data-cross="trust">
+<div class="reveal" style="display: flex; flex-direction: column; gap: 14px"><?php if ($nl->has('products.t1')): ?><span class="kicker kicker-l"><span class="kdot"></span><?php $nl->t('products.t1'); ?></span><?php endif; ?><?php if ($nl->has('products.t2')): ?><h2 class="h2"><?php $nl->rich('products.t2'); ?></h2><?php endif; ?><?php if ($nl->has('products.t3')): ?><p style="margin: 0; font-size: 15px; line-height: 1.9; color: #4A4F57"><?php $nl->t('products.t3'); ?></p><?php endif; ?></div>
+<div class="ptrack" data-ptrack="1" role="list" aria-label="فهرست همهٔ محصولات نورون" style="margin: -16px -16px -34px; padding: 16px 16px 34px; scroll-padding: 0 16px"><?php $nl->partial('products', 'm'); ?></div>
+<div style="display: flex; justify-content: center; gap: 12px"><button type="button" class="pnav neo-sm" style="width: 46px; height: 46px" data-pnav="1" aria-label="محصولات قبلی"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#17191C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform: rotate(180deg)"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button><button type="button" class="pnav neo-sm" style="width: 46px; height: 46px" data-pnav="-1" aria-label="محصولات بعدی"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#17191C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button></div>
+</section><?php endif; ?>
+
+
+<?php if ($nl->on('choose')): ?><section id="m-choose" class="pearl m-sec" data-stop="انتخاب ردیاب" data-side="R" style="padding-top: 16px">
 <div class="reveal" style="display: flex; flex-direction: column; gap: 14px">
 <?php if ($nl->has('choose.t1')): ?><span class="kicker kicker-l"><span class="kdot"></span><?php $nl->t('choose.t1'); ?></span><?php endif; ?>
 <?php if ($nl->has('choose.t2')): ?><h2 class="h2"><?php $nl->t('choose.t2'); ?></h2><?php endif; ?>
@@ -539,13 +547,14 @@ defined('ABSPATH') || exit;
 
 <?php if ($nl->on('todo')): ?><aside style="background: #FFF8EE; border-top: 2px dashed #D9913F; padding: 32px 16px 40px; display: flex; flex-direction: column; gap: 12px">
 <?php if ($nl->has('todo.t1')): ?><h2 style="margin: 0; font-size: 18px; font-weight: 700; color: #7A3E00"><?php $nl->t('todo.t1'); ?></h2><?php endif; ?>
-<?php if ($nl->has('todo.t10')): ?><p style="margin: 0; font-size: 13px; color: #6B5233"><?php $nl->t('todo.t10'); ?></p><?php endif; ?>
+<?php if ($nl->has('todo.t11')): ?><p style="margin: 0; font-size: 13px; color: #6B5233"><?php $nl->t('todo.t11'); ?></p><?php endif; ?>
 <ul style="margin: 0; padding: 0 18px 0 0; font-size: 14px; line-height: 1.9; color: #2B2F35">
 <?php if ($nl->has('todo.t3')): ?><li><?php $nl->t('todo.t3'); ?></li><?php endif; ?>
-<?php if ($nl->has('todo.t11')): ?><li><?php $nl->t('todo.t11'); ?></li><?php endif; ?>
 <?php if ($nl->has('todo.t12')): ?><li><?php $nl->t('todo.t12'); ?></li><?php endif; ?>
 <?php if ($nl->has('todo.t13')): ?><li><?php $nl->t('todo.t13'); ?></li><?php endif; ?>
 <?php if ($nl->has('todo.t14')): ?><li><?php $nl->t('todo.t14'); ?></li><?php endif; ?>
+<?php if ($nl->has('todo.t15')): ?><li><?php $nl->t('todo.t15'); ?></li><?php endif; ?>
+<?php if ($nl->has('todo.t16')): ?><li><?php $nl->t('todo.t16'); ?></li><?php endif; ?>
 </ul>
 </aside><?php endif; ?>
 

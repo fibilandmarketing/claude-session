@@ -34,6 +34,9 @@ function nrn_tpl() {
 			'mag_label_d' => '<span style="font-size: 13px; font-weight: 500; color: #A3490B">',
 			'mag_more_d' => '<span style="font-size: 14px; color: #4A4F57">',
 			'path_d' => '<path class="{CLS}" data-province="{SLUG}" data-name="{NAME}"{URL} data-n="{N}" fill="{FILL}" d="{D}" tabindex="0" role="button" aria-pressed="false" aria-label="{ARIA}"></path>',
+			'prod_d' => '<a href="{URL}" class="pcard neo-sm" role="listitem" aria-label="{ARIA}"><span class="pc-img">{PHB}{IMG}</span>{TAG}<span class="pc-name" dir="auto">{NAME}</span><span class="pc-foot"><span class="pc-price">{PRICE}<small>{UNIT}</small></span><span class="pc-go"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17191C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></span></span></a>',
+			'prod_sep_d' => '',
+			'prod_phb_d' => '<span class="phb" style="font-size: 11px">',
 			'seal_d' => '<div style="position: relative; width: 76px; height: 76px; border-radius: 18px; overflow: hidden"><img src="{SRC}" alt="{ALT}" style="width: 100%; height: 100%; object-fit: cover; display: block" loading="lazy" decoding="async">{LABEL}</div>',
 			'seal_sep_d' => '
 ',
@@ -60,6 +63,9 @@ function nrn_tpl() {
 			'mag_label_m' => '<span style="font-size: 12px; font-weight: 500; color: #A3490B">',
 			'mag_more_m' => '',
 			'path_m' => '<path class="{CLS}" data-province="{SLUG}" data-name="{NAME}"{URL} data-n="{N}" fill="{FILL}" d="{D}" tabindex="0" role="button" aria-pressed="false" aria-label="{ARIA}"></path>',
+			'prod_m' => '<a href="{URL}" class="pcard neo-sm" role="listitem" aria-label="{ARIA}"><span class="pc-img">{PHB}{IMG}</span>{TAG}<span class="pc-name" dir="auto">{NAME}</span><span class="pc-foot"><span class="pc-price">{PRICE}<small>{UNIT}</small></span><span class="pc-go"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17191C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></span></span></a>',
+			'prod_sep_m' => '',
+			'prod_phb_m' => '<span class="phb" style="font-size: 11px">',
 			'seal_m' => '<div style="position: relative; width: 70px; height: 70px; border-radius: 16px; overflow: hidden"><img src="{SRC}" alt="{ALT}" style="width: 100%; height: 100%; object-fit: cover; display: block" loading="lazy" decoding="async">{LABEL}</div>',
 			'seal_sep_m' => '
 ',
@@ -237,4 +243,31 @@ function nrn_partial_badges( NRN_Content $c, $layout ) {
 		$parts[] = $html;
 	}
 	echo implode( $t[ 'seal_sep_' . $layout ], $parts ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above / admin-provided seal code
+}
+
+function nrn_partial_products( NRN_Content $c, $layout ) {
+	static $cards = null;
+	if ( null === $cards ) {
+		$cards = $c->product_cards();
+	}
+	$t     = nrn_tpl();
+	$parts = array();
+	foreach ( $cards as $it ) {
+		$cls  = 'cover' === ( $it['fit'] ?? '' ) ? 'pc-cover' : 'mul';
+		$size = ! empty( $it['w'] ) && ! empty( $it['h'] ) ? ' width="' . (int) $it['w'] . '" height="' . (int) $it['h'] . '"' : '';
+		$img  = '<img class="' . $cls . '" src="' . esc_url( $it['img'] ) . '" alt="' . esc_attr( $it['alt'] ?? '' ) . '" loading="lazy" decoding="async"' . $size . '>';
+		$phb  = trim( (string) ( $it['phb'] ?? '' ) );
+		$tag  = trim( (string) ( $it['tag'] ?? '' ) );
+		$parts[] = strtr( $t[ 'prod_' . $layout ], array(
+			'{URL}'   => esc_url( '' !== ( $it['url'] ?? '' ) ? $it['url'] : '#' ),
+			'{ARIA}'  => esc_attr( 'مشاهدهٔ محصول ' . $it['name'] ),
+			'{PHB}'   => '' !== $phb ? $t[ 'prod_phb_' . $layout ] . esc_html( $phb ) . '</span>' : '',
+			'{IMG}'   => $img,
+			'{TAG}'   => '' !== $tag ? '<span class="pc-tag">' . esc_html( $tag ) . '</span>' : '',
+			'{NAME}'  => esc_html( $it['name'] ),
+			'{PRICE}' => esc_html( $it['price'] ?? '' ),
+			'{UNIT}'  => esc_html( $it['unit'] ?? '' ),
+		) );
+	}
+	echo implode( $t[ 'prod_sep_' . $layout ], $parts ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above
 }

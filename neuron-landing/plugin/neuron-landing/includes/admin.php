@@ -50,6 +50,12 @@ function nrn_admin_save() {
 		exit;
 	}
 
+	if ( ! empty( $_POST['nrn_cache_clear'] ) ) {
+		nrn_cache_purge();
+		wp_safe_redirect( admin_url( 'admin.php?page=neuron-landing&tab=settings&nrn_msg=cache' ) );
+		exit;
+	}
+
 	if ( ! empty( $_POST['nrn_reset_all'] ) ) {
 		update_option( NRN_OPTION, array( 'settings' => NRN_Content::get()->data['settings'] ?? array() ), false );
 		nrn_after_save();
@@ -71,6 +77,7 @@ function nrn_admin_save() {
 function nrn_after_save() {
 	NRN_Content::reset_cache();
 	nrn_bump_rev();
+	nrn_cache_purge();
 	// purge the common page caches so visitors see the change right away
 	if ( function_exists( 'rocket_clean_domain' ) ) {
 		rocket_clean_domain();
@@ -225,6 +232,38 @@ function nrn_sanitize_all( array $in ) {
 	}
 
 	// settings
+	// all-products carousel
+	if ( isset( $in['products'] ) && is_array( $in['products'] ) ) {
+		$pi   = $in['products'];
+		$prod = array(
+			'source'   => 'manual' === ( $pi['source'] ?? '' ) ? 'manual' : 'woo',
+			'auto_new' => ! empty( $pi['auto_new'] ),
+			'limit'    => max( 0, min( 60, (int) ( $pi['limit'] ?? 12 ) ) ),
+			'woo'      => array(),
+			'items'    => array(),
+		);
+		foreach ( (array) ( $pi['woo'] ?? array() ) as $r ) {
+			if ( ! empty( $r['id'] ) ) {
+				$prod['woo'][] = array(
+					'id'   => absint( $r['id'] ),
+					'show' => ! empty( $r['show'] ),
+					'tag'  => sanitize_text_field( (string) ( $r['tag'] ?? '' ) ),
+					'fit'  => 'cover' === ( $r['fit'] ?? '' ) ? 'cover' : 'product',
+				);
+			}
+		}
+		foreach ( (array) ( $pi['items'] ?? array() ) as $row ) {
+			if ( is_array( $row ) ) {
+				$r          = nrn_clean_row( $row, array( 'name' => 'text', 'tag' => 'text', 'price' => 'text', 'unit' => 'text', 'img' => 'url', 'alt' => 'text', 'fit' => 'text', 'phb' => 'text', 'url' => 'url' ) );
+				$r['fit']   = 'cover' === $r['fit'] ? 'cover' : 'product';
+				$prod['items'][] = $r;
+			}
+		}
+		if ( $prod !== $c->lists['products'] ) {
+			$out['products'] = $prod;
+		}
+	}
+
 	$out['v'] = 2;
 	$s = isset( $in['settings'] ) && is_array( $in['settings'] ) ? $in['settings'] : array();
 	$out['settings'] = array(
@@ -234,6 +273,8 @@ function nrn_sanitize_all( array $in ) {
 		'hide_phb'   => empty( $s['hide_phb'] ) ? 0 : 1,
 		'breakpoint' => max( 320, min( 1400, (int) ( $s['breakpoint'] ?? 768 ) ) ),
 		'scale_from' => max( 0, min( 1600, (int) ( $s['scale_from'] ?? 1280 ) ) ),
+		'cache'      => empty( $s['cache'] ) ? 0 : 1,
+		'cache_ttl'  => max( 1, min( 168, (int) ( $s['cache_ttl'] ?? 10 ) ) ),
 	);
 	return $out;
 }
@@ -261,6 +302,13 @@ function nrn_clean_row( array $row, array $spec ) {
 				break;
 			case 'textarea':
 				$o[ $k ] = sanitize_textarea_field( (string) $v );
+				break;
+			case 'select':
+				echo '<label>' . esc_html( $label ) . '<select data-f="' . esc_attr( $k ) . '">';
+				foreach ( $fs[2] as $ov => $ol ) {
+					echo '<option value="' . esc_attr( $ov ) . '"' . selected( (string) $v, (string) $ov, false ) . '>' . esc_html( $ol ) . '</option>';
+				}
+				echo '</select></label>';
 				break;
 			case 'code':
 				// trust-seal snippets (eNamad, Samandehi) need their own attributes: administrators may paste them as is
@@ -304,6 +352,7 @@ function nrn_admin_page() {
 		'imported' => array( 'success', 'پشتیبان بارگذاری شد.' ),
 		'badfile'  => array( 'error', 'فایل پشتیبان معتبر نیست.' ),
 		'nodata'   => array( 'error', 'اطلاعاتی دریافت نشد؛ دوباره تلاش کنید.' ),
+		'cache'    => array( 'success', 'کش صفحه پاک شد و چند ثانیه دیگر دوباره ساخته می‌شود.' ),
 	);
 	$preview = add_query_arg( 'nrn_preview', '1', home_url( '/' ) );
 	?>
@@ -545,6 +594,22 @@ function nrn_list_spec( $list ) {
 				'aria'  => array( 'text', 'برچسب دسترس‌پذیری دکمهٔ پخش' ),
 			),
 		),
+		'products' => array(
+			'title'  => 'کارت‌های دستی محصولات',
+			'add'    => 'افزودن کارت',
+			'desc'   => 'وقتی منبع روی «کارت‌های دستی» باشد یا ووکامرس فعال نباشد، این کارت‌ها نمایش داده می‌شوند.',
+			'fields' => array(
+				'name'  => array( 'text', 'نام محصول' ),
+				'tag'   => array( 'text', 'برچسب (دسته)' ),
+				'price' => array( 'text', 'قیمت' ),
+				'unit'  => array( 'text', 'واحد قیمت' ),
+				'img'   => array( 'img', 'تصویر' ),
+				'alt'   => array( 'text', 'متن جایگزین تصویر' ),
+				'fit'   => array( 'select', 'نوع تصویر', array( 'product' => 'عکس محصول (زمینهٔ سفید، وسط کادر)', 'cover' => 'عکس تمام‌کادر' ) ),
+				'phb'   => array( 'text', 'برچسب جایگاه روی تصویر' ),
+				'url'   => array( 'url', 'لینک' ),
+			),
+		),
 		'badges' => array(
 			'title'  => 'نمادهای اعتماد فوتر (اینماد، ساماندهی، دانش‌بنیان)',
 			'add'    => 'افزودن نماد',
@@ -590,6 +655,9 @@ function nrn_render_lists_for( $gid, NRN_Content $c ) {
 		case 'footer':
 			nrn_render_list( 'badges', $c->items( 'badges' ) );
 			break;
+		case 'products':
+			nrn_render_products( $c );
+			break;
 		case 'city':
 			nrn_render_map( $c );
 			break;
@@ -618,7 +686,8 @@ function nrn_render_row( $list, $spec, $it ) {
 	echo '<div class="nrn-row"><div class="nrn-row-bar"><span class="nrn-row-n"></span><span class="nrn-row-title"></span>';
 	echo '<span class="nrn-row-btns"><button type="button" class="nrn-up" title="بالا"><span class="dashicons dashicons-arrow-up-alt2"></span></button><button type="button" class="nrn-down" title="پایین"><span class="dashicons dashicons-arrow-down-alt2"></span></button><button type="button" class="nrn-del" title="حذف"><span class="dashicons dashicons-trash"></span></button></span></div><div class="nrn-row-body">';
 	foreach ( $spec['fields'] as $k => $fs ) {
-		list( $type, $label ) = $fs;
+		$type  = $fs[0];
+		$label = $fs[1];
 		$v = isset( $it[ $k ] ) ? $it[ $k ] : '';
 		echo '<div class="nrn-rf nrn-rf-' . esc_attr( $type ) . '">';
 		switch ( $type ) {
@@ -647,7 +716,7 @@ function nrn_render_row( $list, $spec, $it ) {
 }
 
 function nrn_render_list_templates() {
-	foreach ( array( 'faq', 'orgs', 'videos', 'mag', 'badges' ) as $list ) {
+	foreach ( array( 'faq', 'orgs', 'videos', 'mag', 'badges', 'products' ) as $list ) {
 		echo '<script type="text/template" id="nrn-tpl-' . esc_attr( $list ) . '">';
 		ob_start();
 		nrn_render_row( $list, nrn_list_spec( $list ), array() );
@@ -660,10 +729,58 @@ function nrn_render_list_templates() {
 		'orgs'      => $c->lists['orgs'],
 		'videos'    => $c->lists['videos'],
 		'badges'    => $c->lists['badges'],
+		'products'  => $c->lists['products'],
 		'mag'       => $c->lists['mag'],
 		'provinces' => $c->lists['provinces'],
 		'assetBase' => NRN_URL . 'assets/',
 	) ) . '</script>';
+}
+
+function nrn_render_products( NRN_Content $c ) {
+	$cfg  = $c->products_cfg();
+	$woo  = NRN_Content::woo_active();
+	echo '<div class="nrn-card" data-products="1"><div class="nrn-card-head"><h3>محصولات این بخش</h3></div><div class="nrn-grid2">';
+	echo '<label>منبع کارت‌ها<select data-prod-k="source">';
+	echo '<option value="woo"' . selected( $cfg['source'], 'woo', false ) . '>محصولات ووکامرس (قیمت، تصویر و لینک خودکار)</option>';
+	echo '<option value="manual"' . selected( $cfg['source'], 'manual', false ) . '>کارت‌های دستی</option></select></label>';
+	echo '<label>حداکثر تعداد کارت<input type="number" min="0" max="60" data-prod-k="limit" value="' . esc_attr( (int) $cfg['limit'] ) . '"><small>صفر یعنی همه.</small></label>';
+	echo '</div>';
+	if ( ! $woo ) {
+		echo '<p class="notice notice-warning inline" style="padding:8px 12px">ووکامرس روی این سایت فعال نیست؛ تا وقتی فعال شود، کارت‌های دستی پایین نمایش داده می‌شوند.</p>';
+	} else {
+		echo '<label class="nrn-check" style="margin:12px 0"><input type="checkbox" data-prod-k="auto_new"' . checked( ! empty( $cfg['auto_new'] ), true, false ) . '> محصولاتی که بعداً به فروشگاه اضافه می‌شوند خودکار نمایش داده شوند (انتهای فهرست)</label>';
+		echo '<p class="description">تیک «نمایش» هر محصول را بزنید یا بردارید و با فلش‌ها ترتیبشان را عوض کنید. قیمت، تصویر شاخص، نام و لینک صفحهٔ محصول مستقیم از ووکامرس خوانده می‌شود؛ برچسب بالای نام اگر خالی بماند، دستهٔ محصول است.</p>';
+		$rows = array();
+		foreach ( (array) $cfg['woo'] as $r ) {
+			$rows[ (int) $r['id'] ] = $r;
+		}
+		$ids   = NRN_Content::woo_product_ids();
+		$order = array_values( array_unique( array_merge( array_values( array_intersect( array_keys( $rows ), $ids ) ), $ids ) ) );
+		echo '<div class="nrn-prov-wrap"><table class="widefat striped nrn-woo"><thead><tr><th>نمایش</th><th></th><th>محصول</th><th>قیمت</th><th>برچسب روی کارت</th><th>نوع تصویر</th><th>ترتیب</th></tr></thead><tbody>';
+		if ( ! $order ) {
+			echo '<tr><td colspan="7">هنوز محصول منتشرشده‌ای در فروشگاه نیست.</td></tr>';
+		}
+		foreach ( $order as $id ) {
+			$p = wc_get_product( $id );
+			if ( ! $p ) {
+				continue;
+			}
+			$r    = isset( $rows[ $id ] ) ? $rows[ $id ] : array( 'show' => ! empty( $cfg['auto_new'] ) || ! $rows, 'tag' => '', 'fit' => 'product' );
+			$card = NRN_Content::woo_card( $p, $r );
+			$thumb = $p->get_image_id() ? wp_get_attachment_image_url( $p->get_image_id(), 'thumbnail' ) : '';
+			echo '<tr data-id="' . (int) $id . '"><td><input type="checkbox" class="nrn-w-show"' . checked( ! empty( $r['show'] ), true, false ) . ' aria-label="نمایش ' . esc_attr( $p->get_name() ) . '"></td>';
+			echo '<td>' . ( $thumb ? '<img src="' . esc_url( $thumb ) . '" alt="" width="44" height="44" style="border-radius:8px;object-fit:cover">' : '' ) . '</td>';
+			echo '<td><a href="' . esc_url( get_edit_post_link( $id ) ) . '" target="_blank" rel="noopener">' . esc_html( $p->get_name() ) . '</a>' . ( 'hidden' === $p->get_catalog_visibility() ? ' <small>(در فروشگاه پنهان)</small>' : '' ) . '</td>';
+			echo '<td>' . esc_html( trim( $card['price'] . ' ' . $card['unit'] ) ) . '</td>';
+			echo '<td><input type="text" class="nrn-w-tag" value="' . esc_attr( $r['tag'] ?? '' ) . '" placeholder="' . esc_attr( $card['tag'] ) . '"></td>';
+			echo '<td><select class="nrn-w-fit"><option value="product"' . selected( $r['fit'] ?? 'product', 'product', false ) . '>عکس محصول</option><option value="cover"' . selected( $r['fit'] ?? '', 'cover', false ) . '>تمام‌کادر</option></select></td>';
+			echo '<td class="nrn-row-btns"><button type="button" class="nrn-wup" title="بالا"><span class="dashicons dashicons-arrow-up-alt2"></span></button><button type="button" class="nrn-wdown" title="پایین"><span class="dashicons dashicons-arrow-down-alt2"></span></button></td></tr>';
+		}
+		echo '</tbody></table></div>';
+	}
+	echo '<hr><h4>' . esc_html( nrn_list_spec( 'products' )['title'] ) . '</h4><p class="description">' . esc_html( nrn_list_spec( 'products' )['desc'] ) . '</p>';
+	nrn_render_list( 'products', $cfg['items'], false );
+	echo '</div>';
 }
 
 function nrn_render_mag( NRN_Content $c ) {
@@ -739,6 +856,25 @@ function nrn_render_settings( NRN_Content $c, $preview ) {
 			<input type="number" min="0" max="1600" data-scope="settings" data-k="scale_from" value="<?php echo esc_attr( (int) $c->setting( 'scale_from' ) ); ?>">
 			<small>بین عرض موبایل و این عدد (مثل تبلت‌ها)، طراحی دسکتاپ دقیقاً در همین عرض ساخته و متناسب با صفحه کوچک می‌شود تا چیدمان به هم نریزد. پیش‌فرض ۱۲۸۰؛ صفر یعنی بدون کوچک‌نمایی.</small>
 		</label>
+	</div>
+	<div class="nrn-card">
+		<h3>کش صفحه (افزایش سرعت)</h3>
+		<label class="nrn-switch">
+			<input type="checkbox" data-scope="settings" data-k="cache" <?php checked( (bool) $c->setting( 'cache' ) ); ?>>
+			<span class="nrn-switch-ui"></span>
+			<span><b>کش صفحهٔ اصلی روشن باشد</b><small>صفحهٔ آماده برای بازدیدکننده‌ها به‌صورت فایل ذخیره و بدون پردازش دوباره فرستاده می‌شود. برای کاربران واردشده و پیش‌نمایش کش استفاده نمی‌شود. با هر ذخیره در این پنل، یا تغییر محصول، قیمت، موجودی، نوشته و دسته، کش خودکار پاک و دوباره ساخته می‌شود.</small></span>
+		</label>
+		<div class="nrn-grid2" style="margin-top:12px">
+			<label>مدت اعتبار کش (ساعت)
+				<input type="number" min="1" max="168" data-scope="settings" data-k="cache_ttl" value="<?php echo esc_attr( (int) $c->setting( 'cache_ttl' ) ); ?>">
+				<small>بعد از این مدت صفحه دوباره ساخته می‌شود (پیش‌فرض ۱۰).</small>
+			</label>
+			<div>
+				<?php $st = nrn_cache_status(); ?>
+				<p style="margin:0 0 8px"><b>وضعیت:</b> <?php echo $st ? esc_html( sprintf( 'ساخته‌شده در %s، حجم %s کیلوبایت', wp_date( 'Y/m/d H:i', $st['time'] ), number_format_i18n( $st['size'] / 1024 ) ) ) : 'هنوز ساخته نشده (با اولین بازدید ساخته می‌شود)'; ?></p>
+				<button type="submit" class="button" name="nrn_cache_clear" value="1"><span class="dashicons dashicons-update"></span> پاک کردن کش</button>
+			</div>
+		</div>
 	</div>
 	<div class="nrn-card">
 		<h3>نشان‌ها و برچسب‌های جایگاه طرح</h3>

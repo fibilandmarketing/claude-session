@@ -1,5 +1,5 @@
 hero      hero.i1      dm  img  -                            img/hero-bg.webp
-hero      hero.i2      dm  img  -                            img/hero-car.webp
+hero      hero.i2      dm  img  -                            img/hero-car-v2.webp
 hero      hero.t3      dm  text -                            ردیاب و دزدگیر خودرو نورون
 hero      hero.t4      dm  text -                            خودرویت را⏎[روی نقشه ببین]
 hero      hero.t5      dm  text -                            موقعیت خودرو را لحظه‌ای ببینید و هشدارهای امنیتی را روی موبا
@@ -46,6 +46,9 @@ why       why.t20      m   text why|۲ سال گارانتی            برای
 why       why.t21      m   text why|بیمهٔ سرقت رایگان        همراه با خرید دستگاه
 why       why.t22      m   text why|سیم‌کارت رایگان          آماده، بدون خرید جداگانه
 why       why.t23      m   text why|پشتیبانی ۲۴ ساعته        هر روز هفته
+products  products.t1  dm  text -                            فروشگاه نورون
+products  products.t2  dm  text -                            همهٔ [محصولات]
+products  products.t3  dm  text -                            از ردیاب خودروی شخصی تا سامانهٔ ناوگان؛ محصول مورد نیازتان ر
 choose    choose.t1    dm  text -                            انتخاب بر اساس نیاز
 choose    choose.t2    dm  text -                            دنبال چه چیزی هستید؟
 choose    choose.t3    dm  text choose|ردیابی خودروی شخصی    ردیاب
@@ -348,13 +351,15 @@ todo      todo.t4      d   text -                            تفاوت دقیق
 todo      todo.t5      d   text -                            ۳ ویدئوی واقعی مشتری (کاور و عنوان)
 todo      todo.t6      d   text -                            اعتبار گارانتی و بیمه برای خرید از فروشگاه‌های دیگر
 todo      todo.t7      d   text -                            پنل مدیریت ناوگان
-todo      todo.t8      d   text -                            قیمت‌ها پیش از انتشار دوباره چک شود
-todo      todo.t9      d   text -                            تصاویر مقالات، نمادهای اینماد و ساماندهی، لینک شبکه‌های اجتم
-todo      todo.t10     m   text -                            فقط برای بررسی؛ فهرست کامل در نسخهٔ دسکتاپ.
-todo      todo.t11     m   text -                            امکانات دقیق S350 و S600
-todo      todo.t12     m   text -                            ویدئوها
-todo      todo.t13     m   text -                            تصاویر جایگاه‌دار: پنل، مقالات
-todo      todo.t14     m   text -                            قیمت‌ها پیش از انتشار
+todo      todo.t8      d   text -                            همهٔ محصولات: لینک صفحهٔ تک‌محصول هر کارت؛ عکس ردیاب سازمانی
+todo      todo.t9      d   text -                            قیمت‌ها پیش از انتشار دوباره چک شود
+todo      todo.t10     d   text -                            تصاویر مقالات، نمادهای اینماد و ساماندهی، لینک شبکه‌های اجتم
+todo      todo.t11     m   text -                            فقط برای بررسی؛ فهرست کامل در نسخهٔ دسکتاپ.
+todo      todo.t12     m   text -                            امکانات دقیق S350 و S600
+todo      todo.t13     m   text -                            ویدئوها
+todo      todo.t14     m   text -                            تصاویر جایگاه‌دار: پنل، مقالات، ردیاب سازمانی، ناوگان شهری، 
+todo      todo.t15     m   text -                            لینک صفحهٔ تک‌محصول کارت‌های همهٔ محصولات
+todo      todo.t16     m   text -                            قیمت‌ها پیش از انتشار
 drawer    drawer.u1    m   url  -                            #m-top
 drawer    drawer.t2    m   text -                            صفحهٔ اصلی
 drawer    drawer.u3    m   url  -                            #m-top

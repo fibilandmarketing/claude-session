@@ -120,6 +120,8 @@
   $form.on('click', '.nrn-del', function () { var $l = $(this).closest('.nrn-list'); $(this).closest('.nrn-row').remove(); refreshTitles($l); setDirty(); });
   $form.on('click', '.nrn-up', function () { var $r = $(this).closest('.nrn-row'); $r.prev('.nrn-row').before($r); refreshTitles($r.parent()); setDirty(); });
   $form.on('click', '.nrn-down', function () { var $r = $(this).closest('.nrn-row'); $r.next('.nrn-row').after($r); refreshTitles($r.parent()); setDirty(); });
+  $form.on('click', '.nrn-wup', function () { var $r = $(this).closest('tr'); $r.prev('tr').before($r); setDirty(); });
+  $form.on('click', '.nrn-wdown', function () { var $r = $(this).closest('tr'); $r.next('tr').after($r); setDirty(); });
   $form.on('click', '.nrn-row-bar', function (e) { if ($(e.target).closest('button').length) return; $(this).closest('.nrn-row').toggleClass('is-open'); });
 
   function rowsOf(list) {
@@ -157,6 +159,12 @@
     if (gid === 'videos') renderList('videos', DEF.videos);
     if (gid === 'faq') renderList('faq', DEF.faq);
     if (gid === 'footer') renderList('badges', DEF.badges);
+    if (gid === 'products') {
+      renderList('products', DEF.products.items);
+      $p.find('[data-prod-k="source"]').val(DEF.products.source); $p.find('[data-prod-k="limit"]').val(DEF.products.limit);
+      $p.find('[data-prod-k="auto_new"]').prop('checked', true);
+      $p.find('.nrn-w-show').prop('checked', true); $p.find('.nrn-w-tag').val(''); $p.find('.nrn-w-fit').val('product');
+    }
     if (gid === 'mag') {
       renderList('mag', DEF.mag.items);
       $p.find('[data-mag-k="source"]').val(DEF.mag.source); $p.find('[data-mag-k="more"]').val(DEF.mag.more); $p.find('.nrn-mag-cat').val('0');
@@ -191,6 +199,14 @@
     ['faq', 'orgs', 'videos', 'badges'].forEach(function (l) { p[l] = rowsOf(l); });
     p.mag = { source: $('[data-mag-k="source"]').val(), cat: $('.nrn-mag-cat').val(), more: $('[data-mag-k="more"]').val(), items: rowsOf('mag') };
     $('[data-map-k]').each(function () { p.map[$(this).data('map-k')] = $(this).val(); });
+    p.products = {
+      source: $('[data-prod-k="source"]').val(), limit: $('[data-prod-k="limit"]').val(),
+      auto_new: $('[data-prod-k="auto_new"]').length ? ($('[data-prod-k="auto_new"]').prop('checked') ? 1 : 0) : 1,
+      woo: $('.nrn-woo tr[data-id]').map(function () {
+        return { id: $(this).data('id'), show: $(this).find('.nrn-w-show').prop('checked') ? 1 : 0, tag: $(this).find('.nrn-w-tag').val(), fit: $(this).find('.nrn-w-fit').val() };
+      }).get(),
+      items: rowsOf('products')
+    };
     p.provinces = $('.nrn-prov tr[data-slug]').map(function () {
       return { slug: $(this).data('slug'), name: $(this).find('.nrn-p-name').val(), n: $(this).find('.nrn-p-n').val(), url: $(this).find('.nrn-p-url').val() };
     }).get();

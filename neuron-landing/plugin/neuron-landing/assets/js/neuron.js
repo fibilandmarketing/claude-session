@@ -139,6 +139,29 @@
     this.mapApply();
   };
 
+  /* --------------------------------------------- products carousel */
+  P.initProducts = function () {
+    var self = this, root = this.root; if (!root || this.prodOff) return;
+    var doc = root.ownerDocument || document;
+    var upd = function (tr) {
+      var sec = tr.closest('section'); if (!sec) return;
+      var max = tr.scrollWidth - tr.clientWidth, x = Math.abs(tr.scrollLeft);
+      Array.prototype.forEach.call(sec.querySelectorAll('[data-pnav]'), function (b) { var d = +b.getAttribute('data-pnav'); b.disabled = d > 0 ? x <= 12 : x >= max - 12; });
+    };
+    var click = function (e) {
+      var b = e.target && e.target.closest ? e.target.closest('[data-pnav]') : null;
+      if (!b || !self.root || !self.root.contains(b)) return;
+      var sec = b.closest('section'), tr = sec && sec.querySelector('[data-ptrack]'); if (!tr) return;
+      var c = tr.querySelector('.pcard'), step = c ? c.getBoundingClientRect().width + 20 : 300;
+      tr.scrollBy({ left: (+b.getAttribute('data-pnav')) * step, behavior: 'smooth' });
+    };
+    var scr = function (e) { var t = e.target; if (t && t.matches && t.matches('[data-ptrack]')) upd(t); };
+    doc.addEventListener('click', click); doc.addEventListener('scroll', scr, true);
+    this.prodOff = function () { doc.removeEventListener('click', click); doc.removeEventListener('scroll', scr, true); };
+    this.prodApply = function () { if (self.root) Array.prototype.forEach.call(self.root.querySelectorAll('[data-ptrack]'), upd); };
+    this.prodApply();
+  };
+
   /* --------------------------------------------------- mobile drawer */
   P.initMenu = function () {
     var self = this, root = this.root; if (!root || this.menuOff) return;
@@ -208,9 +231,17 @@
       var hc = this.heroCar;
       if (hc) {
         var par = hc.offsetParent ? off(hc.offsetParent) : { x: 0, y: 0 };
-        hc.style.left = Math.round(ox + (+hc.getAttribute('data-x')) * sc - par.x) + 'px';
-        hc.style.top = Math.round(oy + (+hc.getAttribute('data-y')) * sc - par.y) + 'px';
-        hc.style.width = Math.round((+hc.getAttribute('data-w')) * sc) + 'px';
+        if (hc.hasAttribute('data-pw')) {
+          // fixed width, centred on a point of the map (mobile hero)
+          var pw = +hc.getAttribute('data-pw');
+          hc.style.width = pw + 'px';
+          hc.style.left = Math.round(ox + (+hc.getAttribute('data-cx')) * sc - pw / 2 - par.x) + 'px';
+          hc.style.top = Math.round(oy + (+hc.getAttribute('data-cy')) * sc - pw * 0.601 / 2 - par.y) + 'px';
+        } else {
+          hc.style.left = Math.round(ox + (+hc.getAttribute('data-x')) * sc - par.x) + 'px';
+          hc.style.top = Math.round(oy + (+hc.getAttribute('data-y')) * sc - par.y) + 'px';
+          hc.style.width = Math.round((+hc.getAttribute('data-w')) * sc) + 'px';
+        }
       }
     } else {
       sx = Math.round(W * 0.5); sy = Math.round(h.y + h.h - 100); d = 'M' + sx + ' ' + sy;
@@ -221,12 +252,17 @@
     var legs = [];
     var stops = [];
     var CROSS = mob ? 170 : 320;
-    var cx = preEnd ? preEnd.x : sx, cy = preEnd ? preEnd.y : sy, side = 'L';
+    var cx = preEnd ? preEnd.x : sx, cy = preEnd ? preEnd.y : sy, prevSide = null;
     secs.forEach(function (el, i) {
       var o = off(el);
-      var tx = side === 'L' ? Lx : Rx;
+      // a section may pin the side the road reaches it from (data-side)
+      var sd = el.getAttribute('data-side') || (prevSide ? (prevSide === 'L' ? 'R' : 'L') : 'L');
+      var tx = sd === 'L' ? Lx : Rx;
       var yTop = i === 0 ? cy : Math.round(Math.max(cy + 40, o.y - CROSS));
       var yBot = Math.round(o.y + (i === 0 ? (mob ? 90 : 140) : (mob ? 18 : 26)));
+      // ... and make the road cross over a given element (data-cross -> data-crossel)
+      var ck = el.getAttribute('data-cross'), ce = ck ? root.querySelector('[data-crossel="' + ck + '"]') : null;
+      if (ce && i > 0) { var cr = off(ce), pad = mob ? 50 : 70; yTop = Math.round(Math.max(cy + 40, cr.y - pad)); yBot = Math.round(cr.y + cr.h + pad); }
       var minDy = mob ? 90 : 120;
       if (yBot < yTop + minDy) yBot = yTop + minDy;
       var seg = '';
@@ -236,13 +272,14 @@
       legs.push((i === 0 ? first : 'M' + cx + ' ' + cy) + seg);
       d += seg; dr += seg;
       stops.push({ i: i, x: tx, y: yBot });
-      cx = tx; cy = yBot; side = side === 'L' ? 'R' : 'L';
+      cx = tx; cy = yBot; prevSide = sd;
     });
     var px, py;
     if (park) {
       var pk = off(park);
       px = Math.round(pk.x + pk.w / 2); py = Math.round(pk.y + pk.h / 2);
       if (!this.mapOff) this.initMap();
+      if (!this.prodOff) this.initProducts();
       var tp = park.querySelector('[data-province="' + (MAP.def || 'tehran') + '"]');
       if (tp) {
         var o2 = off(tp);
@@ -250,6 +287,7 @@
         var mb = park.querySelector('[data-mapbox]');
         if (mb) { var ob = off(mb); this.ping = { x: px - ob.x, y: py - ob.y }; }
         if (this.mapApply) this.mapApply();
+        if (this.prodApply) this.prodApply();
       }
     } else {
       // the map section is switched off: park at the bottom of the last stop's column
@@ -275,6 +313,7 @@
       this.render();
       this.buildTable();
       if (this.mapApply) this.mapApply();
+      if (this.prodApply) this.prodApply();
     } else { this.updateTarget(); this.kick(); }
   };
 
@@ -408,6 +447,10 @@
       this.cur = this.startLen * e;
       if (p >= 1) this.intro = false;
     } else {
+      // a fling to the far end of the page: the car is off-screen anyway, so it skips ahead and
+      // only drives the last stretch (no burst of station / glass / route updates on the way)
+      var lim = 1.4 * (this.vh || 800) / (this.s || 1), gap = this.target - this.cur;
+      if (Math.abs(gap) > lim) { this.cur = this.target - (gap > 0 ? lim : -lim); prev = this.cur; }
       this.cur += (this.target - this.cur) * (1 - Math.exp(-dt * 7));
     }
     var v = (this.cur - prev) / dt;
@@ -451,7 +494,11 @@
         this.tail.style.opacity = (q / 60 * 0.95).toFixed(3);
       }
     }
-    this.tunnel(x, y);
+    if (document.documentElement.classList.contains('nrn-fast')) {
+      if (this.on && this.on.length) { this.on.forEach(function (el) { el.classList.remove('tunnel'); }); this.on = []; }
+    } else {
+      this.tunnel(x, y);
+    }
   };
 
   P.applyHero = function () {
@@ -501,7 +548,7 @@
     var list = root.querySelectorAll('.neo, .neo-sm, .neo-in, .glass, .glass-l, .btn, .kicker, div.dark, article.dark, [data-box]');
     var boxes = [];
     Array.prototype.forEach.call(list, function (el) {
-      if (el === park || el.closest('.drive, .drive-top, .stage, .marquee')) return;
+      if (el === park || el.closest('.drive, .drive-top, .stage, .ptrack') || (el.closest('.marquee') && !el.classList.contains('marquee'))) return;
       var r = lr(el);
       if (!r || r.x2 - r.x1 < 8 || r.y2 - r.y1 < 8) return;
       boxes.push({ el: el, x1: r.x1, y1: r.y1, x2: r.x2, y2: r.y2 });
@@ -571,8 +618,29 @@
   function whenIdle(fn) {
     if (window.requestIdleCallback) window.requestIdleCallback(fn, { timeout: 1200 }); else setTimeout(fn, 300);
   }
+  /* Performance on phones: decorative animations run only in sections near the screen,
+     and pause altogether while the page is being flung. */
+  function initPerf() {
+    var secs = document.querySelectorAll('.nrn [data-ref="root"] > section, .nrn [data-ref="root"] > footer, .nrn [data-ref="root"] > aside');
+    if (window.IntersectionObserver) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { e.target.classList.toggle('nrn-off', !e.isIntersecting); });
+      }, { rootMargin: '400px 0px' });
+      Array.prototype.forEach.call(secs, function (el) { io.observe(el); });
+    }
+    var html = document.documentElement, lastY = window.pageYOffset, lastT = performance.now(), timer = 0;
+    window.addEventListener('scroll', function () {
+      var t = performance.now(), y = window.pageYOffset, v = Math.abs(y - lastY) / Math.max(1, t - lastT);
+      lastY = y; lastT = t;
+      if (v > 2.5 && !html.classList.contains('nrn-fast')) html.classList.add('nrn-fast');
+      clearTimeout(timer);
+      timer = setTimeout(function () { html.classList.remove('nrn-fast'); }, 220);
+    }, { passive: true });
+  }
+
   function boot() {
     initVideos();
+    initPerf();
     if (document.readyState === 'complete') whenIdle(startDrives);
     else window.addEventListener('load', function () { whenIdle(startDrives); });
   }

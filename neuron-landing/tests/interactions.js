@@ -60,7 +60,7 @@ function check(name, ok, extra) { console.log((ok ? 'PASS ' : 'FAIL ') + name + 
   await p.setViewportSize({ width: 390, height: 844 });
   await p.waitForTimeout(1500);
   const mob = await p.evaluate(() => ({ d: getComputedStyle(document.querySelector('.nrn-d')).display, m: getComputedStyle(document.querySelector('.nrn-m')).display, car: document.querySelector('.nrn-m .car').style.transform, stops: document.querySelectorAll('.nrn-m .stop').length }));
-  check('resize to phone switches to the mobile design and starts its car', mob.d === 'none' && mob.m === 'block' && mob.car.includes('translate3d') && mob.stops === 6, JSON.stringify(mob));
+  check('resize to phone switches to the mobile design and starts its car', mob.d === 'none' && mob.m === 'block' && mob.car.includes('translate3d') && mob.stops === 7, JSON.stringify(mob));
   await p.close();
 
   // ---------------- mobile (fresh, touch)

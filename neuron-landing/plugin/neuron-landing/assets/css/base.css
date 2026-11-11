@@ -26,6 +26,11 @@ body.nrn-body{margin:0;padding:0;background:#0B0C0F}
 .nrn:not(.nrn-go) [data-ref="root"] > svg[aria-hidden="true"],.nrn:not(.nrn-go) .drive,.nrn:not(.nrn-go) .drive-top{opacity:0}
 .nrn:not(.nrn-go) .mtrack{animation-play-state:paused}
 
+/* performance: animations pause off-screen and during a fling (neuron.js sets the classes);
+   scroll-driven reveals (.reveal) keep running so content never stays hidden */
+.nrn .nrn-off *:not(.reveal),.nrn .nrn-off *::before,.nrn .nrn-off *::after,
+html.nrn-fast .nrn *:not(.reveal):not(.car-in),html.nrn-fast .nrn *::before,html.nrn-fast .nrn *::after{animation-play-state:paused !important}
+
 /* admin switches */
 .nrn-hide-tbd .tbd{display:none !important}
 .nrn-hide-phb .phb,.nrn-hide-phb .phb-d{display:none !important}

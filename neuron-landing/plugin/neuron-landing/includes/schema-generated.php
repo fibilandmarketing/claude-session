@@ -5,7 +5,7 @@ return array(
 'fields' => array(
   'hero' => array(
     'hero.i1' => array('type' => 'img', 'role' => 'تصویر', 'default' => 'img/hero-bg.webp', 'layouts' => 'dm', 'alt' => '', 'card' => ''),
-    'hero.i2' => array('type' => 'img', 'role' => 'تصویر', 'default' => 'img/hero-car.webp', 'layouts' => 'dm', 'alt' => 'خودرو با ردیاب و دزدگیر نورون و جعبهٔ محصول', 'card' => ''),
+    'hero.i2' => array('type' => 'img', 'role' => 'تصویر', 'default' => 'img/hero-car-v2.webp', 'layouts' => 'dm', 'alt' => 'خودرو با ردیاب و دزدگیر نورون و جعبهٔ محصول', 'card' => ''),
     'hero.t3' => array('type' => 'text', 'role' => 'تیتر اصلی', 'default' => 'ردیاب و دزدگیر خودرو نورون', 'layouts' => 'dm', 'long' => false, 'card' => ''),
     'hero.t4' => array('type' => 'text', 'role' => 'متن', 'default' => 'خودرویت را
 [روی نقشه ببین]', 'layouts' => 'dm', 'long' => true, 'card' => '', 'tags' => array(array('<span>', '</span>')), 'br' => true),
@@ -59,6 +59,11 @@ return array(
     'why.t21' => array('type' => 'text', 'role' => 'متن', 'default' => 'همراه با خرید دستگاه', 'layouts' => 'm', 'long' => false, 'card' => 'why|بیمهٔ سرقت رایگان'),
     'why.t22' => array('type' => 'text', 'role' => 'متن', 'default' => 'آماده، بدون خرید جداگانه', 'layouts' => 'm', 'long' => false, 'card' => 'why|سیم‌کارت رایگان'),
     'why.t23' => array('type' => 'text', 'role' => 'متن', 'default' => 'هر روز هفته', 'layouts' => 'm', 'long' => false, 'card' => 'why|پشتیبانی ۲۴ ساعته'),
+  ),
+  'products' => array(
+    'products.t1' => array('type' => 'text', 'role' => 'برچسب بالای تیتر', 'default' => 'فروشگاه نورون', 'layouts' => 'dm', 'long' => false, 'card' => ''),
+    'products.t2' => array('type' => 'text', 'role' => 'تیتر', 'default' => 'همهٔ [محصولات]', 'layouts' => 'dm', 'long' => false, 'card' => '', 'tags' => array(array('<span class="grad">', '</span>'))),
+    'products.t3' => array('type' => 'text', 'role' => 'متن', 'default' => 'از ردیاب خودروی شخصی تا سامانهٔ ناوگان؛ محصول مورد نیازتان را انتخاب کنید.', 'layouts' => 'dm', 'long' => false, 'card' => ''),
   ),
   'choose' => array(
     'choose.t1' => array('type' => 'text', 'role' => 'برچسب بالای تیتر', 'default' => 'انتخاب بر اساس نیاز', 'layouts' => 'dm', 'long' => false, 'card' => ''),
@@ -389,13 +394,15 @@ return array(
     'todo.t5' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => '۳ ویدئوی واقعی مشتری (کاور و عنوان)', 'layouts' => 'd', 'long' => false, 'card' => ''),
     'todo.t6' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => 'اعتبار گارانتی و بیمه برای خرید از فروشگاه‌های دیگر', 'layouts' => 'd', 'long' => false, 'card' => ''),
     'todo.t7' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => 'پنل مدیریت ناوگان', 'layouts' => 'd', 'long' => false, 'card' => ''),
-    'todo.t8' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => 'قیمت‌ها پیش از انتشار دوباره چک شود', 'layouts' => 'd', 'long' => false, 'card' => ''),
-    'todo.t9' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => 'تصاویر مقالات، نمادهای اینماد و ساماندهی، لینک شبکه‌های اجتماعی', 'layouts' => 'd', 'long' => false, 'card' => ''),
-    'todo.t10' => array('type' => 'text', 'role' => 'متن', 'default' => 'فقط برای بررسی؛ فهرست کامل در نسخهٔ دسکتاپ.', 'layouts' => 'm', 'long' => false, 'card' => ''),
-    'todo.t11' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => 'امکانات دقیق S350 و S600', 'layouts' => 'm', 'long' => false, 'card' => ''),
-    'todo.t12' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => 'ویدئوها', 'layouts' => 'm', 'long' => false, 'card' => ''),
-    'todo.t13' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => 'تصاویر جایگاه‌دار: پنل، مقالات', 'layouts' => 'm', 'long' => false, 'card' => ''),
-    'todo.t14' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => 'قیمت‌ها پیش از انتشار', 'layouts' => 'm', 'long' => false, 'card' => ''),
+    'todo.t8' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => 'همهٔ محصولات: لینک صفحهٔ تک‌محصول هر کارت؛ عکس ردیاب سازمانی، سامانهٔ ناوگان شهری و پک وسایل شخصی', 'layouts' => 'd', 'long' => true, 'card' => ''),
+    'todo.t9' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => 'قیمت‌ها پیش از انتشار دوباره چک شود', 'layouts' => 'd', 'long' => false, 'card' => ''),
+    'todo.t10' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => 'تصاویر مقالات، نمادهای اینماد و ساماندهی، لینک شبکه‌های اجتماعی', 'layouts' => 'd', 'long' => false, 'card' => ''),
+    'todo.t11' => array('type' => 'text', 'role' => 'متن', 'default' => 'فقط برای بررسی؛ فهرست کامل در نسخهٔ دسکتاپ.', 'layouts' => 'm', 'long' => false, 'card' => ''),
+    'todo.t12' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => 'امکانات دقیق S350 و S600', 'layouts' => 'm', 'long' => false, 'card' => ''),
+    'todo.t13' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => 'ویدئوها', 'layouts' => 'm', 'long' => false, 'card' => ''),
+    'todo.t14' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => 'تصاویر جایگاه‌دار: پنل، مقالات، ردیاب سازمانی، ناوگان شهری، پک وسایل شخصی', 'layouts' => 'm', 'long' => false, 'card' => ''),
+    'todo.t15' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => 'لینک صفحهٔ تک‌محصول کارت‌های همهٔ محصولات', 'layouts' => 'm', 'long' => false, 'card' => ''),
+    'todo.t16' => array('type' => 'text', 'role' => 'آیتم فهرست', 'default' => 'قیمت‌ها پیش از انتشار', 'layouts' => 'm', 'long' => false, 'card' => ''),
   ),
   'drawer' => array(
     'drawer.u1' => array('type' => 'url', 'role' => 'لینک', 'default' => '#m-top', 'layouts' => 'm', 'defaults' => array('m' => '#m-top'), 'label' => 'نورون، صفحهٔ اصلی', 'card' => ''),

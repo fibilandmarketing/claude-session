@@ -69,6 +69,7 @@ class NRN_Content {
 			'header'   => array( 'title' => 'هدر و منو', 'icon' => 'menu', 'toggle' => false ),
 			'hero'     => array( 'title' => 'هیرو (بخش اول)', 'icon' => 'cover-image', 'toggle' => false ),
 			'why'      => array( 'title' => 'چرا نورون: ضمانت‌ها، آمار، سازمان‌ها', 'icon' => 'shield', 'toggle' => true ),
+			'products' => array( 'title' => 'همهٔ محصولات (ووکامرس)', 'icon' => 'cart', 'toggle' => true ),
 			'choose'   => array( 'title' => 'انتخاب بر اساس نیاز', 'icon' => 'screenoptions', 'toggle' => true ),
 			'compare'  => array( 'title' => 'مقایسهٔ S350 و S600', 'icon' => 'columns', 'toggle' => true ),
 			'personal' => array( 'title' => 'ردیابی وسایل شخصی', 'icon' => 'tag', 'toggle' => true ),
@@ -195,7 +196,7 @@ class NRN_Content {
 		if ( isset( $this->data['fields'][ $key ] ) && is_string( $this->data['fields'][ $key ] ) ) {
 			$v = $this->data['fields'][ $key ];
 			// in-page anchors: the mobile design prefixes its section ids with "m-"
-			if ( 'm' === $layout && preg_match( '/^#(top|choose|compare|personal|heavy|cold|city|fleet|mag)$/', $v ) ) {
+			if ( 'm' === $layout && preg_match( '/^#(top|products|choose|compare|personal|heavy|cold|city|fleet|mag)$/', $v ) ) {
 				$v = '#m-' . substr( $v, 1 );
 			}
 			return $v;
@@ -241,7 +242,7 @@ class NRN_Content {
 	/* ------------------------------------------------------------ lists */
 
 	public function items( $list ) {
-		if ( isset( $this->data[ $list ] ) && is_array( $this->data[ $list ] ) && 'mag' !== $list ) {
+		if ( isset( $this->data[ $list ] ) && is_array( $this->data[ $list ] ) && ! in_array( $list, array( 'mag', 'products' ), true ) ) {
 			return $this->data[ $list ];
 		}
 		return $this->lists[ $list ];
@@ -301,6 +302,157 @@ class NRN_Content {
 			);
 		}
 		return $cards;
+	}
+
+	/* --------------------------------------------------------- products */
+
+	public function products_cfg() {
+		$d = $this->lists['products'];
+		if ( isset( $this->data['products'] ) && is_array( $this->data['products'] ) ) {
+			$d = array_merge( $d, $this->data['products'] );
+		}
+		return $d;
+	}
+
+	public static function woo_active() {
+		return class_exists( 'WooCommerce' ) && function_exists( 'wc_get_products' );
+	}
+
+	/** Persian price: 12240000 -> ۱۲٬۲۴۰٬۰۰۰ */
+	public static function fa_price( $v ) {
+		return self::fa( number_format( (float) $v, 0, '.', '٬' ) );
+	}
+
+	public static function currency_unit() {
+		$units = array( 'IRT' => 'تومان', 'IRR' => 'ریال', 'IRHT' => 'هزار تومان', 'IRHR' => 'هزار ریال' );
+		$code  = function_exists( 'get_woocommerce_currency' ) ? get_woocommerce_currency() : 'IRT';
+		if ( isset( $units[ $code ] ) ) {
+			return $units[ $code ];
+		}
+		return function_exists( 'get_woocommerce_currency_symbol' ) ? html_entity_decode( get_woocommerce_currency_symbol( $code ) ) : '';
+	}
+
+	/** Published WooCommerce products (ids) in the shop's own order. */
+	public static function woo_product_ids() {
+		if ( ! self::woo_active() ) {
+			return array();
+		}
+		return wc_get_products( array(
+			'status'  => 'publish',
+			'limit'   => 300,
+			'orderby' => array( 'menu_order' => 'ASC', 'date' => 'DESC' ),
+			'return'  => 'ids',
+		) );
+	}
+
+	/** Card data of one WooCommerce product. */
+	public static function woo_card( $product, $row = array() ) {
+		$name  = $product->get_name();
+		$img   = '';
+		$imgid = $product->get_image_id();
+		$w     = 0;
+		$h     = 0;
+		if ( $imgid ) {
+			$src = wp_get_attachment_image_src( $imgid, 'woocommerce_single' );
+			if ( $src ) {
+				list( $img, $w, $h ) = $src;
+			}
+		}
+		$tag = isset( $row['tag'] ) ? trim( (string) $row['tag'] ) : '';
+		if ( '' === $tag ) {
+			$terms = get_the_terms( $product->get_id(), 'product_cat' );
+			if ( $terms && ! is_wp_error( $terms ) ) {
+				foreach ( $terms as $t ) {
+					if ( 'uncategorized' !== $t->slug ) {
+						$tag = $t->name;
+						break;
+					}
+				}
+			}
+		}
+		if ( $product->is_type( 'variable' ) ) {
+			$price = $product->get_variation_price( 'min', true );
+		} else {
+			$price = wc_get_price_to_display( $product );
+		}
+		$unit = self::currency_unit();
+		if ( ! $product->is_in_stock() ) {
+			$ptxt = 'ناموجود';
+			$unit = '';
+		} elseif ( '' === (string) $price || (float) $price <= 0 ) {
+			$ptxt = 'تماس بگیرید';
+			$unit = '';
+		} else {
+			$ptxt = self::fa_price( $price );
+		}
+		return array(
+			'name'  => $name,
+			'tag'   => $tag,
+			'price' => $ptxt,
+			'unit'  => $unit,
+			'img'   => $img,
+			'w'     => $w,
+			'h'     => $h,
+			'alt'   => $name,
+			'fit'   => isset( $row['fit'] ) && 'cover' === $row['fit'] ? 'cover' : 'product',
+			'phb'   => $img ? '' : 'جایگاه: عکس محصول',
+			'url'   => get_permalink( $product->get_id() ),
+		);
+	}
+
+	/** Cards of the "all products" carousel: WooCommerce products, else the manual cards. */
+	public function product_cards() {
+		$cfg    = $this->products_cfg();
+		$manual = array();
+		foreach ( (array) $cfg['items'] as $it ) {
+			if ( '' === trim( (string) ( $it['name'] ?? '' ) ) ) {
+				continue;
+			}
+			$it['img'] = '' !== ( $it['img'] ?? '' ) ? self::asset( $it['img'] ) : self::asset( 'img/placeholder.svg' );
+			$manual[]  = $it;
+		}
+		if ( 'woo' !== $cfg['source'] || ! self::woo_active() ) {
+			return $manual;
+		}
+		$key   = 'nrn_products_' . md5( wp_json_encode( array( $cfg['woo'], $cfg['auto_new'], $cfg['limit'] ) ) . get_option( 'nrn_rev', 0 ) );
+		$cards = get_transient( $key );
+		if ( is_array( $cards ) ) {
+			return $cards ? $cards : $manual;
+		}
+		$rows = array();
+		foreach ( (array) $cfg['woo'] as $r ) {
+			if ( ! empty( $r['id'] ) ) {
+				$rows[ (int) $r['id'] ] = $r;
+			}
+		}
+		$all   = self::woo_product_ids();
+		$order = array();
+		foreach ( $rows as $id => $r ) {
+			if ( ! empty( $r['show'] ) && in_array( $id, $all, true ) ) {
+				$order[] = $id;
+			}
+		}
+		if ( ! empty( $cfg['auto_new'] ) ) {
+			foreach ( $all as $id ) {
+				if ( ! isset( $rows[ $id ] ) ) {
+					$order[] = $id; // products added later show up by themselves
+				}
+			}
+		}
+		$limit = (int) $cfg['limit'];
+		$cards = array();
+		foreach ( $order as $id ) {
+			$p = wc_get_product( $id );
+			if ( ! $p || 'hidden' === $p->get_catalog_visibility() ) {
+				continue;
+			}
+			$cards[] = self::woo_card( $p, $rows[ $id ] ?? array() );
+			if ( $limit > 0 && count( $cards ) >= $limit ) {
+				break;
+			}
+		}
+		set_transient( $key, $cards, 6 * HOUR_IN_SECONDS );
+		return $cards ? $cards : $manual;
 	}
 
 	/* -------------------------------------------------------------- map */
@@ -407,6 +559,8 @@ class NRN_Content {
 			'hide_phb'   => 0,
 			'breakpoint' => 768,
 			'scale_from' => 1280,
+			'cache'      => 1,
+			'cache_ttl'  => 10,
 		);
 		$s = isset( $this->data['settings'] ) && is_array( $this->data['settings'] ) ? array_merge( $d, $this->data['settings'] ) : $d;
 		return isset( $s[ $k ] ) ? $s[ $k ] : null;

@@ -166,3 +166,30 @@ function nrn_partial_badges( NRN_Content $c, $layout ) {
 	}
 	echo implode( $t[ 'seal_sep_' . $layout ], $parts ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above / admin-provided seal code
 }
+
+function nrn_partial_products( NRN_Content $c, $layout ) {
+	static $cards = null;
+	if ( null === $cards ) {
+		$cards = $c->product_cards();
+	}
+	$t     = nrn_tpl();
+	$parts = array();
+	foreach ( $cards as $it ) {
+		$cls  = 'cover' === ( $it['fit'] ?? '' ) ? 'pc-cover' : 'mul';
+		$size = ! empty( $it['w'] ) && ! empty( $it['h'] ) ? ' width="' . (int) $it['w'] . '" height="' . (int) $it['h'] . '"' : '';
+		$img  = '<img class="' . $cls . '" src="' . esc_url( $it['img'] ) . '" alt="' . esc_attr( $it['alt'] ?? '' ) . '" loading="lazy" decoding="async"' . $size . '>';
+		$phb  = trim( (string) ( $it['phb'] ?? '' ) );
+		$tag  = trim( (string) ( $it['tag'] ?? '' ) );
+		$parts[] = strtr( $t[ 'prod_' . $layout ], array(
+			'{URL}'   => esc_url( '' !== ( $it['url'] ?? '' ) ? $it['url'] : '#' ),
+			'{ARIA}'  => esc_attr( 'مشاهدهٔ محصول ' . $it['name'] ),
+			'{PHB}'   => '' !== $phb ? $t[ 'prod_phb_' . $layout ] . esc_html( $phb ) . '</span>' : '',
+			'{IMG}'   => $img,
+			'{TAG}'   => '' !== $tag ? '<span class="pc-tag">' . esc_html( $tag ) . '</span>' : '',
+			'{NAME}'  => esc_html( $it['name'] ),
+			'{PRICE}' => esc_html( $it['price'] ?? '' ),
+			'{UNIT}'  => esc_html( $it['unit'] ?? '' ),
+		) );
+	}
+	echo implode( $t[ 'prod_sep_' . $layout ], $parts ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above
+}

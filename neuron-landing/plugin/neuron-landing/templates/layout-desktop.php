@@ -86,7 +86,7 @@ defined('ABSPATH') || exit;
 
 <section class="hero" data-hero="1">
 <img class="hero-bg" data-heromap="1" data-ox="0" data-oy="0.5" src="<?php $nl->img('hero.i1'); ?>" alt="" aria-hidden="true" style="object-position: 0% 50%" width="1672" height="941">
-<img class="hero-car hero-in" data-ref="heroCar" data-x="35" data-y="263" data-w="800" src="<?php $nl->img('hero.i2'); ?>" alt="<?php $nl->alt('hero.i2'); ?>" style="animation-delay: .25s; left: 2%; top: 26%; width: 49%" width="1533" height="921" fetchpriority="high">
+<img class="hero-car hero-in" data-ref="heroCar" data-x="35" data-y="263" data-w="800" src="<?php $nl->img('hero.i2'); ?>" alt="<?php $nl->alt('hero.i2'); ?>" style="animation-delay: .25s; left: 2%; top: 26%; width: 49%" width="1619" height="972" fetchpriority="high">
 <header class="wrap" style="max-width: 1440px; padding: 0 64px">
 <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 104px; border-bottom: 1px solid rgba(255,255,255,0.10); flex-wrap: wrap">
 <div style="display: flex; align-items: center; gap: 72px; flex-wrap: wrap">
@@ -171,7 +171,7 @@ defined('ABSPATH') || exit;
 <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap">
 <?php if ($nl->has('why.t19')): ?><h3 style="margin: 0; font-size: 20px; font-weight: 700"><?php $nl->t('why.t19'); ?></h3><?php endif; ?>
 </div>
-<div class="marquee" style="margin: 0 calc(50% - 50vw)">
+<div class="marquee" data-box="1" data-crossel="trust" style="margin: 0 calc(50% - 50vw)">
 <div class="mtrack"><?php $nl->partial('orgs', 'd'); ?></div>
 </div>
 </div>
@@ -179,7 +179,18 @@ defined('ABSPATH') || exit;
 </section><?php endif; ?>
 
 
-<?php if ($nl->on('choose')): ?><section id="choose" class="pearl sec" data-stop="انتخاب ردیاب" style="padding-top: 24px">
+<?php if ($nl->on('products')): ?><section id="products" class="pearl sec" data-stop="همهٔ محصولات" data-side="R" data-cross="trust">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 32px">
+<div class="reveal" style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 16px; max-width: 680px"><?php if ($nl->has('products.t1')): ?><span class="kicker kicker-l"><span class="kdot"></span><?php $nl->t('products.t1'); ?></span><?php endif; ?><?php if ($nl->has('products.t2')): ?><h2 class="h2"><?php $nl->rich('products.t2'); ?></h2><?php endif; ?><?php if ($nl->has('products.t3')): ?><p class="lead" style="margin: 0"><?php $nl->t('products.t3'); ?></p><?php endif; ?></div>
+<div style="display: flex; gap: 12px"><button type="button" class="pnav neo-sm" data-pnav="1" aria-label="محصولات قبلی"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#17191C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform: rotate(180deg)"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button><button type="button" class="pnav neo-sm" data-pnav="-1" aria-label="محصولات بعدی"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#17191C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button></div>
+</div>
+<div class="ptrack" data-ptrack="1" role="list" aria-label="فهرست همهٔ محصولات نورون"><?php $nl->partial('products', 'd'); ?></div>
+</div>
+</section><?php endif; ?>
+
+
+<?php if ($nl->on('choose')): ?><section id="choose" class="pearl sec" data-stop="انتخاب ردیاب" data-side="R" style="padding-top: 24px">
 <div class="orb" style="width: 420px; height: 420px; background: rgba(244,128,38,0.14); left: -140px; top: 280px; animation-delay: -4s"></div>
 <div class="wrap" style="display: flex; flex-direction: column; gap: 48px">
 <div class="reveal" style="display: flex; flex-direction: column; gap: 16px; max-width: 680px">
@@ -671,6 +682,7 @@ defined('ABSPATH') || exit;
 <?php if ($nl->has('todo.t7')): ?><li><?php $nl->t('todo.t7'); ?></li><?php endif; ?>
 <?php if ($nl->has('todo.t8')): ?><li><?php $nl->t('todo.t8'); ?></li><?php endif; ?>
 <?php if ($nl->has('todo.t9')): ?><li><?php $nl->t('todo.t9'); ?></li><?php endif; ?>
+<?php if ($nl->has('todo.t10')): ?><li><?php $nl->t('todo.t10'); ?></li><?php endif; ?>
 </ul>
 </div>
 </aside><?php endif; ?>
