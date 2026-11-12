@@ -13,6 +13,7 @@ class YL_Frontend {
 		add_filter( 'template_include', array( __CLASS__, 'template' ), 99 );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'assets' ), 20 );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'isolate' ), 9999 );
+		add_action( 'wp_head', array( __CLASS__, 'shield' ), PHP_INT_MIN );
 		add_action( 'wp_head', array( __CLASS__, 'head' ), 1 );
 		add_action( 'template_redirect', array( __CLASS__, 'prepare' ) );
 	}
@@ -98,6 +99,34 @@ class YL_Frontend {
 				. ( $hero['srcset'] ? ' imagesrcset="' . esc_attr( $hero['srcset'] ) . '" imagesizes="(max-width:760px) 92vw, 570px"' : '' )
 				. ' fetchpriority="high">' . "\n";
 		}
+	}
+
+	/**
+	 * Link shield, printed first in <head> so its listeners run before any theme or plugin script.
+	 *
+	 * Themes and plugins often catch every link click on the site (AJAX/PJAX page loading,
+	 * preloaders, page transitions). On this standalone template they cannot find the theme
+	 * wrapper, so they stay stuck in their "loading" state and the page looks frozen until a
+	 * refresh. For links inside the landing we stop the click from reaching those scripts
+	 * (the browser still follows the link itself) and keep their beforeunload loaders quiet.
+	 * In-page "#section" links are scrolled here, so theme smooth-scroll code does not fight ours.
+	 */
+	public static function shield() {
+		if ( ! self::is_landing() || ! YL_Settings::get( 'general', 'shield', 1 ) ) {
+			return;
+		}
+		echo '<script id="yl-shield">' . self::shield_js() . '</script>' . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput
+	}
+
+	private static function shield_js() {
+		return <<<'JS'
+(function(){var nav=0;
+window.addEventListener('click',function(e){var t=e.target,a=t&&t.closest&&t.closest('a[href]');if(!a)return;var r=document.getElementById('yl');if(!r||!r.contains(a))return;var h=a.getAttribute('href')||'';
+if(h.charAt(0)==='#'){var el=h.length>1&&document.getElementById(h.slice(1));if(!el)return;e.preventDefault();e.stopImmediatePropagation();var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;el.scrollIntoView({behavior:rm?'auto':'smooth',block:'start'});if(history.replaceState)history.replaceState(null,'',h);return;}
+e.stopImmediatePropagation();nav=Date.now();},true);
+window.addEventListener('beforeunload',function(e){if(Date.now()-nav<1500)e.stopImmediatePropagation();},true);
+})();
+JS;
 	}
 
 	/* ------------------------------------------------------------------ view helpers */

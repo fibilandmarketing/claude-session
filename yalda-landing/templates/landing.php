@@ -107,6 +107,7 @@ $config = array(
 	'deals'   => $js_deals,
 	'recent'  => $js_recent,
 	'fals'    => $fals,
+	'proofMs' => (int) round( 1000 * min( 30, max( 3, (float) $S['proof']['interval'] ) ) ),
 	't'       => array(
 		'info'      => $build['info_label'],
 		'fName'     => $build['f_name'],
@@ -328,31 +329,75 @@ foreach ( (array) $g['order'] as $sec ) :
 			break;
 
 		case 'proof':
-			$pf = $S['proof'];
-			if ( empty( $pf['logos'] ) && empty( $pf['quotes'] ) ) {
+			$pf     = $S['proof'];
+			$logos  = array_values( array_filter( (array) $pf['logos'], static function ( $lg ) {
+				return ! empty( $lg['img'] ) || '' !== trim( (string) ( isset( $lg['name'] ) ? $lg['name'] : '' ) );
+			} ) );
+			$quotes = array_values( array_filter( (array) $pf['quotes'], static function ( $q ) {
+				return '' !== trim( (string) ( isset( $q['text'] ) ? $q['text'] : '' ) );
+			} ) );
+			if ( ! $logos && ! $quotes ) {
 				break;
 			}
+			$speeds = array( 'slow' => 26, 'normal' => 42, 'fast' => 64 );
+			$speed  = isset( $speeds[ $pf['logo_speed'] ] ) ? $speeds[ $pf['logo_speed'] ] : 42;
+			$nq     = count( $quotes );
 			?>
-<section id="proof" class="yl-sec" aria-labelledby="pf-t">
+<section id="proof" class="yl-sec yl-pf" aria-labelledby="pf-t">
 	<?php $F::deco( 'proof' ); ?>
 	<div class="yl-wrap">
 		<div class="yl-sh yl-rv"><?php $F::heading( 'proof', 'pf-t' ); ?><?php if ( $pf['sub'] ) : ?><p><?php echo esc_html( $pf['sub'] ); ?></p><?php endif; ?></div>
-		<?php if ( ! empty( $pf['logos'] ) ) : ?>
-		<div class="yl-lg" aria-label="لوگوی مشتریان سازمانی">
-			<?php foreach ( (array) $pf['logos'] as $lg ) : ?>
-				<?php $li = ! empty( $lg['img'] ) ? YL_Images::get( $lg['img'], array( 300 ) ) : null; ?>
-				<div class="yl-ins"><?php echo $li ? YL_Images::tag( $li, array( 'alt' => $lg['name'] ) ) : esc_html( $lg['name'] ); // phpcs:ignore ?></div>
-			<?php endforeach; ?>
-		</div>
-		<?php endif; ?>
-		<?php if ( ! empty( $pf['quotes'] ) ) : ?>
-		<div class="yl-qs">
-			<?php foreach ( (array) $pf['quotes'] as $i => $q ) : ?>
-			<figure class="yl-qc yl-neu yl-rv" style="--i:<?php echo (int) min( $i, 3 ); ?>"><p><?php echo esc_html( $q['text'] ); ?></p><?php if ( $q['by'] ) : ?><footer><?php echo esc_html( $q['by'] ); ?></footer><?php endif; ?></figure>
-			<?php endforeach; ?>
-		</div>
-		<?php endif; ?>
 	</div>
+	<?php if ( $logos ) : ?>
+	<div class="yl-mq yl-rv" role="region" aria-label="لوگوی مشتریان سازمانی" data-speed="<?php echo (int) $speed; ?>">
+		<div class="yl-mq-t">
+			<ul class="yl-mq-g">
+				<?php foreach ( $logos as $lg ) : ?>
+					<?php $li = ! empty( $lg['img'] ) ? YL_Images::get( $lg['img'], array( 300 ) ) : null; ?>
+				<li class="yl-mq-i<?php echo $li ? '' : ' is-txt'; ?>"><?php echo $li ? YL_Images::tag( $li, array( 'alt' => $lg['name'], 'sizes' => '150px' ) ) : '<span>' . esc_html( $lg['name'] ) . '</span>'; // phpcs:ignore ?></li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	</div>
+	<?php endif; ?>
+	<?php if ( $quotes ) : ?>
+	<div class="yl-wrap">
+		<div class="yl-qz yl-rv" role="region" aria-roledescription="اسلایدر" aria-label="نظر مشتریان سازمانی">
+			<div class="yl-qz-c yl-neu">
+				<svg class="yl-qz-mk" viewBox="0 0 48 36" aria-hidden="true"><path fill="currentColor" d="M20 0v6c-6 1.6-9 5.2-9.4 10.6H20V36H0V18C0 7.4 6.8 1.4 20 0Zm28 0v6c-6 1.6-9 5.2-9.4 10.6H48V36H28V18C28 7.4 34.8 1.4 48 0Z"/></svg>
+				<div class="yl-qz-vp" aria-live="off">
+					<?php
+					foreach ( $quotes as $i => $q ) :
+						$by    = trim( (string) $q['by'] );
+						$parts = preg_split( '/\s*[،,]\s*/u', $by, 2 );
+						$name  = isset( $parts[0] ) ? $parts[0] : '';
+						$role  = isset( $parts[1] ) ? $parts[1] : '';
+						$init  = '' !== $name ? mb_substr( preg_replace( '/^\[/u', '', $name ), 0, 1 ) : '';
+						?>
+					<figure class="yl-qz-s<?php echo 0 === $i ? ' is-on' : ''; ?>" role="group" aria-roledescription="نظر" aria-label="<?php echo esc_attr( yl_fa( $i + 1 ) . ' از ' . yl_fa( $nq ) ); ?>"<?php echo 0 === $i ? '' : ' aria-hidden="true"'; ?>>
+						<blockquote><p><?php echo esc_html( $q['text'] ); ?></p></blockquote>
+						<?php if ( '' !== $by ) : ?>
+						<figcaption><?php if ( '' !== $init ) : ?><span class="yl-qz-av" aria-hidden="true"><?php echo esc_html( $init ); ?></span><?php endif; ?><span class="yl-qz-by"><b><?php echo esc_html( $name ); ?></b><?php if ( '' !== $role ) : ?><small><?php echo esc_html( $role ); ?></small><?php endif; ?></span></figcaption>
+						<?php endif; ?>
+					</figure>
+					<?php endforeach; ?>
+				</div>
+			</div>
+			<?php if ( $nq > 1 ) : ?>
+			<div class="yl-qz-n">
+				<button class="yl-qz-a" type="button" data-qz="-1" aria-label="نظر قبلی"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+				<div class="yl-qz-d">
+					<?php for ( $i = 0; $i < $nq; $i++ ) : ?>
+					<button type="button" data-qz-go="<?php echo (int) $i; ?>" aria-label="<?php echo esc_attr( 'نظر ' . yl_fa( $i + 1 ) ); ?>"<?php echo 0 === $i ? ' class="is-on" aria-current="true"' : ''; ?>><i></i></button>
+					<?php endfor; ?>
+				</div>
+				<button class="yl-qz-a" type="button" data-qz="1" aria-label="نظر بعدی"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+				<button class="yl-qz-p" type="button" data-qz-pause aria-pressed="false" aria-label="توقف جابه‌جایی خودکار"><svg class="i-pa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="i-pl" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg></button>
+			</div>
+			<?php endif; ?>
+		</div>
+	</div>
+	<?php endif; ?>
 </section>
 			<?php
 			break;

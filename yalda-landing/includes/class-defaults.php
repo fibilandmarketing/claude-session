@@ -80,6 +80,7 @@ class YL_Defaults {
 				'drift'      => 1,
 				'reveal'     => 1,
 				'isolate'    => 1,
+				'shield'     => 1,
 				'faq_schema' => 1,
 				'bg'         => '',
 				'c_night'    => '#0C113A',
@@ -279,6 +280,8 @@ class YL_Defaults {
 					array( 'text' => '[نظر واقعی مشتری درباره‌ی کیفیت و بسته‌بندی پک]', 'by' => '[نام و سمت]، [نام شرکت]' ),
 					array( 'text' => '[نظر واقعی مشتری درباره‌ی تحویل به‌موقع پیش از یلدا]', 'by' => '[نام و سمت]، [نام شرکت]' ),
 				),
+				'logo_speed' => 'normal',
+				'interval'   => 5,
 			),
 			'fal'     => array(
 				'on'        => 1,

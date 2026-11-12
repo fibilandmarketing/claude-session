@@ -165,14 +165,46 @@ body.yl-body{margin:0;background:var(--night,#0C113A)}
 .yl-nm .yl-amt{font-size:15px;font-weight:700;color:var(--amb)}
 .yl .yl-rr .yl-soft{flex:none;padding:0 14px;font-size:14px}
 
-/* نظرات */
-.yl-lg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
-.yl-lg>div{display:flex;align-items:center;justify-content:center;height:72px;padding:8px 12px;font-size:13px;color:var(--mut);text-align:center}
-.yl-lg img{display:block;max-height:52px;width:auto;max-width:100%;object-fit:contain}
-.yl-qs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:16px}
-.yl-qc{margin:0;padding:26px}
-.yl-qc p{color:#FFD66B}
-.yl-qc footer{font-size:13px;color:var(--mut);margin-top:6px}
+/* نظرات: نوار بی‌پایان لوگوها */
+.yl-mq{position:relative;direction:ltr;overflow:hidden;padding:10px 0 14px;margin-bottom:30px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.yl-mq-t{display:flex;width:max-content;direction:ltr}
+.yl-mq.is-run .yl-mq-t{animation:yl-mq var(--mq-d,30s) linear infinite;will-change:transform}
+.yl-mq:hover .yl-mq-t,.yl-mq:focus-within .yl-mq-t,.yl-mq.is-off .yl-mq-t{animation-play-state:paused}
+.yl .yl-mq-g{display:flex;flex:none;gap:18px;margin:0;padding:0 18px 0 0;list-style:none}
+.yl-mq-i{position:relative;flex:none;display:flex;align-items:center;justify-content:center;width:178px;height:92px;margin:0;padding:14px 20px;border-radius:16px;background:var(--cream);box-shadow:0 10px 22px rgba(2,3,18,.38);outline:2px dashed rgba(16,22,63,.2);outline-offset:-7px;transition:transform .35s var(--ease)}
+.yl-mq-i:hover{transform:translateY(-4px) rotate(-1deg)}
+.yl-mq-i img{display:block;max-width:100%;max-height:58px;width:auto;height:auto;object-fit:contain}
+.yl-mq-i.is-txt span{direction:rtl;font-size:15px;font-weight:700;line-height:1.5;color:#10163F;text-align:center}
+@keyframes yl-mq{from{transform:translateX(calc(-1 * var(--mq-w,0px)))}to{transform:translateX(0)}}
+
+/* نظرات: یک نظر بزرگ، جابه‌جایی خودکار */
+.yl-qz{max-width:860px;margin:0 auto}
+.yl-qz-c{padding:58px 56px 40px;text-align:center;background:linear-gradient(180deg,rgba(14,20,66,.92),rgba(5,8,32,.86));box-shadow:0 24px 50px rgba(2,3,18,.45)}
+.yl-qz-mk{position:absolute;top:-24px;left:50%;width:62px;height:48px;margin-left:-31px;padding:10px 12px;border-radius:14px;background:var(--amb);color:#1A1204;box-shadow:0 8px 18px rgba(2,3,18,.45)}
+.yl-qz-vp{display:grid}
+.yl-qz-s{grid-area:1/1;margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;opacity:0;visibility:hidden;transform:translateX(-26px);transition:opacity .6s var(--ease),transform .6s var(--ease),visibility 0s .6s}
+.yl-qz-s.is-on{opacity:1;visibility:visible;transform:none;transition:opacity .6s var(--ease) .12s,transform .6s var(--ease) .12s,visibility 0s}
+.yl-qz-s blockquote{margin:0;padding:0;border:0;quotes:none}
+.yl-qz-s blockquote p{margin:0;font-size:21px;font-weight:700;line-height:2;color:#FFE2A0}
+.yl-qz-s figcaption{display:flex;align-items:center;gap:12px;text-align:right}
+.yl-qz-av{flex:none;display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:var(--cream);color:#10163F;font-size:20px;font-weight:700;line-height:1;outline:2px dashed rgba(16,22,63,.28);outline-offset:-5px}
+.yl-qz-by b{display:block;font-size:16px;line-height:1.5;color:var(--ink)}
+.yl-qz-by small{display:block;font-size:13px;line-height:1.6;color:var(--mut)}
+.yl-qz-n{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:20px}
+.yl .yl-qz-a,.yl .yl-qz-p{flex:none;width:44px;height:44px;padding:0;display:flex;align-items:center;justify-content:center;border:0;border-radius:10px;background:rgba(243,234,215,.12);color:var(--ink);cursor:pointer;transition:background .25s}
+.yl .yl-qz-a:hover,.yl .yl-qz-p:hover{background:rgba(243,234,215,.24)}
+.yl-qz-a svg{width:16px;height:16px}
+.yl-qz-p svg{width:15px;height:15px}
+.yl-qz-p .i-pl,.yl-qz-p[aria-pressed=true] .i-pa{display:none}
+.yl-qz-p[aria-pressed=true] .i-pl{display:block}
+.yl-qz-d{display:flex;align-items:center;gap:4px}
+.yl .yl-qz-d button{position:relative;width:26px;height:44px;padding:0;border:0;background:none;cursor:pointer;transition:width .4s var(--ease)}
+.yl .yl-qz-d button::before{content:"";position:absolute;inset:19px 4px;border-radius:6px;background:rgba(243,234,215,.28)}
+.yl .yl-qz-d button.is-on{width:58px}
+.yl-qz-d i{position:absolute;inset:19px 4px;border-radius:6px;background:var(--amb);transform:scaleX(0);transform-origin:right}
+.yl-qz .yl-qz-d .is-on i{animation:yl-qz-bar var(--qz-ms,5000ms) linear both;animation-play-state:paused}
+.yl-qz.is-play .yl-qz-d .is-on i{animation-play-state:running}
+@keyframes yl-qz-bar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
 /* فال */
 .yl-bt{font-weight:700;font-size:22px;line-height:1.95}
@@ -258,6 +290,7 @@ body.yl-body{margin:0;background:var(--night,#0C113A)}
 .yl .yl-ma .yl-cta{grid-column:1/-1}
 .yl-er{color:#FFB4A8;font-size:14px;margin-top:6px}
 .yl .yl-busy{opacity:.7;pointer-events:none}
+html.yl-lock{scrollbar-gutter:stable}
 html.yl-lock,html.yl-lock body{overflow:hidden}
 
 /* ورود نرم بخش‌ها هنگام اسکرول */
@@ -341,13 +374,11 @@ html.yl-lock,html.yl-lock body{overflow:hidden}
   .yl .yl-sec .yl-fl:not(.tw):not(.cld){--w:48px!important}
 
   /* ریل‌های افقی به‌جای ستون بلند */
-  .yl-rail,.yl-rcg,.yl-qs,.yl-lg{display:grid;grid-auto-flow:column;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:16px;margin-inline:-16px;padding:4px 16px 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-  .yl-rail::-webkit-scrollbar,.yl-rcg::-webkit-scrollbar,.yl-qs::-webkit-scrollbar,.yl-lg::-webkit-scrollbar{display:none}
+  .yl-rail,.yl-rcg{display:grid;grid-auto-flow:column;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:16px;margin-inline:-16px;padding:4px 16px 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .yl-rail::-webkit-scrollbar,.yl-rcg::-webkit-scrollbar{display:none}
   .yl-rail{grid-auto-columns:68%;gap:12px}
   .yl-rcg{grid-auto-columns:82%;gap:12px}
-  .yl-qs{grid-auto-columns:84%;gap:12px}
-  .yl-lg{grid-auto-columns:38%;gap:10px;margin-bottom:6px}
-  .yl-deal,.yl-rr,.yl-qc,.yl-lg>div{scroll-snap-align:start}
+  .yl-deal,.yl-rr{scroll-snap-align:start}
   .yl-arw{display:none}
   .yl-deal h3{font-size:15px}
   .yl .yl-deal .yl-soft{min-height:48px}
@@ -355,7 +386,18 @@ html.yl-lock,html.yl-lock body{overflow:hidden}
   .yl-th{width:76px;height:76px}
   .yl-nm{flex:1 1 140px}
   .yl .yl-rr .yl-soft{flex:1 1 100%;min-height:48px}
-  .yl-qc{padding:22px 20px}
+  .yl-mq{margin-bottom:26px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+  .yl .yl-mq-g{gap:12px;padding-right:12px}
+  .yl-mq-i{width:138px;height:74px;padding:10px 14px;border-radius:14px}
+  .yl-mq-i img{max-height:46px}
+  .yl-mq-i.is-txt span{font-size:13px}
+  .yl-qz-c{padding:40px 18px 22px}
+  .yl-qz-mk{top:-20px;width:52px;height:40px;margin-left:-26px;padding:8px 10px}
+  .yl-qz-s{gap:18px}
+  .yl-qz-s blockquote p{font-size:17px;line-height:1.95}
+  .yl-qz-n{gap:6px;margin-top:14px}
+  .yl .yl-qz-d button{width:22px}
+  .yl .yl-qz-d button.is-on{width:46px}
 
   /* سازنده */
   .yl .yl-ch{min-height:46px}
@@ -403,7 +445,7 @@ html.yl-lock,html.yl-lock body{overflow:hidden}
   .yl-ft-in{justify-content:center;text-align:center}
 
   /* نوار چسبان */
-  .yl-mb.is-show{position:fixed;inset:auto 8px calc(8px + env(safe-area-inset-bottom)) 8px;z-index:60;display:flex;align-items:center;gap:10px;min-height:66px;padding:7px;background:rgba(5,8,32,.94);border-radius:12px;box-shadow:0 10px 26px rgba(2,3,18,.55);animation:yl-rise .35s var(--ease) both}
+  .yl-mb.is-show{-webkit-backdrop-filter:none;backdrop-filter:none;position:fixed;inset:auto 8px calc(8px + env(safe-area-inset-bottom)) 8px;z-index:60;display:flex;align-items:center;gap:10px;min-height:66px;padding:7px;background:rgba(5,8,32,.94);border-radius:12px;box-shadow:0 10px 26px rgba(2,3,18,.55);animation:yl-rise .35s var(--ease) both}
   .yl-mb div{flex:1;min-width:0;padding:0 8px;font-size:12px;line-height:1.45;color:var(--mut)}
   .yl-mb div b{display:block;color:var(--ink);font-size:14px}
   .yl .yl-mb .yl-cta{flex:none;min-height:52px;padding:0 20px;font-size:15px;white-space:nowrap}
@@ -429,4 +471,9 @@ html.yl-lock,html.yl-lock body{overflow:hidden}
   .yl .yl-fbox{transition:opacity .5s!important}
   .yl .yl-fe{transition:opacity .45s,transform .6s!important}
   .yl.yl-js .yl-rv{opacity:1;transform:none}
+  .yl-mq{-webkit-mask-image:none;mask-image:none}
+  .yl-mq-t{width:auto;flex-wrap:wrap;justify-content:center;direction:rtl}
+  .yl .yl-mq-g{flex-wrap:wrap;justify-content:center;padding:0 16px;row-gap:12px}
+  .yl-qz-d i{transform:scaleX(0)!important}
+  .yl-qz-d .is-on i{transform:scaleX(1)!important}
 }
