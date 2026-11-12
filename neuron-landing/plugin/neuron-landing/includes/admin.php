@@ -597,7 +597,7 @@ function nrn_list_spec( $list ) {
 				'alt'   => array( 'text', 'متن جایگزین کاور' ),
 				'label' => array( 'text', 'برچسب جایگاه (روی کاور)' ),
 				'title' => array( 'text', 'عنوان' ),
-				'sub'   => array( 'text', 'توضیح زیر عنوان (فقط دسکتاپ)' ),
+				'sub'   => array( 'text', 'توضیح زیر عنوان' ),
 				'video' => array( 'url', 'لینک ویدئو' ),
 				'aria'  => array( 'text', 'برچسب دسترس‌پذیری دکمهٔ پخش' ),
 			),

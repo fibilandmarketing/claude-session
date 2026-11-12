@@ -49,12 +49,12 @@ function nrn_tpl() {
 			'badge_m' => '<div class="org"{HID}><span class="org-logo"><span class="org-badge">★</span></span><span class="org-name">{NAME}</span></div>',
 			'vid_m' => '<article class="neo" style="flex: 0 0 290px; border-radius: 28px; padding: 10px; display: flex; flex-direction: column; gap: 12px">
 <button type="button" aria-label="{ARIA}"{VID} style="position: relative; height: 180px; border-radius: 20px; border: 0; padding: 0; overflow: hidden; cursor: pointer; background: #E2E5EA; font-family: Vazir, Tahoma, sans-serif">{LABEL}<img loading="lazy" decoding="async" src="{SRC}" alt="{ALT}" style="width: 100%; height: 100%; object-fit: cover; display: block"><span class="glass" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 62px; height: 62px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(23,25,28,0.55)">{RING}<svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M17 12L8 6.5v11z"></path></svg></span></button>
-<h3 style="margin: 0 6px 8px; font-size: 15px; font-weight: 700">{TITLE}</h3>
+<div style="margin: 0 6px 8px; display: flex; flex-direction: column; gap: 4px"><h3 style="margin: 0; font-size: 15px; font-weight: 700">{TITLE}</h3>{SUB}</div>
 </article>',
 			'vid_sep_m' => '
 ',
 			'vid_phb_m' => '<span class="phb">',
-			'vid_sub_m' => '',
+			'vid_sub_m' => '<p style="margin: 0; font-size: 13px; line-height: 1.7; color: #5E636C">',
 			'vid_ring_m' => '<span class="pin" style="position: absolute; inset: 0; width: auto; height: auto; background: transparent; box-shadow: none"></span>',
 			'vid_ring_all_m' => false,
 			'mag_m' => '<a href="{URL}" class="neo reveal" style="border-radius: 24px; padding: 10px; text-decoration: none; color: #17191C; display: flex; gap: 12px; align-items: center"><div style="position: relative; width: 120px; height: 88px; flex-shrink: 0; border-radius: 18px; overflow: hidden"><img loading="lazy" decoding="async" src="{SRC}" alt="{ALT}" style="width: 100%; height: 100%; object-fit: cover; display: block"></div><div style="display: flex; flex-direction: column; gap: 4px">{LABEL}<h3 style="margin: 0; font-size: 15px; line-height: 1.7; font-weight: 700">{TITLE}</h3></div></a>',

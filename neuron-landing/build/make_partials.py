@@ -67,6 +67,13 @@ def videos(layout):
     t = tpl(it, subs)
     phb_open = re.search(r'<span class="phb">', it).group(0)
     sub_open = sub.group(1) if sub else ''
+    if not sub:
+        # the mobile card had no subtitle: the title moves into a box with the same margins
+        # (identical when the subtitle is empty) and the subtitle goes under it
+        h3 = re.search(r'<h3 style="([^"]*)">\{TITLE\}</h3>', t)
+        m = re.match(r'margin: ([^;]*); (.*)', h3.group(1))
+        t = t.replace(h3.group(0), '<div style="margin: %s; display: flex; flex-direction: column; gap: 4px"><h3 style="margin: 0; %s">{TITLE}</h3>{SUB}</div>' % (m.group(1), m.group(2)))
+        sub_open = '<p style="margin: 0; font-size: 13px; line-height: 1.7; color: #5E636C">'
     # ping ring: card 1 in mobile has it, cards 2-3 do not; desktop: all
     ring = re.search(r'<span class="pin"[^>]*></span>', items[0]).group(0)
     ring_in_t = ring in it
