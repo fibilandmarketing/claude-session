@@ -159,6 +159,7 @@
     if (gid === 'videos') renderList('videos', DEF.videos);
     if (gid === 'faq') renderList('faq', DEF.faq);
     if (gid === 'footer') renderList('badges', DEF.badges);
+    if (gid === 'bnav') renderList('bnav', DEF.bnav);
     if (gid === 'products') {
       renderList('products', DEF.products.items);
       $p.find('[data-prod-k="source"]').val(DEF.products.source); $p.find('[data-prod-k="limit"]').val(DEF.products.limit);
@@ -196,7 +197,7 @@
       var $i = $(this);
       p.settings[$i.data('k')] = $i.is(':checkbox') ? ($i.prop('checked') ? 1 : 0) : $i.val();
     });
-    ['faq', 'orgs', 'videos', 'badges'].forEach(function (l) { p[l] = rowsOf(l); });
+    ['faq', 'orgs', 'videos', 'badges', 'bnav'].forEach(function (l) { p[l] = rowsOf(l); });
     p.mag = { source: $('[data-mag-k="source"]').val(), cat: $('.nrn-mag-cat').val(), more: $('[data-mag-k="more"]').val(), items: rowsOf('mag') };
     $('[data-map-k]').each(function () { p.map[$(this).data('map-k')] = $(this).val(); });
     p.products = {

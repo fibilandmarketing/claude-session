@@ -9,3 +9,7 @@
   .nrn-d:not(.nrn-scaled) section[data-stop="سناریوی سرقت"] ol{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
   .nrn-d:not(.nrn-scaled) section[data-stop="سناریوی سرقت"] .flow{display:none}
 }
+
+/* Mobile hero: as in the previous version the moving car shows above the hero picture
+   (the road stays under it); neuron.js sets .in-hero while the car is inside the hero */
+.nrn-m .drive.in-hero{z-index:2}

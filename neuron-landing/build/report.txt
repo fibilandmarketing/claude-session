@@ -153,10 +153,10 @@ personal  personal.t21 d   text personal|ضد آب               ضد آب
 personal  personal.t22 m   text -                            ردیابی [وسایل شخصی] با برچسب‌های هوشمند
 personal  personal.t23 m   text -                            نورون فقط برای خودرو نیست؛ وسایل مهمتان را هم زیر نظر داشته 
 personal  personal.t24 m   text _notes                       نیازمند تأیید: نحوهٔ کار و برد برچسب‌ها
-personal  personal.t25 m   text personal|پارک خودرو جاسوئیچی پارک خودرو
-personal  personal.t26 m   text personal|برچسب‌های هوشمند نو پارک خودرو · جاسوئیچ · ۸ برچسب ضد آب
-personal  personal.t27 m   text personal|پک کامل ردیابی وسای خرید
-personal  personal.u28 m   url  personal|پک کامل ردیابی وسای #
+personal  personal.t26 m   text personal|پارک خودرو جاسوئیچی پارک خودرو
+personal  personal.t27 m   text personal|برچسب‌های هوشمند نو پارک خودرو · جاسوئیچ · ۸ برچسب ضد آب
+personal  personal.t28 m   text personal|پک کامل ردیابی وسای خرید
+personal  personal.u29 m   url  personal|پک کامل ردیابی وسای #
 heavy     heavy.i1     dm  img  heavy|کارت                   img/product-heavy.webp
 heavy     heavy.t2     d   text heavy|مخصوص خودروهای سنگین   مخصوص خودروهای سنگین
 heavy     heavy.t3     dm  text -                            خودروی سنگین
@@ -252,7 +252,12 @@ city      city.t29     dm  text city|تهران                   خلیج فا�
 city      city.t30     dm  text city|تهران                   دریای عمان
 city      city.t31     dm  text city|تهران                   مشاهدهٔ نمایندگی‌ها
 city      city.u32     dm  url  city|تهران                   https://noroncar.ir/namayandegi/
-city      city.t33     m   text -                            هماهنگی تحویل و نصب با نمایندهٔ شهر
+city      city.t33     dm  text city|نمایندهٔ نورون در شهر خ برای فروشگاه‌ها و نصاب‌ها
+city      city.t34     dm  text city|نمایندهٔ نورون در شهر خ نمایندهٔ نورون در شهر خود شوید
+city      city.t35     dm  text city|نمایندهٔ نورون در شهر خ نورون مشتری را با محصول آشنا می‌کند و سفارش مصرف‌کننده را به
+city      city.t36     dm  text city|نمایندهٔ نورون در شهر خ درخواست همکاری و نمایندگی
+city      city.u37     dm  url  city|نمایندهٔ نورون در شهر خ #
+city      city.t38     m   text -                            هماهنگی تحویل و نصب با نمایندهٔ شهر
 fleet     fleet.t1     dm  text -                            سازمان‌ها و ناوگان
 fleet     fleet.t2     dm  text -                            راهکارهای [سازمانی] نورون
 fleet     fleet.i3     dm  img  fleet|ردیابی خودروهای سنگین  img/product-heavy.webp
@@ -280,19 +285,14 @@ fleet     fleet.t24    dm  text fleet|پایش سوخت تراکتورها    ت
 fleet     fleet.t25    dm  text fleet|پایش سوخت تراکتورها    درخواست مشاورهٔ سازمانی
 fleet     fleet.u26    dm  url  fleet|پایش سوخت تراکتورها    #
 fleet     fleet.i27    dm  img  fleet|پایش سوخت تراکتورها    img/tractor-fuel.webp
-fleet     fleet.t28    dm  text fleet|نمایندهٔ نورون در شهر  برای فروشگاه‌ها و نصاب‌ها
-fleet     fleet.t29    dm  text fleet|نمایندهٔ نورون در شهر  نمایندهٔ نورون در شهر خود شوید
-fleet     fleet.t30    dm  text fleet|نمایندهٔ نورون در شهر  نورون مشتری را با محصول آشنا می‌کند و سفارش مصرف‌کننده را به
-fleet     fleet.t31    dm  text fleet|نمایندهٔ نورون در شهر  درخواست همکاری و نمایندگی
-fleet     fleet.u32    dm  url  fleet|نمایندهٔ نورون در شهر  #
-fleet     fleet.t33    m   text fleet|ردیابی خودروهای سنگین  +S400
-fleet     fleet.u34    m   url  fleet|ردیابی خودروهای سنگین  #
-fleet     fleet.t35    m   text fleet|پایش سوخت ماشین‌آلات ک FUEL
-fleet     fleet.u36    m   url  fleet|پایش سوخت ماشین‌آلات ک #
-fleet     fleet.t37    m   text _notes                       جایگاه: پنل
-fleet     fleet.u38    m   url  fleet|مدیریت ناوگان سازمانی  #
-fleet     fleet.t39    m   text fleet|پایش دمای بار یخچالی   S400T
-fleet     fleet.u40    m   url  fleet|پایش دمای بار یخچالی   #
+fleet     fleet.t28    m   text fleet|ردیابی خودروهای سنگین  +S400
+fleet     fleet.u29    m   url  fleet|ردیابی خودروهای سنگین  #
+fleet     fleet.t30    m   text fleet|پایش سوخت ماشین‌آلات ک FUEL
+fleet     fleet.u31    m   url  fleet|پایش سوخت ماشین‌آلات ک #
+fleet     fleet.t32    m   text _notes                       جایگاه: پنل
+fleet     fleet.u33    m   url  fleet|مدیریت ناوگان سازمانی  #
+fleet     fleet.t34    m   text fleet|پایش دمای بار یخچالی   S400T
+fleet     fleet.u35    m   url  fleet|پایش دمای بار یخچالی   #
 faq       faq.t1       dm  text -                            سؤالات متداول
 faq       faq.t2       dm  text -                            پیش از خرید [بدانید]
 faq       faq.t3       d   text -                            پاسخ پرتکرارترین سؤال‌های مشتریان دربارهٔ انتخاب، نصب و هزین

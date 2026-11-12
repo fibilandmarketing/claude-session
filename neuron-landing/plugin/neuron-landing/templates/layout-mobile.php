@@ -273,15 +273,15 @@ defined('ABSPATH') || exit;
 </div>
 <div class="neo reveal" style="position: relative; border-radius: 32px; height: 300px; display: flex; align-items: center; justify-content: center; overflow: hidden">
 <div class="neo-in" style="position: absolute; inset: 14px; border-radius: 24px"></div>
-<img class="mul" src="<?php $nl->img('personal.i5'); ?>" alt="<?php $nl->alt('personal.i5'); ?>" style="position: relative; width: 74%; height: auto" width="600" height="600" loading="lazy" decoding="async">
-<?php if ($nl->has('personal.t25')): ?><div class="glass-l floaty2" style="position: absolute; top: 24px; left: 20px; border-radius: 14px; padding: 8px 12px; display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"></rect><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3"></path></svg><?php $nl->t('personal.t25'); ?></div><?php endif; ?>
+<img class="mul" src="<?php $nl->img('personal.i18'); ?>" alt="<?php $nl->alt('personal.i18'); ?>" style="position: relative; width: 74%; height: auto" width="600" height="600" loading="lazy" decoding="async">
+<?php if ($nl->has('personal.t26')): ?><div class="glass-l floaty2" style="position: absolute; top: 24px; left: 20px; border-radius: 14px; padding: 8px 12px; display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"></rect><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3"></path></svg><?php $nl->t('personal.t26'); ?></div><?php endif; ?>
 <?php if ($nl->has('personal.t20')): ?><div class="glass-l floaty" style="position: absolute; bottom: 24px; right: 20px; border-radius: 14px; padding: 8px 12px; display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l9-9M17 6l3 3M15 8l2 2"></path></svg><?php $nl->t('personal.t20'); ?></div><?php endif; ?>
 </div>
 <div class="neo reveal" style="border-radius: 26px; padding: 12px; display: flex; align-items: center; gap: 12px">
-<div class="neo-in" style="width: 84px; height: 84px; border-radius: 18px; flex-shrink: 0; overflow: hidden; display: flex; align-items: center; justify-content: center"><img class="mul" src="<?php $nl->img('personal.i18'); ?>" alt="" style="width: 120%; height: auto" width="600" height="600" loading="lazy" decoding="async"></div>
+<div class="neo-in" style="width: 84px; height: 84px; border-radius: 18px; flex-shrink: 0; overflow: hidden; display: flex; align-items: center; justify-content: center"><img class="mul" src="<?php $nl->img('personal.i5'); ?>" alt="" style="width: 120%; height: auto" width="600" height="600" loading="lazy" decoding="async"></div>
 <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px">
 <?php if ($nl->has('personal.t6')): ?><h3 style="margin: 0; font-size: 15px; font-weight: 700"><?php $nl->t('personal.t6'); ?></h3><?php endif; ?>
-<?php if ($nl->has('personal.t26')): ?><p style="margin: 0; font-size: 12px; line-height: 1.7; color: #5E636C"><?php $nl->t('personal.t26'); ?></p><?php endif; ?>
+<?php if ($nl->has('personal.t27')): ?><p style="margin: 0; font-size: 12px; line-height: 1.7; color: #5E636C"><?php $nl->t('personal.t27'); ?></p><?php endif; ?>
 <?php if ($nl->has('personal.t8')): ?><p style="margin: 0; font-size: 12px; color: #4A4F57"><?php $nl->rich('personal.t8'); ?></p><?php endif; ?>
 </div>
 <?php if ($nl->has('personal.t9')): ?><a href="<?php $nl->url('personal.u10', 'm'); ?>" class="btn btn-ink" style="width: auto; min-height: 44px; padding: 0 14px; font-size: 14px"><?php $nl->t('personal.t9'); ?></a><?php endif; ?>
@@ -293,7 +293,7 @@ defined('ABSPATH') || exit;
 <?php if ($nl->has('personal.t14')): ?><span class="tbd" style="width: fit-content"><?php $nl->t('personal.t14'); ?></span><?php endif; ?>
 <?php if ($nl->has('personal.t15')): ?><p style="margin: 0; font-size: 12px; color: #4A4F57"><?php $nl->rich('personal.t15'); ?></p><?php endif; ?>
 </div>
-<?php if ($nl->has('personal.t27')): ?><a href="<?php $nl->url('personal.u28', 'm'); ?>" class="btn btn-liquid" style="width: auto; min-height: 44px; padding: 0 14px; font-size: 14px"><?php $nl->t('personal.t27'); ?></a><?php endif; ?>
+<?php if ($nl->has('personal.t28')): ?><a href="<?php $nl->url('personal.u29', 'm'); ?>" class="btn btn-liquid" style="width: auto; min-height: 44px; padding: 0 14px; font-size: 14px"><?php $nl->t('personal.t28'); ?></a><?php endif; ?>
 </div>
 </section><?php endif; ?>
 
@@ -410,7 +410,7 @@ defined('ABSPATH') || exit;
 <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; position: relative">
 <?php if ($nl->has('city.t3')): ?><li style="display: flex; gap: 14px; align-items: center"><?php if ($nl->has('city.t3')): ?><span class="neo-sm" style="flex-shrink: 0; width: 56px; height: 56px; border-radius: 20px; font-size: 20px; font-weight: 700; color: #E2650C; display: flex; align-items: center; justify-content: center"><?php $nl->t('city.t3'); ?></span><?php endif; ?><?php if ($nl->has('city.t4')): ?><span style="font-size: 15px; font-weight: 700"><?php $nl->t('city.t4'); ?></span><?php endif; ?></li><?php endif; ?>
 <?php if ($nl->has('city.t6')): ?><li style="display: flex; gap: 14px; align-items: center"><?php if ($nl->has('city.t6')): ?><span class="neo-sm" style="flex-shrink: 0; width: 56px; height: 56px; border-radius: 20px; font-size: 20px; font-weight: 700; color: #E2650C; display: flex; align-items: center; justify-content: center"><?php $nl->t('city.t6'); ?></span><?php endif; ?><?php if ($nl->has('city.t7')): ?><span style="font-size: 15px; font-weight: 700"><?php $nl->t('city.t7'); ?></span><?php endif; ?></li><?php endif; ?>
-<?php if ($nl->has('city.t9')): ?><li style="display: flex; gap: 14px; align-items: center"><?php if ($nl->has('city.t9')): ?><span class="neo-sm" style="flex-shrink: 0; width: 56px; height: 56px; border-radius: 20px; font-size: 20px; font-weight: 700; color: #E2650C; display: flex; align-items: center; justify-content: center"><?php $nl->t('city.t9'); ?></span><?php endif; ?><?php if ($nl->has('city.t33')): ?><span style="font-size: 15px; font-weight: 700"><?php $nl->t('city.t33'); ?></span><?php endif; ?></li><?php endif; ?>
+<?php if ($nl->has('city.t9')): ?><li style="display: flex; gap: 14px; align-items: center"><?php if ($nl->has('city.t9')): ?><span class="neo-sm" style="flex-shrink: 0; width: 56px; height: 56px; border-radius: 20px; font-size: 20px; font-weight: 700; color: #E2650C; display: flex; align-items: center; justify-content: center"><?php $nl->t('city.t9'); ?></span><?php endif; ?><?php if ($nl->has('city.t38')): ?><span style="font-size: 15px; font-weight: 700"><?php $nl->t('city.t38'); ?></span><?php endif; ?></li><?php endif; ?>
 </ol>
 </div>
 <div class="neo reveal" style="border-radius: 28px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
@@ -438,6 +438,15 @@ defined('ABSPATH') || exit;
 <div style="width: 44px; height: 44px; border-radius: 14px; flex-shrink: 0; background: linear-gradient(180deg,#FFB06E,#F48026 55%,#E06A10); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6); display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#17191C" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.4-3 8.2-7 9.5-4-1.3-7-5.1-7-9.5V6l7-3z"></path><path d="M8.8 12.2l2.2 2.2 4.2-4.4"></path></svg></div>
 <?php if ($nl->has('city.t24')): ?><p style="margin: 0; font-size: 13px; line-height: 1.9; color: #2B2F35"><?php $nl->rich('city.t24'); ?></p><?php endif; ?>
 </div>
+<div class="neo reveal" style="border-radius: 28px; padding: 22px 18px; display: flex; flex-direction: column; gap: 12px; background: linear-gradient(140deg, rgba(244,128,38,0.16), rgba(236,238,242,0) 62%), #ECEEF2">
+<div style="display: flex; align-items: center; gap: 12px">
+<div class="neo-sm" style="width: 52px; height: 52px; border-radius: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5L12 4l9 6.5"></path><path d="M5 9.5V20h14V9.5"></path><path d="M9.5 20v-5.5h5V20"></path></svg></div>
+<?php if ($nl->has('city.t33')): ?><p style="margin: 0; font-size: 13px; font-weight: 500; color: #A3490B"><?php $nl->t('city.t33'); ?></p><?php endif; ?>
+</div>
+<?php if ($nl->has('city.t34')): ?><h2 style="margin: 0; font-size: 21px; line-height: 1.6; font-weight: 700; color: #17191C"><?php $nl->t('city.t34'); ?></h2><?php endif; ?>
+<?php if ($nl->has('city.t35')): ?><p style="margin: 0; font-size: 14px; line-height: 1.9; color: #4A4F57"><?php $nl->t('city.t35'); ?></p><?php endif; ?>
+<?php if ($nl->has('city.t36')): ?><a href="<?php $nl->url('city.u37', 'm'); ?>" class="btn btn-liquid" style="margin-top: 4px"><?php $nl->t('city.t36'); ?></a><?php endif; ?>
+</div>
 </section><?php endif; ?>
 
 
@@ -448,21 +457,21 @@ defined('ABSPATH') || exit;
 <?php if ($nl->has('fleet.t2')): ?><h2 class="h2" style="color: #FFFFFF"><?php $nl->rich('fleet.t2'); ?></h2><?php endif; ?>
 </div>
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
-<a href="<?php $nl->url('fleet.u34', 'm'); ?>" class="glass reveal" style="border-radius: 24px; padding: 8px; text-decoration: none; color: #FFFFFF; display: flex; flex-direction: column; gap: 10px">
+<a href="<?php $nl->url('fleet.u29', 'm'); ?>" class="glass reveal" style="border-radius: 24px; padding: 8px; text-decoration: none; color: #FFFFFF; display: flex; flex-direction: column; gap: 10px">
 <div style="height: 110px; border-radius: 18px; background: #ECEEF2; overflow: hidden; display: flex; align-items: center; justify-content: center"><img class="mul" src="<?php $nl->img('fleet.i3'); ?>" alt="<?php $nl->alt('fleet.i3'); ?>" style="height: 106px; width: auto" width="600" height="600" loading="lazy" decoding="async"></div>
-<div style="padding: 0 6px 8px"><?php if ($nl->has('fleet.t4')): ?><h3 style="margin: 0; font-size: 14px; line-height: 1.7; font-weight: 700"><?php $nl->t('fleet.t4'); ?></h3><?php endif; ?><?php if ($nl->has('fleet.t33')): ?><span style="font-size: 12px; color: #9EA4AE"><?php $nl->t('fleet.t33'); ?></span><?php endif; ?></div>
+<div style="padding: 0 6px 8px"><?php if ($nl->has('fleet.t4')): ?><h3 style="margin: 0; font-size: 14px; line-height: 1.7; font-weight: 700"><?php $nl->t('fleet.t4'); ?></h3><?php endif; ?><?php if ($nl->has('fleet.t28')): ?><span style="font-size: 12px; color: #9EA4AE"><?php $nl->t('fleet.t28'); ?></span><?php endif; ?></div>
 </a>
-<a href="<?php $nl->url('fleet.u36', 'm'); ?>" class="glass reveal" style="border-radius: 24px; padding: 8px; text-decoration: none; color: #FFFFFF; display: flex; flex-direction: column; gap: 10px">
+<a href="<?php $nl->url('fleet.u31', 'm'); ?>" class="glass reveal" style="border-radius: 24px; padding: 8px; text-decoration: none; color: #FFFFFF; display: flex; flex-direction: column; gap: 10px">
 <div style="position: relative; height: 110px; border-radius: 18px; overflow: hidden"><img src="<?php $nl->img('fleet.i7'); ?>" alt="<?php $nl->alt('fleet.i7'); ?>" style="width: 100%; height: 100%; object-fit: cover; object-position: 30% 55%; display: block" width="1536" height="1024" loading="lazy" decoding="async"></div>
-<div style="padding: 0 6px 8px"><?php if ($nl->has('fleet.t8')): ?><h3 style="margin: 0; font-size: 14px; line-height: 1.7; font-weight: 700"><?php $nl->t('fleet.t8'); ?></h3><?php endif; ?><?php if ($nl->has('fleet.t35')): ?><span style="font-size: 12px; color: #9EA4AE"><?php $nl->t('fleet.t35'); ?></span><?php endif; ?></div>
+<div style="padding: 0 6px 8px"><?php if ($nl->has('fleet.t8')): ?><h3 style="margin: 0; font-size: 14px; line-height: 1.7; font-weight: 700"><?php $nl->t('fleet.t8'); ?></h3><?php endif; ?><?php if ($nl->has('fleet.t30')): ?><span style="font-size: 12px; color: #9EA4AE"><?php $nl->t('fleet.t30'); ?></span><?php endif; ?></div>
 </a>
-<a href="<?php $nl->url('fleet.u38', 'm'); ?>" class="glass reveal" style="border-radius: 24px; padding: 8px; text-decoration: none; color: #FFFFFF; display: flex; flex-direction: column; gap: 10px">
-<div style="position: relative; height: 110px; border-radius: 18px; overflow: hidden"><?php if ($nl->has('fleet.t37')): ?><span class="phb" style="font-size: 10px"><?php $nl->t('fleet.t37'); ?></span><?php endif; ?><img src="<?php $nl->img('fleet.i12'); ?>" alt="<?php $nl->alt('fleet.i12'); ?>" style="width: 100%; height: 100%; object-fit: cover; display: block" width="1600" height="1000" loading="lazy" decoding="async"></div>
+<a href="<?php $nl->url('fleet.u33', 'm'); ?>" class="glass reveal" style="border-radius: 24px; padding: 8px; text-decoration: none; color: #FFFFFF; display: flex; flex-direction: column; gap: 10px">
+<div style="position: relative; height: 110px; border-radius: 18px; overflow: hidden"><?php if ($nl->has('fleet.t32')): ?><span class="phb" style="font-size: 10px"><?php $nl->t('fleet.t32'); ?></span><?php endif; ?><img src="<?php $nl->img('fleet.i12'); ?>" alt="<?php $nl->alt('fleet.i12'); ?>" style="width: 100%; height: 100%; object-fit: cover; display: block" width="1600" height="1000" loading="lazy" decoding="async"></div>
 <div style="padding: 0 6px 8px"><?php if ($nl->has('fleet.t13')): ?><h3 style="margin: 0; font-size: 14px; line-height: 1.7; font-weight: 700"><?php $nl->t('fleet.t13'); ?></h3><?php endif; ?></div>
 </a>
-<a href="<?php $nl->url('fleet.u40', 'm'); ?>" class="glass reveal" style="border-radius: 24px; padding: 8px; text-decoration: none; color: #FFFFFF; display: flex; flex-direction: column; gap: 10px">
+<a href="<?php $nl->url('fleet.u35', 'm'); ?>" class="glass reveal" style="border-radius: 24px; padding: 8px; text-decoration: none; color: #FFFFFF; display: flex; flex-direction: column; gap: 10px">
 <div style="height: 110px; border-radius: 18px; background: #ECEEF2; overflow: hidden; display: flex; align-items: center; justify-content: center"><img class="mul" src="<?php $nl->img('fleet.i16'); ?>" alt="<?php $nl->alt('fleet.i16'); ?>" style="height: 106px; width: auto" width="400" height="400" loading="lazy" decoding="async"></div>
-<div style="padding: 0 6px 8px"><?php if ($nl->has('fleet.t17')): ?><h3 style="margin: 0; font-size: 14px; line-height: 1.7; font-weight: 700"><?php $nl->t('fleet.t17'); ?></h3><?php endif; ?><?php if ($nl->has('fleet.t39')): ?><span style="font-size: 12px; color: #9EA4AE"><?php $nl->t('fleet.t39'); ?></span><?php endif; ?></div>
+<div style="padding: 0 6px 8px"><?php if ($nl->has('fleet.t17')): ?><h3 style="margin: 0; font-size: 14px; line-height: 1.7; font-weight: 700"><?php $nl->t('fleet.t17'); ?></h3><?php endif; ?><?php if ($nl->has('fleet.t34')): ?><span style="font-size: 12px; color: #9EA4AE"><?php $nl->t('fleet.t34'); ?></span><?php endif; ?></div>
 </a>
 </div>
 <div class="glass reveal" style="border-radius: 30px; padding: 10px; display: flex; flex-direction: column; gap: 6px">
@@ -474,12 +483,6 @@ defined('ABSPATH') || exit;
 <?php if ($nl->has('fleet.t23')): ?><div style="display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; padding: 14px 0; border-top: 1px solid rgba(255,255,255,0.1)"><?php if ($nl->has('fleet.t23')): ?><span class="grad" style="font-size: 30px; font-weight: 700"><?php $nl->t('fleet.t23'); ?></span><?php endif; ?><?php if ($nl->has('fleet.t24')): ?><span style="font-size: 14px; color: #D0D4DA"><?php $nl->t('fleet.t24'); ?></span><?php endif; ?></div><?php endif; ?>
 <?php if ($nl->has('fleet.t25')): ?><a href="<?php $nl->url('fleet.u26', 'm'); ?>" class="btn btn-liquid" style="margin-top: 4px"><?php $nl->t('fleet.t25'); ?></a><?php endif; ?>
 </div>
-</div>
-<div class="glass reveal" style="border-radius: 28px; padding: 22px 18px; display: flex; flex-direction: column; gap: 12px; background: linear-gradient(140deg, rgba(244,128,38,0.24), rgba(255,255,255,0.04) 60%)">
-<?php if ($nl->has('fleet.t28')): ?><p style="margin: 0; font-size: 13px; font-weight: 500; color: #FFC08A"><?php $nl->t('fleet.t28'); ?></p><?php endif; ?>
-<?php if ($nl->has('fleet.t29')): ?><h2 style="margin: 0; font-size: 21px; line-height: 1.6; font-weight: 700; color: #FFFFFF"><?php $nl->t('fleet.t29'); ?></h2><?php endif; ?>
-<?php if ($nl->has('fleet.t30')): ?><p style="margin: 0; font-size: 14px; line-height: 1.9; color: #C3C8CF"><?php $nl->t('fleet.t30'); ?></p><?php endif; ?>
-<?php if ($nl->has('fleet.t31')): ?><a href="<?php $nl->url('fleet.u32', 'm'); ?>" class="btn btn-liquid" style="margin-top: 4px"><?php $nl->t('fleet.t31'); ?></a><?php endif; ?>
 </div>
 </section><?php endif; ?>
 

@@ -180,7 +180,9 @@
       if (t && t.focus) setTimeout(function () { try { t.focus({ preventScroll: true }); } catch (e) {} }, v ? 160 : 0);
     };
     var click = function (e) {
-      var t = e.target; if (!t || !t.closest || !self.root || !self.root.contains(t)) return;
+      var t = e.target; if (!t || !t.closest || !self.root) return;
+      // the bottom bar lives next to the root, inside the same layout wrapper
+      if (!self.root.contains(t) && t.closest('.nrn') !== self.root.closest('.nrn')) return;
       if (t.closest('[data-menu-open]')) { e.preventDefault(); set(true); return; }
       if (self.menuOpen && (t.closest('[data-menu-close]') || t.closest('[data-drawer] a'))) set(false);
     };
@@ -211,7 +213,7 @@
     var m = Math.round(Math.max(14, Math.min(64, (W - Math.min(W, 1240)) / 4 + 12)));
     var Lx = m, Rx = W - m;
     var hm = root.querySelector('[data-heromap]');
-    var d, sx, sy, pre = '', preEnd = null;
+    var d, sx, sy, pre = '', preEnd = null, startY = 0;
     if (hm) {
       var r0 = off(hm), NW = 1672, NH = 941;
       var sc = Math.max(r0.w / NW, r0.h / NH);
@@ -233,10 +235,14 @@
         var par = hc.offsetParent ? off(hc.offsetParent) : { x: 0, y: 0 };
         if (hc.hasAttribute('data-pw')) {
           // fixed width, centred on a point of the map (mobile hero)
-          var pw = +hc.getAttribute('data-pw');
+          // phones: left-aligned and never wider than the screen (it used to be cut on the right),
+          // vertically still on its spot of the map
+          var pw = Math.min(+hc.getAttribute('data-pw'), W - 8);
           hc.style.width = pw + 'px';
-          hc.style.left = Math.round(ox + (+hc.getAttribute('data-cx')) * sc - pw / 2 - par.x) + 'px';
+          hc.style.left = '0px';
           hc.style.top = Math.round(oy + (+hc.getAttribute('data-cy')) * sc - pw * 0.601 / 2 - par.y) + 'px';
+          var ho = off(hc);
+          startY = Math.round(ho.y + ho.h - 14);
         } else {
           hc.style.left = Math.round(ox + (+hc.getAttribute('data-x')) * sc - par.x) + 'px';
           hc.style.top = Math.round(oy + (+hc.getAttribute('data-y')) * sc - par.y) + 'px';
@@ -308,7 +314,9 @@
     Array.prototype.forEach.call(root.querySelectorAll('section.dark, section.pearl, footer.dark'), function (el) { el.style.backgroundPosition = 'center ' + Math.round(-el.offsetTop) + 'px'; });
     var vb = '0 0 ' + W + ' ' + H;
     var st = this.state;
-    if (st.d !== d || st.vb !== vb) {
+    var startMoved = startY !== (this.startY || 0);
+    this.startY = startY;
+    if (st.d !== d || st.vb !== vb || startMoved) {
       this.state = { d: d, dr: dr, vb: vb, legs: legs, stops: stops, park: { x: px, y: py } };
       this.render();
       this.buildTable();
@@ -389,6 +397,10 @@
     var geo = this.geo || { sx: 0 };
     var si = 0, best = 1e12;
     for (i = 0; i < n; i++) { var dd = (xs[i] - geo.sx) * (xs[i] - geo.sx) + (ys[i] - geo.sy) * (ys[i] - geo.sy); if (dd < best) { best = dd; si = i; } }
+    // phones: the car waits on the road at the bottom of the hero picture, not hidden behind the pin
+    if (this.startY) {
+      for (i = si; i < n; i++) { if (ys[i] >= this.startY) { si = i; break; } }
+    }
     var mm = ys[si];
     for (i = 0; i < n; i++) { if (i <= si) ym[i] = ys[si]; else { if (ys[i] > mm) mm = ys[i]; ym[i] = mm; } }
     this.startLen = L * si / (n - 1);
@@ -485,6 +497,8 @@
       this.ang += dA * (1 - Math.exp(-dt * 16));
     }
     this.car.style.transform = 'translate3d(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px,0) rotate(' + this.ang.toFixed(2) + 'deg)';
+    var inHero = this.mob && y < (this.heroH || 0);
+    if (inHero !== this.inHero) { this.inHero = inHero; if (this.drive) this.drive.classList.toggle('in-hero', inHero); }
     if (this.tail) {
       var sp = this.vel > 0 ? Math.min(1, this.vel / (this.mob ? 900 : 1500)) : 0;
       var q = Math.round(sp * 60);
@@ -638,9 +652,22 @@
     }, { passive: true });
   }
 
+  /* Bottom bar: number of items in the WooCommerce cart (read live, so the cached page stays valid) */
+  function initCartBadge() {
+    var badges = document.querySelectorAll('[data-cart-count]');
+    if (!badges.length || !CFG.cartApi || document.cookie.indexOf('woocommerce_items_in_cart') < 0) return;
+    fetch(CFG.cartApi, { credentials: 'same-origin', headers: { Accept: 'application/json' } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (c) {
+        var n = c && (c.items_count || 0);
+        Array.prototype.forEach.call(badges, function (b) { if (n > 0) { b.textContent = fa(n > 99 ? '99+' : n); b.hidden = false; } });
+      }).catch(function () {});
+  }
+
   function boot() {
     initVideos();
     initPerf();
+    initCartBadge();
     if (document.readyState === 'complete') whenIdle(startDrives);
     else window.addEventListener('load', function () { whenIdle(startDrives); });
   }

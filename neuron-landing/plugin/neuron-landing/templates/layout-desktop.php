@@ -531,6 +531,17 @@ defined('ABSPATH') || exit;
 <div class="glass" style="position: relative; z-index: 1; border-radius: 22px; padding: 16px 18px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap"><div style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 2px" aria-live="polite"><b data-mname="1" style="font-size: 20px; font-weight: 700; color: #FFFFFF"><?php $nl->map_name(); ?></b><span data-mcount="1" style="font-size: 14px; color: #C3C8CF"><?php $nl->map_count(); ?></span></div><?php if ($nl->has('city.t31')): ?><a data-mcta="1" href="<?php $nl->url('city.u32', 'd'); ?>" class="btn btn-liquid" style="min-height: 50px"><?php $nl->t('city.t31'); ?></a><?php endif; ?></div>
 </div>
 </div>
+<div class="neo reveal" style="position: relative; overflow: hidden; border-radius: 36px; padding: 36px 40px; display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; background: linear-gradient(120deg, rgba(244,128,38,0.16), rgba(236,238,242,0) 58%), #ECEEF2">
+<div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap; position: relative; z-index: 1">
+<div class="neo-sm" style="width: 76px; height: 76px; border-radius: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#E2650C" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5L12 4l9 6.5"></path><path d="M5 9.5V20h14V9.5"></path><path d="M9.5 20v-5.5h5V20"></path></svg></div>
+<div style="display: flex; flex-direction: column; gap: 10px; max-width: 620px">
+<?php if ($nl->has('city.t33')): ?><p style="margin: 0; font-size: 14px; font-weight: 500; color: #A3490B"><?php $nl->t('city.t33'); ?></p><?php endif; ?>
+<?php if ($nl->has('city.t34')): ?><h2 style="margin: 0; font-size: 26px; line-height: 1.6; font-weight: 700; color: #17191C"><?php $nl->t('city.t34'); ?></h2><?php endif; ?>
+<?php if ($nl->has('city.t35')): ?><p style="margin: 0; font-size: 15px; line-height: 1.95; color: #4A4F57"><?php $nl->t('city.t35'); ?></p><?php endif; ?>
+</div>
+</div>
+<?php if ($nl->has('city.t36')): ?><a href="<?php $nl->url('city.u37', 'd'); ?>" class="btn btn-liquid" style="position: relative; z-index: 1"><?php $nl->t('city.t36'); ?></a><?php endif; ?>
+</div>
 </div>
 </section><?php endif; ?>
 
@@ -575,17 +586,6 @@ defined('ABSPATH') || exit;
 <div style="position: relative; border-radius: 30px; overflow: hidden; min-height: 420px"><img src="<?php $nl->img('fleet.i27'); ?>" alt="<?php $nl->alt('fleet.i27'); ?>" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 25% 50%; display: block" width="1536" height="1024" loading="lazy" decoding="async"></div>
 </div>
 
-<div class="glass reveal" style="position: relative; overflow: hidden; border-radius: 36px; padding: 40px 44px; display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; background: linear-gradient(120deg, rgba(244,128,38,0.22), rgba(255,255,255,0.04) 55%)">
-<div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap; position: relative; z-index: 1">
-<div class="glass" style="width: 76px; height: 76px; border-radius: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFC08A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5L12 4l9 6.5"></path><path d="M5 9.5V20h14V9.5"></path><path d="M9.5 20v-5.5h5V20"></path></svg></div>
-<div style="display: flex; flex-direction: column; gap: 10px; max-width: 620px">
-<?php if ($nl->has('fleet.t28')): ?><p style="margin: 0; font-size: 14px; font-weight: 500; color: #FFC08A"><?php $nl->t('fleet.t28'); ?></p><?php endif; ?>
-<?php if ($nl->has('fleet.t29')): ?><h2 style="margin: 0; font-size: 26px; line-height: 1.6; font-weight: 700; color: #FFFFFF"><?php $nl->t('fleet.t29'); ?></h2><?php endif; ?>
-<?php if ($nl->has('fleet.t30')): ?><p style="margin: 0; font-size: 15px; line-height: 1.95; color: #C3C8CF"><?php $nl->t('fleet.t30'); ?></p><?php endif; ?>
-</div>
-</div>
-<?php if ($nl->has('fleet.t31')): ?><a href="<?php $nl->url('fleet.u32', 'd'); ?>" class="btn btn-liquid" style="position: relative; z-index: 1"><?php $nl->t('fleet.t31'); ?></a><?php endif; ?>
-</div>
 </div>
 </section><?php endif; ?>
 

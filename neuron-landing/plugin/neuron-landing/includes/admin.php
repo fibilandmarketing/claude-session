@@ -154,6 +154,7 @@ function nrn_sanitize_all( array $in ) {
 		'orgs'   => array( 'name' => 'text', 'logo' => 'url', 'alt' => 'text' ),
 		'videos' => array( 'label' => 'text', 'cover' => 'url', 'alt' => 'text', 'title' => 'text', 'sub' => 'text', 'aria' => 'text', 'video' => 'url' ),
 		'badges' => array( 'label' => 'text', 'img' => 'url', 'alt' => 'text', 'link' => 'url', 'code' => 'code' ),
+		'bnav'   => array( 'label' => 'text', 'icon' => 'text', 'url' => 'url', 'main' => 'bool' ),
 	);
 	foreach ( $list_fields as $list => $spec ) {
 		if ( ! isset( $in[ $list ] ) || ! is_array( $in[ $list ] ) ) {
@@ -165,6 +166,12 @@ function nrn_sanitize_all( array $in ) {
 				continue;
 			}
 			$items[] = nrn_clean_row( $row, $spec );
+		}
+		if ( 'bnav' === $list ) {
+			foreach ( $items as &$it ) {
+				$it['icon'] = isset( nrn_bnav_icons()[ $it['icon'] ] ) ? $it['icon'] : 'home';
+			}
+			unset( $it );
 		}
 		if ( $items !== $c->lists[ $list ] ) {
 			$out[ $list ] = $items;
@@ -264,7 +271,8 @@ function nrn_sanitize_all( array $in ) {
 		}
 	}
 
-	$out['v'] = 2;
+	$out['v']  = 2;
+	$out['sv'] = ( require NRN_DIR . 'includes/migrate-keys.php' )['version'];
 	$s = isset( $in['settings'] ) && is_array( $in['settings'] ) ? $in['settings'] : array();
 	$out['settings'] = array(
 		'enabled'    => empty( $s['enabled'] ) ? 0 : 1,
@@ -594,6 +602,17 @@ function nrn_list_spec( $list ) {
 				'aria'  => array( 'text', 'برچسب دسترس‌پذیری دکمهٔ پخش' ),
 			),
 		),
+		'bnav'   => array(
+			'title'  => 'دکمه‌های نوار',
+			'add'    => 'افزودن دکمه',
+			'desc'   => 'بهتر است ۴ یا ۵ دکمه باشد. برای باز شدن منوی کشویی، آیکن «منو» یا لینک #menu را انتخاب کنید.',
+			'fields' => array(
+				'label' => array( 'text', 'عنوان' ),
+				'icon'  => array( 'select', 'آیکن', array_map( function ( $i ) { return $i[0]; }, nrn_bnav_icons() ) ),
+				'url'   => array( 'url', 'لینک' ),
+				'main'  => array( 'bool', 'دکمهٔ اصلی (دایرهٔ نارنجی وسط)' ),
+			),
+		),
 		'products' => array(
 			'title'  => 'کارت‌های دستی محصولات',
 			'add'    => 'افزودن کارت',
@@ -658,6 +677,9 @@ function nrn_render_lists_for( $gid, NRN_Content $c ) {
 		case 'products':
 			nrn_render_products( $c );
 			break;
+		case 'bnav':
+			nrn_render_list( 'bnav', $c->items( 'bnav' ) );
+			break;
 		case 'city':
 			nrn_render_map( $c );
 			break;
@@ -716,7 +738,7 @@ function nrn_render_row( $list, $spec, $it ) {
 }
 
 function nrn_render_list_templates() {
-	foreach ( array( 'faq', 'orgs', 'videos', 'mag', 'badges', 'products' ) as $list ) {
+	foreach ( array( 'faq', 'orgs', 'videos', 'mag', 'badges', 'products', 'bnav' ) as $list ) {
 		echo '<script type="text/template" id="nrn-tpl-' . esc_attr( $list ) . '">';
 		ob_start();
 		nrn_render_row( $list, nrn_list_spec( $list ), array() );
@@ -730,6 +752,7 @@ function nrn_render_list_templates() {
 		'videos'    => $c->lists['videos'],
 		'badges'    => $c->lists['badges'],
 		'products'  => $c->lists['products'],
+		'bnav'      => $c->lists['bnav'],
 		'mag'       => $c->lists['mag'],
 		'provinces' => $c->lists['provinces'],
 		'assetBase' => NRN_URL . 'assets/',

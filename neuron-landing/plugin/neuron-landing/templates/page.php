@@ -32,6 +32,7 @@ if ( $nl->setting( 'hide_phb' ) ) {
 window.nrnFit=function(){var h=document.querySelector('.nrn-d');if(!h)return 1;var r=h.querySelector('[data-ref="root"]');if(!r)return 1;var dw=+h.getAttribute('data-dw')||0;h.classList.remove('nrn-scaled');h.style.height='';var vw=h.clientWidth;if(!dw||!vw||vw>=dw||getComputedStyle(h).display==='none')return 1;var s=vw/dw;h.style.setProperty('--nrn-dw',dw+'px');h.style.setProperty('--nrn-s',s);h.classList.add('nrn-scaled');h.style.height=Math.ceil(r.offsetHeight*s)+'px';return s};window.nrnFit();</script>
 <div class="<?php echo esc_attr( $wrap ); ?> nrn-m" data-layout="m">
 <?php $nl->layout = 'm'; include NRN_DIR . 'templates/layout-mobile.php'; ?>
+<?php nrn_render_bnav( $nl ); ?>
 </div>
 <?php wp_footer(); ?>
 </body>

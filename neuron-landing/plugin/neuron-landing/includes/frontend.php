@@ -51,6 +51,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_script( 'nrn-main', NRN_URL . 'assets/js/neuron.js', array(), $ver, true );
 	$map = $c->map_cfg();
 	wp_localize_script( 'nrn-main', 'NRN_CFG', array(
+		'cartApi' => NRN_Content::woo_active() ? rest_url( 'wc/store/v1/cart' ) : '',
 		'map' => array(
 			'def'         => $map['def'],
 			'url'         => $map['url'],

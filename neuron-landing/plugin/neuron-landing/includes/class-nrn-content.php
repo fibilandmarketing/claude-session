@@ -38,6 +38,7 @@ class NRN_Content {
 	private function __construct() {
 		$this->schema = require NRN_DIR . 'includes/schema-generated.php';
 		$this->lists  = require NRN_DIR . 'includes/defaults-lists.php';
+		$this->lists['bnav'] = nrn_bnav_defaults();
 		$this->geo    = require NRN_DIR . 'includes/map-geometry.php';
 		$saved        = get_option( NRN_OPTION, array() );
 		$this->data   = is_array( $saved ) ? self::migrate( $saved ) : array();
@@ -45,7 +46,28 @@ class NRN_Content {
 
 	/** Version 1.0 stored one field per word run; carry its edits over to the current keys. */
 	private static function migrate( array $d ) {
-		if ( ! empty( $d['v'] ) || empty( $d['fields'] ) ) {
+		$km = require NRN_DIR . 'includes/migrate-keys.php';
+		if ( ! empty( $d['v'] ) ) {
+			// field keys of the previous release -> this release (moved / renumbered fields)
+			if ( (int) ( $d['sv'] ?? 0 ) < $km['version'] && ! empty( $d['fields'] ) && is_array( $d['fields'] ) ) {
+				$fields = array();
+				foreach ( $d['fields'] as $k => $v ) {
+					if ( ! isset( $km['map'][ $k ] ) && ! isset( $fields[ $k ] ) ) {
+						$fields[ $k ] = $v;
+					}
+				}
+				foreach ( $d['fields'] as $k => $v ) {
+					if ( isset( $km['map'][ $k ] ) ) {
+						$fields[ $km['map'][ $k ] ] = $v;
+					}
+				}
+				$d['fields'] = $fields;
+			}
+			$d['sv'] = $km['version'];
+			return $d;
+		}
+		if ( empty( $d['fields'] ) ) {
+			$d['sv'] = $km['version'];
 			return $d;
 		}
 		$map    = require NRN_DIR . 'includes/migrate-v1.php';
@@ -57,6 +79,7 @@ class NRN_Content {
 		}
 		$d['fields'] = $fields;
 		$d['v']      = 2;
+		$d['sv']     = $km['version'];
 		return $d;
 	}
 
@@ -84,6 +107,7 @@ class NRN_Content {
 			'footer'   => array( 'title' => 'فوتر', 'icon' => 'align-wide', 'toggle' => false ),
 			'social'   => array( 'title' => 'شبکه‌های اجتماعی', 'icon' => 'share', 'toggle' => false, 'desc' => 'در فوتر و منوی موبایل استفاده می‌شود.' ),
 			'drawer'   => array( 'title' => 'منوی کشویی موبایل', 'icon' => 'smartphone', 'toggle' => false ),
+			'bnav'     => array( 'title' => 'نوار پایین موبایل', 'icon' => 'ellipsis', 'toggle' => true, 'desc' => 'نوار شناور پایین صفحه در گوشی. دکمهٔ «اصلی» به‌صورت دایرهٔ نارنجی برجسته وسط نوار نمایش داده می‌شود. لینک «سبد خرید» اگر خالی بماند، صفحهٔ سبد ووکامرس است و تعداد اقلام سبد روی آیکنش نمایش داده می‌شود.' ),
 			'todo'     => array( 'title' => 'فهرست موارد تکمیل‌نشده', 'icon' => 'warning', 'toggle' => true, 'desc' => 'کادر زرد انتهای صفحه که در طرح برای بررسی کارفرما گذاشته شده است.' ),
 		);
 	}
@@ -390,11 +414,11 @@ class NRN_Content {
 			'tag'   => $tag,
 			'price' => $ptxt,
 			'unit'  => $unit,
-			'img'   => $img,
+			'img'   => $img ? $img : self::asset( 'img/placeholder.svg' ),
 			'w'     => $w,
 			'h'     => $h,
 			'alt'   => $name,
-			'fit'   => isset( $row['fit'] ) && 'cover' === $row['fit'] ? 'cover' : 'product',
+			'fit'   => ! $img || ( isset( $row['fit'] ) && 'cover' === $row['fit'] ) ? 'cover' : 'product',
 			'phb'   => $img ? '' : 'جایگاه: عکس محصول',
 			'url'   => get_permalink( $product->get_id() ),
 		);
