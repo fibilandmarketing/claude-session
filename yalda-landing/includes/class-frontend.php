@@ -24,6 +24,8 @@ class YL_Frontend {
 		add_action( 'wp_head', array( __CLASS__, 'head' ), 1 );
 		add_action( 'template_redirect', array( __CLASS__, 'prepare' ) );
 		add_filter( 'script_loader_tag', array( __CLASS__, 'script_tag' ), 99, 2 );
+		add_action( 'wp_ajax_yl_fal', array( __CLASS__, 'ajax_fal' ) );
+		add_action( 'wp_ajax_nopriv_yl_fal', array( __CLASS__, 'ajax_fal' ) );
 	}
 
 	public static function is_landing() {
@@ -45,6 +47,39 @@ class YL_Frontend {
 			remove_action( 'wp_footer', 'wp_enqueue_global_styles', 1 );
 			remove_action( 'wp_body_open', 'wp_global_styles_render_svg_filters' );
 		}
+	}
+
+	/**
+	 * One random Hafez fortune. The page carries only a handful inline (as a fallback), so the
+	 * full list (80+) never weighs down the HTML; the canary's 4-second animation hides the wait.
+	 * "not" = index shown last time, so the same fortune doesn't come twice in a row.
+	 */
+	public static function ajax_fal() {
+		nocache_headers();
+		$items = array_values( array_filter( (array) YL_Settings::get( 'fal', 'items', array() ), static function ( $f ) {
+			return is_array( $f ) && ! empty( $f['b1'] );
+		} ) );
+		$n = count( $items );
+		if ( ! $n || ! YL_Settings::on( 'fal' ) ) {
+			wp_send_json( array( 'ok' => false ) );
+		}
+		$not = isset( $_GET['not'] ) ? (int) $_GET['not'] : -1; // phpcs:ignore WordPress.Security.NonceVerification
+		if ( $n > 1 && $not >= 0 && $not < $n ) {
+			$i = wp_rand( 0, $n - 2 );
+			if ( $i >= $not ) {
+				$i++;
+			}
+		} else {
+			$i = wp_rand( 0, $n - 1 );
+		}
+		$f = $items[ $i ];
+		wp_send_json( array(
+			'ok' => true,
+			'i'  => $i,
+			'b1' => (string) $f['b1'],
+			'b2' => isset( $f['b2'] ) ? (string) $f['b2'] : '',
+			't'  => isset( $f['t'] ) ? (string) $f['t'] : '',
+		) );
 	}
 
 	public static function script_tag( $tag, $handle ) {

@@ -560,6 +560,16 @@
 	var stage = $('.yl-fst'), play = document.getElementById('yl-fal-play'), fres = document.getElementById('yl-fres');
 	var falIdx = -1, falT = [];
 	function falSet(ph) { if (stage) stage.setAttribute('data-ph', ph); }
+	var falSrv = -1;
+	// One fortune from the full list on the server; null if it fails (then a local one is used).
+	function falFetch() {
+		if (!window.fetch || !((C.falN || 0) > (C.fals || []).length)) return null;
+		var url = C.ajax + (C.ajax.indexOf('?') < 0 ? '?' : '&') + 'action=yl_fal&not=' + falSrv + '&_=' + Date.now();
+		return fetch(url, { credentials: 'same-origin' })
+			.then(function (r) { return r.ok ? r.json() : null; })
+			.then(function (j) { return j && j.ok && j.b1 ? j : null; })
+			.catch(function () { return null; });
+	}
 	function falStart() {
 		var fals = C.fals || [];
 		if (!fals.length || !stage) return;
@@ -567,26 +577,37 @@
 		falT.forEach(clearTimeout);
 		var n = fals.length;
 		falIdx = falIdx < 0 ? Math.floor(Math.random() * n) : (n > 1 ? (falIdx + 1 + Math.floor(Math.random() * (n - 1))) % n : 0);
+		var req = falFetch(), got = null;
+		if (req) req.then(function (j) { got = j; });
 		fres.hidden = true;
 		play.hidden = false;
 		var go = $('[data-fal="go"]', play);
 		go.disabled = true;
 		go.textContent = T.falBusy;
 		falSet('go');
+		var show = function (f) {
+			if (f && typeof f.i === 'number') falSrv = f.i;
+			f = f || fals[falIdx];
+			$('[data-fal-b1]', fres).textContent = f.b1;
+			$('[data-fal-b2]', fres).textContent = f.b2;
+			$('[data-fal-t]', fres).textContent = f.t;
+			play.hidden = true;
+			fres.hidden = false;
+			falSet('idle');
+			go.disabled = false;
+			go.textContent = T.falCta;
+			setTimeout(function () { smooth(fres, 'center'); }, 60);
+		};
 		var seq = [['peck', 900], ['carry', 1600], ['seal', 2500], ['open', 3300], ['done', 4200]];
 		falT = seq.map(function (x) {
 			return setTimeout(function () {
 				if (x[0] !== 'done') return falSet(x[0]);
-				var f = fals[falIdx];
-				$('[data-fal-b1]', fres).textContent = f.b1;
-				$('[data-fal-b2]', fres).textContent = f.b2;
-				$('[data-fal-t]', fres).textContent = f.t;
-				play.hidden = true;
-				fres.hidden = false;
-				falSet('idle');
-				go.disabled = false;
-				go.textContent = T.falCta;
-				setTimeout(function () { smooth(fres, 'center'); }, 60);
+				if (got || !req) return show(got);
+				// Slow connection: wait up to 2.5s more for the server's fortune, then use a local one.
+				var waited = false;
+				var t = setTimeout(function () { waited = true; show(null); }, 2500);
+				falT.push(t);
+				req.then(function (j) { if (!waited) { clearTimeout(t); show(j); } });
 			}, x[1]);
 		});
 	}

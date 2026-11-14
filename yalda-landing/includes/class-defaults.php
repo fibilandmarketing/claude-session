@@ -21,6 +21,53 @@ class YL_Defaults {
 	}
 
 	public static function get() {
+		$d                  = self::base();
+		$d['fal']['items'] = array_merge( $d['fal']['items'], self::more_fals() );
+		return $d;
+	}
+
+	/** The 80 extra Hafez fortunes (verbatim from Ganjoor), see includes/fal-extra.php. */
+	public static function more_fals() {
+		static $list = null;
+		if ( null === $list ) {
+			$list = (array) include YL_DIR . 'includes/fal-extra.php';
+		}
+		return $list;
+	}
+
+	/** Comparison key for a couplet: letters only, so spacing/punctuation/diacritics differences don't matter. */
+	public static function fal_key( $text ) {
+		$t = preg_replace( '/[\x{064B}-\x{0652}\x{0670}\x{0654}\x{200C}\x{200F}]/u', '', (string) $text );
+		$t = str_replace( array( 'ي', 'ك', 'ة' ), array( 'ی', 'ک', 'ه' ), $t );
+		return preg_replace( '/[^\p{L}]+/u', '', $t );
+	}
+
+	/**
+	 * One-time update for sites that already saved their own fortunes: append the new ones
+	 * that are not in the list yet. The site's own fortunes and edits are kept as they are.
+	 */
+	public static function upgrade_fals() {
+		if ( (int) get_option( 'yl_fal_pack', 0 ) >= 1 ) {
+			return;
+		}
+		$saved = get_option( YL_OPTION, array() );
+		if ( is_array( $saved ) && isset( $saved['fal']['items'] ) && is_array( $saved['fal']['items'] ) ) {
+			$have = array();
+			foreach ( $saved['fal']['items'] as $f ) {
+				$have[ self::fal_key( isset( $f['b1'] ) ? $f['b1'] : '' ) ] = 1;
+			}
+			foreach ( self::more_fals() as $f ) {
+				if ( empty( $have[ self::fal_key( $f['b1'] ) ] ) ) {
+					$saved['fal']['items'][] = $f;
+				}
+			}
+			update_option( YL_OPTION, $saved, false );
+			YL_Settings::flush();
+		}
+		update_option( 'yl_fal_pack', 1 );
+	}
+
+	private static function base() {
 		$packs = array(
 			self::pack( 'wooden-hexagon-serving-set', 'پک چوبی شش ضلعی', 783000, 'fa' ),
 			self::pack( 'yalda-happy-gift-set-fruit-cups', 'پک هدیه شادی یلدا', 760000, 'f' ),

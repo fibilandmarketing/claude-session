@@ -189,7 +189,7 @@ body.yl-body{margin:0;background:var(--night,#0C113A)}
 /* Pure CSS motion: every copy of the row slides by exactly its own width, so the loop is seamless
    and keeps running even if a cache/optimisation plugin delays or blocks the page's JavaScript.
    --n = cards per row, --iw = card + gap width in px, --v = speed in px per second. */
-.yl .yl-mq-g{display:flex;flex:none;align-items:center;gap:24px;margin:0;padding:0 24px 0 0;list-style:none;animation:yl-mq-l calc(var(--n,6) * var(--iw,202) / var(--v,24) * 1s) linear infinite;will-change:transform}
+.yl .yl-mq-g{display:flex;flex:none;align-items:center;gap:24px;margin:0;padding:0 24px 0 0;list-style:none;animation:yl-mq-l calc(var(--n,6) * var(--iw,202) / var(--v,24) * 1s) linear infinite}
 .yl .yl-mq-qt .yl-mq-g{animation-name:yl-mq-r}
 .yl-mq:hover .yl-mq-g,.yl-mq:focus-within .yl-mq-g,.yl-mq.is-hold .yl-mq-g,.yl-pf.is-off .yl-mq-g,.yl-pf.is-stop .yl-mq-g{animation-play-state:paused}
 @keyframes yl-mq-l{from{transform:translateX(0)}to{transform:translateX(-100%)}}
@@ -422,6 +422,7 @@ html.yl-lock,html.yl-lock body{overflow:hidden}
   .yl .yl-rr .yl-soft{flex:1 1 100%;min-height:48px}
   .yl-mq{padding:14px 0 18px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
   .yl-mq-lg{--iw:152}
+  .yl-mq-c{animation:none}
   .yl-mq-qt{--iw:296;padding:28px 0 26px}
   .yl .yl-mq-g{gap:14px;padding-right:14px}
   .yl-mq-lg .yl-mq-c{width:138px;height:74px;padding:10px 14px;border-radius:14px}

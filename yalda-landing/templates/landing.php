@@ -106,7 +106,8 @@ $config = array(
 	'packs'   => $js_packs,
 	'deals'   => $js_deals,
 	'recent'  => $js_recent,
-	'fals'    => $fals,
+	'fals'    => array_slice( $fals, 0, 6 ),
+	'falN'    => count( $fals ),
 	't'       => array(
 		'info'      => $build['info_label'],
 		'fName'     => $build['f_name'],
@@ -204,7 +205,7 @@ $config = array(
 				<?php endif; ?>
 			</div>
 		</div>
-		<div class="yl-hs-w"><?php echo $F::img( 'hero', 'still_img', array( 600, 1000 ), array( 'alt' => $h['still_alt'], 'class' => 'yl-hs', 'sizes' => '(max-width:760px) 72vw, (max-width:1000px) 420px, 520px', 'lazy' => false ) ); // phpcs:ignore ?></div>
+		<div class="yl-hs-w"><?php echo $F::img( 'hero', 'still_img', array( 600, 1000 ), array( 'alt' => $h['still_alt'], 'class' => 'yl-hs', 'sizes' => '(max-width:760px) min(72vw, 270px), (max-width:1000px) 420px, 520px', 'high' => true ) ); // phpcs:ignore ?></div>
 	</div>
 </section>
 
@@ -347,11 +348,11 @@ foreach ( (array) $g['order'] as $sec ) :
 			/*
 			 * The strips move with CSS alone (no JavaScript needed), so they keep moving even when
 			 * a cache/optimisation plugin delays or breaks scripts. The server prints enough copies
-			 * of each row to cover screens up to 4000px wide; card widths are fixed in the CSS
+			 * of each row to cover screens up to 3900px wide (4K at 100%); card widths are fixed in the CSS
 			 * (logo 178px + 24px gap, quote 360px + 24px gap) so the copy count is exact.
 			 */
 			$copies = static function ( $n, $card ) {
-				return max( 2, (int) ceil( 4000 / max( 1, $n * $card ) ) + 1 );
+				return max( 2, (int) ceil( 3900 / max( 1, $n * $card ) ) + 1 );
 			};
 			$logo_li = static function ( $clone ) use ( $logos ) {
 				$h = '';
@@ -359,7 +360,7 @@ foreach ( (array) $g['order'] as $sec ) :
 					$li  = ! empty( $lg['img'] ) ? YL_Images::get( $lg['img'], array( 300 ) ) : null;
 					$alt = $clone ? '' : $lg['name'];
 					$h  .= '<li class="yl-mq-i"><div class="yl-mq-c' . ( $li ? '' : ' is-txt' ) . '">'
-						. ( $li ? YL_Images::tag( $li, array( 'alt' => $alt, 'sizes' => '150px', 'lazy' => false ) ) : '<span>' . esc_html( $lg['name'] ) . '</span>' )
+						. ( $li ? YL_Images::tag( $li, array( 'alt' => $alt, 'sizes' => '150px' ) ) : '<span>' . esc_html( $lg['name'] ) . '</span>' )
 						. '</div></li>';
 				}
 				return $h;
