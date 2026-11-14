@@ -81,6 +81,8 @@ class YL_Defaults {
 				'reveal'     => 1,
 				'isolate'    => 1,
 				'shield'     => 1,
+				'block_plugins' => array(),
+				'block_words'   => 'afracc',
 				'faq_schema' => 1,
 				'bg'         => '',
 				'c_night'    => '#0C113A',

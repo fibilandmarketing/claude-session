@@ -561,7 +561,7 @@ class YL_Admin {
 				$cur = (array) $val;
 				echo '<div class="yl-tags" data-name="' . esc_attr( $name ) . '[]">';
 				if ( empty( $f['o'] ) ) {
-					echo '<span class="yl-note">ابتدا در تب «فرم پک‌ساز» یک سؤال از نوع «حال‌وهوا» بسازید.</span>';
+					echo '<span class="yl-note">' . esc_html( isset( $f['empty'] ) ? $f['empty'] : 'ابتدا در تب «فرم پک‌ساز» یک سؤال از نوع «حال‌وهوا» بسازید.' ) . '</span>';
 				}
 				foreach ( (array) $f['o'] as $ov => $ol ) {
 					echo '<label class="yl-chip"><input type="checkbox" name="' . esc_attr( $name ) . '[]" value="' . esc_attr( $ov ) . '"' . checked( in_array( (string) $ov, array_map( 'strval', $cur ), true ), true, false ) . '><span>' . esc_html( $ol ) . '</span></label>';

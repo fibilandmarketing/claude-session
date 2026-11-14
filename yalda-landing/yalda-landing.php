@@ -3,7 +3,7 @@
  * Plugin Name:       لندینگ شب یلدا
  * Plugin URI:        https://partakart.com/
  * Description:       لندینگ هدیه‌ی سازمانی شب یلدا با پیشخوان تنظیمات بخش‌به‌بخش، اتصال به ووکامرس، فرم پنج‌مرحله‌ای، محاسبه‌گر قیمت و فال حافظ.
- * Version:           1.3.0
+ * Version:           1.4.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            آرش شکیبایی
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'YL_VERSION', '1.3.0' );
+define( 'YL_VERSION', '1.4.0' );
 define( 'YL_FILE', __FILE__ );
 define( 'YL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'YL_URL', plugin_dir_url( __FILE__ ) );
@@ -27,6 +27,7 @@ require_once YL_DIR . 'includes/class-data.php';
 require_once YL_DIR . 'includes/class-leads.php';
 require_once YL_DIR . 'includes/class-cart.php';
 require_once YL_DIR . 'includes/class-frontend.php';
+require_once YL_DIR . 'includes/class-block.php';
 
 if ( is_admin() ) {
 	require_once YL_DIR . 'includes/class-schema.php';
@@ -37,6 +38,7 @@ add_action( 'plugins_loaded', static function () {
 	YL_Leads::init();
 	YL_Cart::init();
 	YL_Frontend::init();
+	YL_Block::init();
 	if ( is_admin() ) {
 		YL_Admin::init();
 	}
