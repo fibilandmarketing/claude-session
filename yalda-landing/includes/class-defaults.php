@@ -161,6 +161,8 @@ class YL_Defaults {
 				'source'      => 'list',
 				'woo_cat'     => 0,
 				'woo_limit'   => 8,
+				'auto'        => 1,
+				'auto_s'      => 4,
 				'btn'         => 'سفارش برای تیم',
 				'badge'       => '٪ تخفیف',
 				'items'       => array(

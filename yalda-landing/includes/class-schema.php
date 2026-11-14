@@ -220,13 +220,22 @@ class YL_Schema {
 						),
 					),
 					array(
+						'title'  => 'حرکت اسلایدر',
+						'icon'   => 'swap',
+						'fields' => array(
+							array( 'k' => 'auto', 't' => 'toggle', 'l' => 'جلو رفتن خودکار محصولات', 'h' => 'با بردن موس روی اسلایدر، لمس آن یا زدن فلش‌ها مکث می‌کند و در انتها به اولین محصول برمی‌گردد.', 'w' => 'half' ),
+							array( 'k' => 'auto_s', 't' => 'number', 'l' => 'هر چند ثانیه یک محصول', 'min' => 2, 'max' => 15, 'w' => 'half' ),
+						),
+					),
+					array(
 						'title'  => 'محصولات تخفیف‌دار',
 						'icon'   => 'cart',
 						'fields' => array(
 							array( 'k' => 'source', 't' => 'seg', 'l' => 'محصولات از کجا بیایند؟', 'o' => array( 'list' => 'انتخاب دستی (فهرست زیر)', 'woo' => 'خودکار: محصولات حراج ووکامرس' ), 'w' => 'full' ),
 							array( 'k' => 'woo_cat', 't' => 'pcat', 'l' => 'فقط از این دسته', 'show' => 'source=woo', 'w' => 'half' ),
 							array( 'k' => 'woo_limit', 't' => 'number', 'l' => 'حداکثر تعداد', 'min' => 1, 'max' => 24, 'show' => 'source=woo', 'w' => 'half' ),
-							array( 'k' => 'woo_note', 't' => 'note', 'l' => 'محصولاتی که در ووکامرس «قیمت فروش ویژه» دارند به‌ترتیب جدیدترین نمایش داده می‌شوند و درصد تخفیف خودکار محاسبه می‌شود.', 'show' => 'source=woo', 'w' => 'full' ),
+							array( 'k' => 'woo_note', 't' => 'note', 'l' => 'محصولاتی که در ووکامرس «قیمت فروش ویژه» دارند (یا افزونه‌ی تخفیف آن‌ها را تخفیف‌دار کرده) به‌ترتیب جدیدترین نمایش داده می‌شوند و درصد تخفیف خودکار محاسبه می‌شود.', 'show' => 'source=woo', 'w' => 'full' ),
+							array( 'k' => 'woo_report', 't' => 'note', 'l' => YL_Data::woo_report(), 'show' => 'source=woo', 'w' => 'full' ),
 							array(
 								'k'      => 'items',
 								't'      => 'repeater',

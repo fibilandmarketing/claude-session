@@ -613,29 +613,288 @@
 	}
 
 	/* ---------------- customer logos (→ left) and quotes (→ right) ----------------
-	 * The motion itself is pure CSS (see landing.css), so it runs even if this script is delayed.
-	 * These are extras only: finger-hold on touch screens, pausing off screen, the pause button. */
+	 * Without this script the strips still move with pure CSS (see landing.css). When it runs it takes
+	 * the motion over so people can also move them by hand: drag with the mouse, swipe with a finger
+	 * (vertical page scrolling is left alone), scroll sideways on a trackpad, use the arrows or the
+	 * keyboard. The automatic motion runs as a browser animation (on the GPU, no per-frame script);
+	 * the script only works while someone is moving a strip, then hands the motion back. */
 	var pf = document.getElementById('proof');
 	if (pf) {
-		$$('.yl-mq', pf).forEach(function (mq) {
-			var rel = 0;
-			var up = function () { clearTimeout(rel); rel = setTimeout(function () { mq.classList.remove('is-hold'); }, 1200); };
-			mq.addEventListener('touchstart', function () { clearTimeout(rel); mq.classList.add('is-hold'); }, { passive: true });
-			mq.addEventListener('touchend', up, { passive: true });
-			mq.addEventListener('touchcancel', up, { passive: true });
-		});
-		if ('IntersectionObserver' in window) {
-			new IntersectionObserver(function (l) { pf.classList.toggle('is-off', !l[l.length - 1].isIntersecting); }).observe(pf);
-		}
 		var pfStop = $('[data-pf-stop]', pf);
+		var pfStopped = false, pfVisible = true, pfRaf = 0, pfLast = 0;
+		var strips = [];
+		// position kept in (-2 rows, 0]; the server/clones guarantee enough copies to cover that
+		var wrapX = function (s) { var x = s.x % s.gw; if (x > 0) x -= s.gw; return x; };
+		var put = function (s, x) { s.track.style.transform = 'translate3d(' + x.toFixed(2) + 'px,0,0)'; };
+		var cardW = function (s) {
+			var it = $('.yl-mq-i', s.grp);
+			var gap = parseFloat(getComputedStyle(s.grp).columnGap) || 0;
+			return it ? it.getBoundingClientRect().width + gap : 200;
+		};
+		var measure = function (s) {
+			s.gw = s.grp.getBoundingClientRect().width || s.gw || 1;
+			var need = Math.ceil(s.mq.clientWidth / s.gw) + 2;
+			while (s.track.children.length < need) {
+				var c = s.grp.cloneNode(true);
+				c.setAttribute('aria-hidden', 'true');
+				c.setAttribute('data-clone', '');
+				$$('img', c).forEach(function (im) { im.alt = ''; });
+				s.track.appendChild(c);
+			}
+		};
+		var autoX = function (s) {
+			var a = s.anim, dur = s.gw / s.v * 1000;
+			var t = ((a.currentTime || 0) % dur) / dur;
+			return s.a0 + s.dir * s.gw * t;
+		};
+		// hand the motion back to the browser, starting exactly where the strip is now
+		var startAuto = function (s) {
+			if (s.anim || s.drag || s.tween || Math.abs(s.vel) > 0.02 || !s.track.animate) return;
+			if (Date.now() < s.hold) { clearTimeout(s.ht); s.ht = setTimeout(function () { startAuto(s); }, s.hold - Date.now() + 20); return; }
+			var x = wrapX(s);
+			s.a0 = s.dir < 0 ? x : x - s.gw;
+			s.anim = s.track.animate(
+				[{ transform: 'translate3d(' + s.a0 + 'px,0,0)' }, { transform: 'translate3d(' + (s.a0 + s.dir * s.gw) + 'px,0,0)' }],
+				{ duration: s.gw / s.v * 1000, iterations: Infinity, easing: 'linear' }
+			);
+			if (pfStopped || !pfVisible || s.hover) s.anim.pause();
+		};
+		// take the motion over from the browser animation (the strip stays where it is)
+		var stopAuto = function (s) {
+			clearTimeout(s.ht);
+			if (!s.anim) return;
+			s.x = autoX(s);
+			s.anim.cancel();
+			s.anim = null;
+			put(s, wrapX(s));
+		};
+		var syncPlay = function () {
+			strips.forEach(function (s) {
+				if (!s.anim) return;
+				if (pfStopped || !pfVisible || s.hover) s.anim.pause(); else s.anim.play();
+			});
+		};
+		var frame = function (t) {
+			pfRaf = 0;
+			var dt = pfLast ? Math.min(64, t - pfLast) : 16, busy = false;
+			pfLast = t;
+			strips.forEach(function (s) {
+				if (s.tween) {
+					var k = Math.min(1, (t - s.tween.t0) / s.tween.dur);
+					s.x = s.tween.from + (s.tween.to - s.tween.from) * (1 - Math.pow(1 - k, 3));
+					if (k >= 1) s.tween = null;
+					put(s, wrapX(s));
+				} else if (!s.drag && Math.abs(s.vel) > 0.02) {
+					s.x += s.vel * dt;
+					s.vel *= Math.pow(0.9, dt / 16); // a little momentum after a flick
+					put(s, wrapX(s));
+				}
+				if (s.tween || (!s.drag && Math.abs(s.vel) > 0.02)) {
+					busy = true;
+				} else if (!s.drag && !s.anim) {
+					s.vel = 0;
+					startAuto(s); // tween/flick just finished: give the motion back to the browser
+				}
+			});
+			if (busy) pfRaf = requestAnimationFrame(frame);
+		};
+		var kick = function () { if (!pfRaf) { pfLast = 0; pfRaf = requestAnimationFrame(frame); } };
+		var nudge = function (s, dir) {
+			stopAuto(s);
+			s.vel = 0;
+			s.tween = { from: s.x, to: s.x + dir * cardW(s), t0: performance.now(), dur: 450 };
+			s.hold = Date.now() + 2500;
+			kick();
+		};
+
+		if (!RM) {
+			$$('.yl-mq', pf).forEach(function (mq) {
+				var grp = $('.yl-mq-g', mq);
+				var s = {
+					mq: mq, track: $('.yl-mq-t', mq), grp: grp, gw: 0, hover: false, hold: 0, drag: null, vel: 0, tween: null, anim: null, a0: 0, ht: 0,
+					dir: mq.classList.contains('yl-mq-qt') ? 1 : -1,
+					v: parseFloat(getComputedStyle(mq).getPropertyValue('--v')) || 24,
+					// continue from wherever the CSS animation is now, so the hand-over is invisible
+					x: new DOMMatrix(getComputedStyle(grp).transform).m41 || 0
+				};
+				mq.classList.add('is-js');
+				mq.tabIndex = 0;
+				measure(s);
+				put(s, wrapX(s));
+				strips.push(s);
+				startAuto(s);
+				var box = mq.parentNode;
+				$$('[data-mq]', box).forEach(function (b) {
+					b.hidden = false;
+					b.addEventListener('click', function () { nudge(s, +b.getAttribute('data-mq')); });
+				});
+				box.addEventListener('mouseenter', function () { s.hover = true; syncPlay(); });
+				box.addEventListener('mouseleave', function () { s.hover = false; syncPlay(); });
+				mq.addEventListener('keydown', function (e) {
+					if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); nudge(s, e.key === 'ArrowLeft' ? 1 : -1); }
+				});
+				// drag (mouse) and swipe (touch): CSS touch-action:pan-y leaves vertical scrolling to the browser
+				mq.addEventListener('pointerdown', function (e) {
+					if (e.pointerType === 'mouse' && e.button !== 0) return;
+					s.drag = { id: e.pointerId, x0: e.clientX, last: e.clientX, lt: performance.now(), moved: false, v: 0 };
+				});
+				mq.addEventListener('pointermove', function (e) {
+					var d = s.drag;
+					if (!d || d.id !== e.pointerId) return;
+					if (!d.moved) {
+						if (Math.abs(e.clientX - d.x0) < 6) return;
+						d.moved = true;
+						stopAuto(s);
+						s.vel = 0; s.tween = null;
+						try { mq.setPointerCapture(e.pointerId); } catch (x) {}
+						mq.classList.add('is-drag');
+					}
+					var now = performance.now(), dx = e.clientX - d.last;
+					s.x += dx;
+					put(s, wrapX(s));
+					d.v = 0.8 * (dx / Math.max(1, now - d.lt)) + 0.2 * d.v;
+					d.last = e.clientX; d.lt = now;
+				});
+				var end = function (e) {
+					var d = s.drag;
+					if (!d || (e && d.id !== e.pointerId)) return;
+					s.drag = null;
+					mq.classList.remove('is-drag');
+					if (d.moved) {
+						s.vel = Math.max(-1.5, Math.min(1.5, d.v));
+						s.hold = Date.now() + 1500;
+						s.justDragged = Date.now();
+						kick();
+					} else if (e && e.pointerType !== 'mouse') {
+						// a tap on a phone stops it briefly so it can be read
+						stopAuto(s);
+						s.hold = Date.now() + 2500;
+						startAuto(s);
+					}
+				};
+				mq.addEventListener('pointerup', end);
+				mq.addEventListener('pointercancel', end);
+				// A finger is captured by the card it touched first; moving that capture to the strip fires
+				// lostpointercapture on the card, which bubbles here - only the strip's own loss ends the drag.
+				mq.addEventListener('lostpointercapture', function (e) { if (e.target === mq) end(e); });
+				mq.addEventListener('click', function (e) {
+					if (s.justDragged && Date.now() - s.justDragged < 300) { e.preventDefault(); e.stopPropagation(); }
+				}, true);
+				mq.addEventListener('dragstart', function (e) { e.preventDefault(); });
+				// trackpad sideways scroll (or Shift + wheel); plain vertical wheel keeps scrolling the page
+				mq.addEventListener('wheel', function (e) {
+					var dx = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : 0);
+					if (!dx) return;
+					e.preventDefault();
+					stopAuto(s);
+					s.vel = 0; s.tween = null;
+					s.x -= dx;
+					put(s, wrapX(s));
+					s.hold = Date.now() + 1500;
+					startAuto(s);
+				}, { passive: false });
+			});
+			var remeasure = function () {
+				strips.forEach(function (s) {
+					var running = !!s.anim;
+					stopAuto(s);
+					measure(s);
+					s.x = wrapX(s);
+					put(s, s.x);
+					if (running || !s.tween) startAuto(s);
+				});
+			};
+			var rt = 0;
+			window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(remeasure, 150); }, { passive: true });
+			$$('img', pf).forEach(function (im) { if (!im.complete) im.addEventListener('load', function () { clearTimeout(rt); rt = setTimeout(remeasure, 150); }, { once: true }); });
+			if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
+		}
+
+		if ('IntersectionObserver' in window) {
+			// Save battery: nothing in this section animates while it is off screen.
+			new IntersectionObserver(function (l) {
+				pfVisible = l[l.length - 1].isIntersecting;
+				pf.classList.toggle('is-off', !pfVisible);
+				syncPlay();
+			}).observe(pf);
+		}
 		if (pfStop) {
 			if (RM) pfStop.parentNode.hidden = true;
 			pfStop.addEventListener('click', function () {
-				var stop = !pf.classList.contains('is-stop');
-				pf.classList.toggle('is-stop', stop);
-				pfStop.setAttribute('aria-pressed', stop ? 'true' : 'false');
-				$('[data-pf-l]', pfStop).textContent = stop ? 'ادامه‌ی حرکت' : 'توقف حرکت';
+				pfStopped = !pfStopped;
+				pf.classList.toggle('is-stop', pfStopped);
+				pfStop.setAttribute('aria-pressed', pfStopped ? 'true' : 'false');
+				$('[data-pf-l]', pfStop).textContent = pfStopped ? 'ادامه‌ی حرکت' : 'توقف حرکت';
+				syncPlay();
 			});
+		}
+	}
+
+	/* ---------------- «یلدآف» rail: arrows, auto-advance ---------------- */
+	var rail = document.getElementById('yl-track');
+	var railGo = function () {};
+	if (rail) {
+		var railBox = rail.parentNode;
+		var aPrev = $('[data-slide="1"]', railBox), aNext = $('[data-slide="-1"]', railBox), arw = $('.yl-arw', railBox);
+		var railSign = getComputedStyle(rail).direction === 'rtl' ? -1 : 1; // RTL scrollLeft runs 0 → negative
+		var railPos = function () { return Math.abs(rail.scrollLeft); };
+		var railMax = function () { return Math.max(0, rail.scrollWidth - rail.clientWidth); };
+		var railStep = function () {
+			var c = rail.firstElementChild;
+			var gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
+			return c ? c.getBoundingClientRect().width + gap : 300;
+		};
+		var railUser = 0;
+		// dir: 1 = next card, -1 = previous; loop: past the end go back to the start (auto mode)
+		railGo = function (dir, loop) {
+			var max = railMax();
+			if (max < 4) return;
+			var pos = railPos(), step = railStep(), target;
+			if (dir > 0 && pos >= max - 4) target = loop ? 0 : max;
+			else if (dir < 0 && pos <= 4) target = loop ? max : 0;
+			else target = Math.max(0, Math.min(max, (Math.round(pos / step) + dir) * step));
+			rail.scrollTo({ left: railSign * target, behavior: RM ? 'auto' : 'smooth' });
+		};
+		var railUi = function () {
+			var max = railMax(), pos = railPos();
+			if (arw) arw.hidden = max < 4;
+			if (aPrev) aPrev.disabled = pos <= 4;
+			if (aNext) aNext.disabled = pos >= max - 4;
+		};
+		var railF = 0;
+		rail.addEventListener('scroll', function () {
+			if (!railF) railF = requestAnimationFrame(function () { railF = 0; railUi(); });
+		}, { passive: true });
+		window.addEventListener('resize', railUi, { passive: true });
+		$$('img', rail).forEach(function (im) { if (!im.complete) im.addEventListener('load', railUi, { once: true }); });
+		railUi();
+
+		var railMs = +C.railAuto || 0;
+		if (railMs && !RM) {
+			var rh = { hover: false, focus: false, view: false, touch: 0 };
+			railBox.addEventListener('mouseenter', function () { rh.hover = true; });
+			railBox.addEventListener('mouseleave', function () { rh.hover = false; });
+			railBox.addEventListener('focusin', function (e) {
+				// Only keyboard focus pauses; a mouse click on an arrow also focuses it but should not stop the rail.
+				var kb = true;
+				try { kb = e.target.matches(':focus-visible'); } catch (x) {}
+				rh.focus = kb;
+			});
+			railBox.addEventListener('focusout', function () { rh.focus = false; });
+			rail.addEventListener('touchstart', function () { rh.touch = Date.now(); }, { passive: true });
+			rail.addEventListener('touchend', function () { rh.touch = Date.now(); }, { passive: true });
+			rail.addEventListener('wheel', function () { railUser = Date.now(); }, { passive: true });
+			if ('IntersectionObserver' in window) {
+				new IntersectionObserver(function (l) { rh.view = l[l.length - 1].isIntersecting; }, { threshold: 0.4 }).observe(rail);
+			} else {
+				rh.view = true;
+			}
+			setInterval(function () {
+				var now = Date.now();
+				if (rh.hover || rh.focus || !rh.view || document.hidden || S.modal) return;
+				if (now - rh.touch < 6000 || now - railUser < railMs * 1.5) return; // let people browse in peace
+				railGo(1, true);
+			}, railMs);
 		}
 	}
 
@@ -667,9 +926,9 @@
 		if ((v = b.getAttribute('data-pk-order')) !== null) return openQuick(C.packs[S.results[+v]]);
 		if ((v = b.getAttribute('data-pk-swap')) !== null) return openSwap(+v);
 		if ((v = b.getAttribute('data-slide')) !== null) {
-			var tr = document.getElementById('yl-track');
-			if (tr) tr.scrollBy({ left: +v * 320, behavior: RM ? 'auto' : 'smooth' });
-			return;
+			// data-slide="-1" is the «next» arrow (left in RTL), "1" the «previous» one
+			railUser = Date.now();
+			return railGo(+v === -1 ? 1 : -1, false);
 		}
 		if ((v = b.getAttribute('data-gf')) !== null) {
 			if (v === 'next') return gfNext();

@@ -108,6 +108,7 @@ $config = array(
 	'recent'  => $js_recent,
 	'fals'    => array_slice( $fals, 0, 6 ),
 	'falN'    => count( $fals ),
+	'railAuto' => ! empty( $S['yaldaf']['auto'] ) ? (int) round( 1000 * min( 15, max( 2, (float) $S['yaldaf']['auto_s'] ) ) ) : 0,
 	't'       => array(
 		'info'      => $build['info_label'],
 		'fName'     => $build['f_name'],
@@ -387,12 +388,20 @@ foreach ( (array) $g['order'] as $sec ) :
 				return $h;
 			};
 			$strip = static function ( $cls, $label, $n, $speed, $copy_n, $first, $clone ) {
-				$h = '<div class="yl-mq ' . $cls . ' yl-rv" role="region" aria-label="' . esc_attr( $label ) . '" style="--n:' . (int) $n . ';--v:' . (int) $speed . '"><div class="yl-mq-t">';
+				$arrow = static function ( $dir, $text, $path ) {
+					return '<button class="yl-mq-a is-' . $dir . '" type="button" data-mq="' . ( 'l' === $dir ? '1' : '-1' ) . '" aria-label="' . esc_attr( $text ) . '" hidden>'
+						. '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' . $path . '"/></svg></button>';
+				};
+				// The arrows (and drag/swipe) are switched on by landing.js; without it the CSS motion still runs.
+				$h  = '<div class="yl-mqw yl-rv">';
+				$h .= '<div class="yl-mq ' . $cls . '" role="region" aria-label="' . esc_attr( $label ) . '" style="--n:' . (int) $n . ';--v:' . (int) $speed . '"><div class="yl-mq-t">';
 				$h .= '<ul class="yl-mq-g">' . $first . '</ul>';
 				for ( $i = 1; $i < $copy_n; $i++ ) {
 					$h .= '<ul class="yl-mq-g" aria-hidden="true" data-clone>' . $clone . '</ul>';
 				}
-				return $h . '</div></div>';
+				$h .= '</div></div>';
+				$h .= $arrow( 'l', 'نمایش موارد سمت چپ', 'm15 6-6 6 6 6' ) . $arrow( 'r', 'نمایش موارد سمت راست', 'm9 6 6 6-6 6' );
+				return $h . '</div>';
 			};
 			?>
 <section id="proof" class="yl-sec yl-pf" aria-labelledby="pf-t">

@@ -89,6 +89,7 @@ body.yl-body{margin:0;background:var(--night,#0C113A)}
 .yl-arw{display:flex;justify-content:center;gap:10px;margin-top:10px}
 .yl .yl-arw button{width:46px;height:46px;padding:0;display:flex;align-items:center;justify-content:center;border:0;border-radius:8px;background:var(--cream);color:#10163F;cursor:pointer}
 .yl-arw svg{width:16px;height:16px}
+.yl .yl-arw button[disabled]{opacity:.35;cursor:default}
 
 /* شمارنده و گزینه‌ها */
 .yl-num{display:inline-flex;align-items:center;gap:4px}
@@ -194,6 +195,21 @@ body.yl-body{margin:0;background:var(--night,#0C113A)}
 .yl-mq:hover .yl-mq-g,.yl-mq:focus-within .yl-mq-g,.yl-mq.is-hold .yl-mq-g,.yl-pf.is-off .yl-mq-g,.yl-pf.is-stop .yl-mq-g{animation-play-state:paused}
 @keyframes yl-mq-l{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 @keyframes yl-mq-r{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+/* Manual control (landing.js takes the motion over): drag, swipe, trackpad, arrows, keyboard */
+.yl-mqw{position:relative}
+.yl-mq.is-js{cursor:grab;touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.yl-mq.is-js .yl-mq-g{animation:none}
+.yl-mq.is-js .yl-mq-t{will-change:transform}
+.yl-mq.is-drag{cursor:grabbing}
+.yl-mq.is-drag .yl-mq-i,.yl-mq.is-drag .yl-mq-i:hover{transform:rotate(var(--r));transition:none}
+.yl-mq img{-webkit-user-drag:none}
+.yl-mq:focus-visible{outline:2px solid var(--amb);outline-offset:-4px;border-radius:14px}
+.yl .yl-mq-a{position:absolute;top:50%;z-index:3;width:46px;height:46px;margin-top:-23px;padding:0;display:flex;align-items:center;justify-content:center;border:0;border-radius:50%;background:var(--cream);color:#10163F;box-shadow:0 6px 16px rgba(2,3,18,.45);cursor:pointer;opacity:.88;transition:opacity .25s,transform .25s}
+.yl .yl-mq-a:hover{opacity:1;transform:scale(1.08)}
+.yl-mq-a.is-l{left:max(14px,calc(50% - 640px))}
+.yl-mq-a.is-r{right:max(14px,calc(50% - 640px))}
+.yl-mq-a svg{width:18px;height:18px}
+@media (hover:none),(max-width:760px){.yl .yl-mq-a{display:none!important}}
 
 /* کارت‌ها: کج، تاب نرم، صاف شدن با هاور */
 .yl-mq-i{position:relative;flex:none;margin:0;--r:-2deg;transform:rotate(var(--r));transition:transform .45s var(--ease)}

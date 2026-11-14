@@ -40,6 +40,11 @@ class YL_Data {
 			$f     = yl_toman_factor();
 			$price = (float) $p->get_price() * $f;
 			$reg   = (float) $p->get_regular_price() * $f;
+			if ( $p->is_type( 'variable' ) ) {
+				// A variable product has no single regular price; use its cheapest variation.
+				$price = (float) $p->get_variation_price( 'min', true ) * $f;
+				$reg   = (float) $p->get_variation_regular_price( 'min', true ) * $f;
+			}
 			if ( $reg <= 0 ) {
 				$reg = $price;
 			}
@@ -86,24 +91,16 @@ class YL_Data {
 		$s    = YL_Settings::section( 'yaldaf' );
 		$rows = array();
 		if ( 'woo' === $s['source'] && yl_woo() ) {
-			$ids = wc_get_product_ids_on_sale();
-			if ( $ids ) {
-				$args = array(
-					'include' => $ids,
-					'status'  => 'publish',
-					'limit'   => max( 1, (int) $s['woo_limit'] ),
-					'orderby' => 'date',
-					'order'   => 'DESC',
-					'return'  => 'ids',
-				);
-				if ( ! empty( $s['woo_cat'] ) ) {
-					$term = get_term( (int) $s['woo_cat'], 'product_cat' );
-					if ( $term && ! is_wp_error( $term ) ) {
-						$args['category'] = array( $term->slug );
-					}
+			$scan  = self::woo_on_sale( (int) $s['woo_cat'] );
+			$limit = max( 1, (int) $s['woo_limit'] );
+			foreach ( $scan['ids'] as $id ) {
+				$p = wc_get_product( $id );
+				if ( ! $p || 'publish' !== $p->get_status() ) {
+					continue; // deleted/unpublished since the list was cached: the next product takes its place
 				}
-				foreach ( wc_get_products( $args ) as $id ) {
-					$rows[] = array( 'src' => 'woo', 'pid' => $id, 'pct' => 0 );
+				$rows[] = array( 'src' => 'woo', 'pid' => $id, 'pct' => 0 );
+				if ( count( $rows ) >= $limit ) {
+					break;
 				}
 			}
 		} else {
@@ -137,6 +134,102 @@ class YL_Data {
 			$out[]      = $it;
 		}
 		return self::$memo['deals'] = $out;
+	}
+
+	const SALE_CACHE = 'yl_onsale_scan';
+
+	/**
+	 * Published products that are on sale right now, newest first, optionally limited to one
+	 * category (sub-categories included).
+	 *
+	 * Each product is asked directly (is_on_sale), instead of relying only on WooCommerce's
+	 * on-sale ID list: that list misses discounts set by discount/price plugins. The result is
+	 * cached for 10 minutes and dropped whenever a product is saved.
+	 *
+	 * @return array{ids: int[], in_cat: int, cat: string}
+	 */
+	public static function woo_on_sale( $cat_id ) {
+		$key   = (int) $cat_id;
+		$cache = get_transient( self::SALE_CACHE );
+		if ( is_array( $cache ) && isset( $cache[ $key ] ) ) {
+			return $cache[ $key ];
+		}
+		$args = array(
+			'status'  => 'publish',
+			'limit'   => 300,
+			'orderby' => 'date',
+			'order'   => 'DESC',
+			'return'  => 'ids',
+		);
+		$cat = '';
+		if ( $cat_id ) {
+			$term = get_term( $cat_id, 'product_cat' );
+			if ( $term && ! is_wp_error( $term ) ) {
+				$args['category'] = array( $term->slug );
+				$cat              = $term->name;
+			}
+		}
+		$ids = wc_get_products( $args );
+		if ( ! $cat_id ) {
+			// No category: also include older on-sale products beyond the newest 300.
+			$ids = array_values( array_unique( array_merge( $ids, array_map( 'intval', wc_get_product_ids_on_sale() ) ) ) );
+		}
+		$sale = array();
+		foreach ( $ids as $id ) {
+			$p = wc_get_product( $id );
+			if ( ! $p || 'publish' !== $p->get_status() || $p->is_type( 'variation' ) ) {
+				continue;
+			}
+			if ( $p->is_on_sale() ) {
+				$sale[ $id ] = $p->get_date_created() ? $p->get_date_created()->getTimestamp() : 0;
+			}
+		}
+		arsort( $sale );
+		$out = array(
+			'ids'    => array_map( 'intval', array_keys( $sale ) ),
+			'in_cat' => count( $ids ),
+			'cat'    => $cat,
+		);
+		$cache         = is_array( $cache ) ? $cache : array();
+		$cache[ $key ] = $out;
+		set_transient( self::SALE_CACHE, $cache, 10 * MINUTE_IN_SECONDS );
+		return $out;
+	}
+
+	/** Plain-language status line for the settings page: why the rail shows the number it shows. */
+	public static function woo_report() {
+		if ( ! yl_woo() ) {
+			return 'ووکامرس فعال نیست.';
+		}
+		$s    = YL_Settings::section( 'yaldaf' );
+		$scan = self::woo_on_sale( (int) $s['woo_cat'] );
+		$n    = count( $scan['ids'] );
+		$lim  = max( 1, (int) $s['woo_limit'] );
+		$where = '' !== $scan['cat'] ? 'دسته‌ی «' . $scan['cat'] . '» (با زیردسته‌ها)' : 'کل فروشگاه';
+		$msg   = 'وضعیت فعلی: ' . $where . ' ' . yl_fa( $scan['in_cat'] ) . ' محصول منتشرشده دارد که ' . yl_fa( $n ) . ' تای آن الان تخفیف دارند؛ ' . yl_fa( min( $n, $lim ) ) . ' محصول در لندینگ نمایش داده می‌شود.';
+		if ( $n > $lim ) {
+			$msg .= ' سقف «حداکثر تعداد» ' . yl_fa( $lim ) . ' است؛ برای نمایش همه آن را بالا ببرید.';
+		} elseif ( $n < 5 ) {
+			$msg .= ' برای نمایش بیشتر، به محصولات این دسته «قیمت فروش ویژه» بدهید یا دسته‌ی دیگری انتخاب کنید.';
+		}
+		return $msg . ' (این عدد هر ۱۰ دقیقه یا با ذخیره‌ی هر محصول به‌روز می‌شود.)';
+	}
+
+	public static function flush_sale_cache() {
+		delete_transient( self::SALE_CACHE );
+	}
+
+	/** Any product publish/unpublish/trash/delete changes what is on sale. */
+	public static function flush_on_post( $post_id ) {
+		if ( 'product' === get_post_type( $post_id ) ) {
+			self::flush_sale_cache();
+		}
+	}
+
+	public static function flush_on_status( $new, $old, $post ) {
+		if ( $new !== $old && $post && 'product' === $post->post_type ) {
+			self::flush_sale_cache();
+		}
 	}
 
 	/** Landing-only discount (percent) configured for a WooCommerce product in the deals list. */
