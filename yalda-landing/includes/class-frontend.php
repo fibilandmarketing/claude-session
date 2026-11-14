@@ -9,6 +9,13 @@ class YL_Frontend {
 
 	private static $is = null;
 
+	/**
+	 * Opt-out markers honoured by common optimisers (Cloudflare/Arvan Rocket Loader, LiteSpeed Cache,
+	 * WP Rocket "delay JS", Autoptimize). The landing's own small scripts must run as written:
+	 * if they are delayed, combined or rewritten, the form, price modal and link shield stop working.
+	 */
+	const NO_OPT = ' data-cfasync="false" data-no-optimize="1" data-no-defer="1" data-no-minify="1" data-pagespeed-no-defer nowprocket';
+
 	public static function init() {
 		add_filter( 'template_include', array( __CLASS__, 'template' ), 99 );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'assets' ), 20 );
@@ -16,6 +23,7 @@ class YL_Frontend {
 		add_action( 'wp_head', array( __CLASS__, 'shield' ), PHP_INT_MIN );
 		add_action( 'wp_head', array( __CLASS__, 'head' ), 1 );
 		add_action( 'template_redirect', array( __CLASS__, 'prepare' ) );
+		add_filter( 'script_loader_tag', array( __CLASS__, 'script_tag' ), 99, 2 );
 	}
 
 	public static function is_landing() {
@@ -37,6 +45,13 @@ class YL_Frontend {
 			remove_action( 'wp_footer', 'wp_enqueue_global_styles', 1 );
 			remove_action( 'wp_body_open', 'wp_global_styles_render_svg_filters' );
 		}
+	}
+
+	public static function script_tag( $tag, $handle ) {
+		if ( 'yl-landing' !== $handle || false !== strpos( $tag, 'nowprocket' ) ) {
+			return $tag;
+		}
+		return preg_replace( '/<script\b/', '<script' . self::NO_OPT, $tag, 1 );
 	}
 
 	public static function template( $template ) {
@@ -115,7 +130,7 @@ class YL_Frontend {
 		if ( ! self::is_landing() || ! YL_Settings::get( 'general', 'shield', 1 ) ) {
 			return;
 		}
-		echo '<script id="yl-shield">' . self::shield_js() . '</script>' . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput
+		echo '<script id="yl-shield"' . self::NO_OPT . '>' . self::shield_js() . '</script>' . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput
 	}
 
 	private static function shield_js() {

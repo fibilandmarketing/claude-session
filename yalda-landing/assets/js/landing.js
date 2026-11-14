@@ -591,54 +591,31 @@
 		});
 	}
 
-	/* ---------------- customer logos (→ left) and quotes (→ right): endless strips ---------------- */
+	/* ---------------- customer logos (→ left) and quotes (→ right) ----------------
+	 * The motion itself is pure CSS (see landing.css), so it runs even if this script is delayed.
+	 * These are extras only: finger-hold on touch screens, pausing off screen, the pause button. */
 	var pf = document.getElementById('proof');
-	$$('.yl-mq').forEach(function (mq) {
-		if (RM) return;
-		var track = $('.yl-mq-t', mq), grp = $('.yl-mq-g', mq), lastW = 0;
-		var build = function (force) {
-			var cw = mq.clientWidth, gw = grp.getBoundingClientRect().width;
-			if (!gw || !cw) return;
-			if (!force && cw === lastW && track.children.length > 1) return;
-			lastW = cw;
-			$$('.yl-mq-g[data-clone]', track).forEach(function (n) { track.removeChild(n); });
-			// Enough copies to cover the strip twice over, so the loop never shows a gap.
-			for (var k = Math.max(1, Math.ceil(cw / gw)); k > 0; k--) {
-				var c = grp.cloneNode(true);
-				c.setAttribute('aria-hidden', 'true');
-				c.setAttribute('data-clone', '');
-				$$('img', c).forEach(function (im) { im.alt = ''; im.loading = 'eager'; });
-				track.appendChild(c);
-			}
-			track.style.setProperty('--mq-w', gw.toFixed(2) + 'px');
-			track.style.setProperty('--mq-d', (gw / (+mq.getAttribute('data-speed') || 24)).toFixed(2) + 's');
-			mq.classList.add('is-run', mq.getAttribute('data-dir') === 'right' ? 'to-r' : 'to-l');
-		};
-		var rt = 0;
-		window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { build(false); }, 200); }, { passive: true });
-		$$('img', grp).forEach(function (im) { if (!im.complete) im.addEventListener('load', function () { build(true); }, { once: true }); });
-		if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { build(true); });
-		build(true);
-		// Touch screens have no hover: holding a finger on a strip stops it so it can be read.
-		var rel = 0;
-		var up = function () { clearTimeout(rel); rel = setTimeout(function () { mq.classList.remove('is-hold'); }, 1200); };
-		mq.addEventListener('touchstart', function () { clearTimeout(rel); mq.classList.add('is-hold'); }, { passive: true });
-		mq.addEventListener('touchend', up, { passive: true });
-		mq.addEventListener('touchcancel', up, { passive: true });
-	});
-	if (pf && 'IntersectionObserver' in window) {
-		// Save battery: nothing in this section animates while it is off screen.
-		new IntersectionObserver(function (l) { pf.classList.toggle('is-off', !l[l.length - 1].isIntersecting); }).observe(pf);
-	}
-	var pfStop = pf && $('[data-pf-stop]', pf);
-	if (pfStop) {
-		if (RM) pfStop.parentNode.hidden = true;
-		pfStop.addEventListener('click', function () {
-			var stop = !pf.classList.contains('is-stop');
-			pf.classList.toggle('is-stop', stop);
-			pfStop.setAttribute('aria-pressed', stop ? 'true' : 'false');
-			$('[data-pf-l]', pfStop).textContent = stop ? 'ادامه‌ی حرکت' : 'توقف حرکت';
+	if (pf) {
+		$$('.yl-mq', pf).forEach(function (mq) {
+			var rel = 0;
+			var up = function () { clearTimeout(rel); rel = setTimeout(function () { mq.classList.remove('is-hold'); }, 1200); };
+			mq.addEventListener('touchstart', function () { clearTimeout(rel); mq.classList.add('is-hold'); }, { passive: true });
+			mq.addEventListener('touchend', up, { passive: true });
+			mq.addEventListener('touchcancel', up, { passive: true });
 		});
+		if ('IntersectionObserver' in window) {
+			new IntersectionObserver(function (l) { pf.classList.toggle('is-off', !l[l.length - 1].isIntersecting); }).observe(pf);
+		}
+		var pfStop = $('[data-pf-stop]', pf);
+		if (pfStop) {
+			if (RM) pfStop.parentNode.hidden = true;
+			pfStop.addEventListener('click', function () {
+				var stop = !pf.classList.contains('is-stop');
+				pf.classList.toggle('is-stop', stop);
+				pfStop.setAttribute('aria-pressed', stop ? 'true' : 'false');
+				$('[data-pf-l]', pfStop).textContent = stop ? 'ادامه‌ی حرکت' : 'توقف حرکت';
+			});
+		}
 	}
 
 	/* ---------------- clicks ---------------- */

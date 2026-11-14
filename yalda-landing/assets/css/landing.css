@@ -183,14 +183,17 @@ body.yl-body{margin:0;background:var(--night,#0C113A)}
 @keyframes yl-twk{0%,100%{opacity:1;transform:scale(1) rotate(0)}42%{opacity:.18;transform:scale(.55) rotate(-24deg)}58%{opacity:1;transform:scale(1.18) rotate(10deg)}74%{transform:scale(1) rotate(0)}}
 
 .yl-mq{position:relative;z-index:1;direction:ltr;overflow:hidden;padding:20px 0 24px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.yl-mq-qt{padding:34px 0 34px}
+.yl-mq-lg{--iw:202}
+.yl-mq-qt{--iw:384;padding:34px 0 34px}
 .yl-mq-t{display:flex;width:max-content}
-.yl-mq.is-run .yl-mq-t{animation:yl-mq-l var(--mq-d,40s) linear infinite;will-change:transform}
-.yl-mq.is-run.to-r .yl-mq-t{animation-name:yl-mq-r}
-.yl-mq:hover .yl-mq-t,.yl-mq:focus-within .yl-mq-t,.yl-mq.is-hold .yl-mq-t,.yl-pf.is-off .yl-mq-t,.yl-pf.is-stop .yl-mq-t{animation-play-state:paused}
-@keyframes yl-mq-l{from{transform:translateX(0)}to{transform:translateX(calc(-1 * var(--mq-w,0px)))}}
-@keyframes yl-mq-r{from{transform:translateX(calc(-1 * var(--mq-w,0px)))}to{transform:translateX(0)}}
-.yl .yl-mq-g{display:flex;flex:none;align-items:center;gap:24px;margin:0;padding:0 24px 0 0;list-style:none}
+/* Pure CSS motion: every copy of the row slides by exactly its own width, so the loop is seamless
+   and keeps running even if a cache/optimisation plugin delays or blocks the page's JavaScript.
+   --n = cards per row, --iw = card + gap width in px, --v = speed in px per second. */
+.yl .yl-mq-g{display:flex;flex:none;align-items:center;gap:24px;margin:0;padding:0 24px 0 0;list-style:none;animation:yl-mq-l calc(var(--n,6) * var(--iw,202) / var(--v,24) * 1s) linear infinite;will-change:transform}
+.yl .yl-mq-qt .yl-mq-g{animation-name:yl-mq-r}
+.yl-mq:hover .yl-mq-g,.yl-mq:focus-within .yl-mq-g,.yl-mq.is-hold .yl-mq-g,.yl-pf.is-off .yl-mq-g,.yl-pf.is-stop .yl-mq-g{animation-play-state:paused}
+@keyframes yl-mq-l{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+@keyframes yl-mq-r{from{transform:translateX(-100%)}to{transform:translateX(0)}}
 
 /* کارت‌ها: کج، تاب نرم، صاف شدن با هاور */
 .yl-mq-i{position:relative;flex:none;margin:0;--r:-2deg;transform:rotate(var(--r));transition:transform .45s var(--ease)}
@@ -418,7 +421,8 @@ html.yl-lock,html.yl-lock body{overflow:hidden}
   .yl-nm{flex:1 1 140px}
   .yl .yl-rr .yl-soft{flex:1 1 100%;min-height:48px}
   .yl-mq{padding:14px 0 18px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
-  .yl-mq-qt{padding:28px 0 26px}
+  .yl-mq-lg{--iw:152}
+  .yl-mq-qt{--iw:296;padding:28px 0 26px}
   .yl .yl-mq-g{gap:14px;padding-right:14px}
   .yl-mq-lg .yl-mq-c{width:138px;height:74px;padding:10px 14px;border-radius:14px}
   .yl-mq-lg .yl-mq-c img{max-height:46px}
@@ -503,6 +507,7 @@ html.yl-lock,html.yl-lock body{overflow:hidden}
   .yl .yl-fe{transition:opacity .45s,transform .6s!important}
   .yl.yl-js .yl-rv{opacity:1;transform:none}
   .yl-mq{-webkit-mask-image:none;mask-image:none}
+  .yl-mq-g[data-clone]{display:none}
   .yl-mq-lg .yl-mq-t{width:auto;flex-wrap:wrap;justify-content:center;direction:rtl}
   .yl-mq-lg .yl-mq-g{flex-wrap:wrap;justify-content:center;padding:0 16px;row-gap:14px}
   .yl-mq-qt{overflow-x:auto;direction:rtl;scroll-snap-type:x mandatory;scrollbar-width:none}

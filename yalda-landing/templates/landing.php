@@ -343,6 +343,56 @@ foreach ( (array) $g['order'] as $sec ) :
 			$lspeed = isset( $speeds[ $pf['logo_speed'] ] ) ? $speeds[ $pf['logo_speed'] ] : 24;
 			$qspeed = isset( $speeds[ $pf['quote_speed'] ] ) ? $speeds[ $pf['quote_speed'] ] : 14;
 			$star   = YL_Images::get( 'b:star' );
+
+			/*
+			 * The strips move with CSS alone (no JavaScript needed), so they keep moving even when
+			 * a cache/optimisation plugin delays or breaks scripts. The server prints enough copies
+			 * of each row to cover screens up to 4000px wide; card widths are fixed in the CSS
+			 * (logo 178px + 24px gap, quote 360px + 24px gap) so the copy count is exact.
+			 */
+			$copies = static function ( $n, $card ) {
+				return max( 2, (int) ceil( 4000 / max( 1, $n * $card ) ) + 1 );
+			};
+			$logo_li = static function ( $clone ) use ( $logos ) {
+				$h = '';
+				foreach ( $logos as $lg ) {
+					$li  = ! empty( $lg['img'] ) ? YL_Images::get( $lg['img'], array( 300 ) ) : null;
+					$alt = $clone ? '' : $lg['name'];
+					$h  .= '<li class="yl-mq-i"><div class="yl-mq-c' . ( $li ? '' : ' is-txt' ) . '">'
+						. ( $li ? YL_Images::tag( $li, array( 'alt' => $alt, 'sizes' => '150px', 'lazy' => false ) ) : '<span>' . esc_html( $lg['name'] ) . '</span>' )
+						. '</div></li>';
+				}
+				return $h;
+			};
+			$quote_li = static function () use ( $quotes ) {
+				$h = '';
+				foreach ( $quotes as $q ) {
+					$by    = trim( (string) $q['by'] );
+					$parts = preg_split( '/\s*[،,]\s*/u', $by, 2 );
+					$name  = isset( $parts[0] ) ? $parts[0] : '';
+					$role  = isset( $parts[1] ) ? $parts[1] : '';
+					$init  = '' !== $name ? mb_substr( preg_replace( '/^\[/u', '', $name ), 0, 1 ) : '';
+					$h    .= '<li class="yl-mq-i"><figure class="yl-mq-c yl-qt">'
+						. '<svg class="yl-qt-mk" viewBox="0 0 48 36" aria-hidden="true"><path fill="currentColor" d="M20 0v6c-6 1.6-9 5.2-9.4 10.6H20V36H0V18C0 7.4 6.8 1.4 20 0Zm28 0v6c-6 1.6-9 5.2-9.4 10.6H48V36H28V18C28 7.4 34.8 1.4 48 0Z"/></svg>'
+						. '<blockquote><p>' . esc_html( $q['text'] ) . '</p></blockquote>';
+					if ( '' !== $by ) {
+						$h .= '<figcaption>'
+							. ( '' !== $init ? '<span class="yl-qt-av" aria-hidden="true">' . esc_html( $init ) . '</span>' : '' )
+							. '<span class="yl-qt-by"><b>' . esc_html( $name ) . '</b>' . ( '' !== $role ? '<small>' . esc_html( $role ) . '</small>' : '' ) . '</span>'
+							. '</figcaption>';
+					}
+					$h .= '</figure></li>';
+				}
+				return $h;
+			};
+			$strip = static function ( $cls, $label, $n, $speed, $copy_n, $first, $clone ) {
+				$h = '<div class="yl-mq ' . $cls . ' yl-rv" role="region" aria-label="' . esc_attr( $label ) . '" style="--n:' . (int) $n . ';--v:' . (int) $speed . '"><div class="yl-mq-t">';
+				$h .= '<ul class="yl-mq-g">' . $first . '</ul>';
+				for ( $i = 1; $i < $copy_n; $i++ ) {
+					$h .= '<ul class="yl-mq-g" aria-hidden="true" data-clone>' . $clone . '</ul>';
+				}
+				return $h . '</div></div>';
+			};
 			?>
 <section id="proof" class="yl-sec yl-pf" aria-labelledby="pf-t">
 	<?php $F::deco( 'proof' ); ?>
@@ -356,42 +406,15 @@ foreach ( (array) $g['order'] as $sec ) :
 	<div class="yl-wrap">
 		<div class="yl-sh yl-rv"><?php $F::heading( 'proof', 'pf-t' ); ?><?php if ( $pf['sub'] ) : ?><p><?php echo esc_html( $pf['sub'] ); ?></p><?php endif; ?></div>
 	</div>
-	<?php if ( $logos ) : ?>
-	<div class="yl-mq yl-mq-lg yl-rv" role="region" aria-label="لوگوی مشتریان سازمانی" data-dir="left" data-speed="<?php echo (int) $lspeed; ?>">
-		<div class="yl-mq-t">
-			<ul class="yl-mq-g">
-				<?php foreach ( $logos as $lg ) : ?>
-					<?php $li = ! empty( $lg['img'] ) ? YL_Images::get( $lg['img'], array( 300 ) ) : null; ?>
-				<li class="yl-mq-i"><div class="yl-mq-c<?php echo $li ? '' : ' is-txt'; ?>"><?php echo $li ? YL_Images::tag( $li, array( 'alt' => $lg['name'], 'sizes' => '150px' ) ) : '<span>' . esc_html( $lg['name'] ) . '</span>'; // phpcs:ignore ?></div></li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-	</div>
-	<?php endif; ?>
-	<?php if ( $quotes ) : ?>
-	<div class="yl-mq yl-mq-qt yl-rv" role="region" aria-label="نظر مشتریان سازمانی" data-dir="right" data-speed="<?php echo (int) $qspeed; ?>">
-		<div class="yl-mq-t">
-			<ul class="yl-mq-g">
-				<?php
-				foreach ( $quotes as $q ) :
-					$by    = trim( (string) $q['by'] );
-					$parts = preg_split( '/\s*[،,]\s*/u', $by, 2 );
-					$name  = isset( $parts[0] ) ? $parts[0] : '';
-					$role  = isset( $parts[1] ) ? $parts[1] : '';
-					$init  = '' !== $name ? mb_substr( preg_replace( '/^\[/u', '', $name ), 0, 1 ) : '';
-					?>
-				<li class="yl-mq-i"><figure class="yl-mq-c yl-qt">
-					<svg class="yl-qt-mk" viewBox="0 0 48 36" aria-hidden="true"><path fill="currentColor" d="M20 0v6c-6 1.6-9 5.2-9.4 10.6H20V36H0V18C0 7.4 6.8 1.4 20 0Zm28 0v6c-6 1.6-9 5.2-9.4 10.6H48V36H28V18C28 7.4 34.8 1.4 48 0Z"/></svg>
-					<blockquote><p><?php echo esc_html( $q['text'] ); ?></p></blockquote>
-					<?php if ( '' !== $by ) : ?>
-					<figcaption><?php if ( '' !== $init ) : ?><span class="yl-qt-av" aria-hidden="true"><?php echo esc_html( $init ); ?></span><?php endif; ?><span class="yl-qt-by"><b><?php echo esc_html( $name ); ?></b><?php if ( '' !== $role ) : ?><small><?php echo esc_html( $role ); ?></small><?php endif; ?></span></figcaption>
-					<?php endif; ?>
-				</figure></li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-	</div>
-	<?php endif; ?>
+	<?php
+	if ( $logos ) {
+		echo $strip( 'yl-mq-lg', 'لوگوی مشتریان سازمانی', count( $logos ), $lspeed, $copies( count( $logos ), 202 ), $logo_li( false ), $logo_li( true ) ); // phpcs:ignore WordPress.Security.EscapeOutput
+	}
+	if ( $quotes ) {
+		$qh = $quote_li();
+		echo $strip( 'yl-mq-qt', 'نظر مشتریان سازمانی', count( $quotes ), $qspeed, $copies( count( $quotes ), 384 ), $qh, $qh ); // phpcs:ignore WordPress.Security.EscapeOutput
+	}
+	?>
 	<div class="yl-wrap yl-pf-ctl">
 		<button class="yl-pf-p" type="button" data-pf-stop aria-pressed="false"><svg class="i-pa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="i-pl" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg><span data-pf-l>توقف حرکت</span></button>
 	</div>
@@ -530,7 +553,7 @@ if ( $e['on'] ) :
 
 <div id="yl-layer"></div>
 </div>
-<script type="application/json" id="yl-data"><?php echo wp_json_encode( $config, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?></script>
+<script type="application/json" id="yl-data"<?php echo YL_Frontend::NO_OPT; // phpcs:ignore ?>><?php echo wp_json_encode( $config, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?></script>
 <?php
 if ( $g['faq_schema'] && YL_Settings::on( 'faq' ) && ! empty( $S['faq']['items'] ) ) {
 	$ld = array( '@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => array() );
