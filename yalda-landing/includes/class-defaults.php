@@ -280,8 +280,8 @@ class YL_Defaults {
 					array( 'text' => '[نظر واقعی مشتری درباره‌ی کیفیت و بسته‌بندی پک]', 'by' => '[نام و سمت]، [نام شرکت]' ),
 					array( 'text' => '[نظر واقعی مشتری درباره‌ی تحویل به‌موقع پیش از یلدا]', 'by' => '[نام و سمت]، [نام شرکت]' ),
 				),
-				'logo_speed' => 'normal',
-				'interval'   => 5,
+				'logo_speed'  => 'normal',
+				'quote_speed' => 'slow',
 			),
 			'fal'     => array(
 				'on'        => 1,

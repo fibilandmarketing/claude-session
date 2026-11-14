@@ -591,108 +591,54 @@
 		});
 	}
 
-	/* ---------------- customer logos: endless strip ---------------- */
-	var mq = $('.yl-mq');
-	if (mq && !RM) {
-		var mqT = $('.yl-mq-t', mq), mqG = $('.yl-mq-g', mq), mqW = 0;
-		var mqBuild = function () {
-			var cw = mq.clientWidth, gw = mqG.getBoundingClientRect().width;
+	/* ---------------- customer logos (→ left) and quotes (→ right): endless strips ---------------- */
+	var pf = document.getElementById('proof');
+	$$('.yl-mq').forEach(function (mq) {
+		if (RM) return;
+		var track = $('.yl-mq-t', mq), grp = $('.yl-mq-g', mq), lastW = 0;
+		var build = function (force) {
+			var cw = mq.clientWidth, gw = grp.getBoundingClientRect().width;
 			if (!gw || !cw) return;
-			if (cw === mqW && mqT.children.length > 1) return;
-			mqW = cw;
-			$$('.yl-mq-g[data-clone]', mqT).forEach(function (n) { n.parentNode.removeChild(n); });
+			if (!force && cw === lastW && track.children.length > 1) return;
+			lastW = cw;
+			$$('.yl-mq-g[data-clone]', track).forEach(function (n) { track.removeChild(n); });
 			// Enough copies to cover the strip twice over, so the loop never shows a gap.
 			for (var k = Math.max(1, Math.ceil(cw / gw)); k > 0; k--) {
-				var c = mqG.cloneNode(true);
+				var c = grp.cloneNode(true);
 				c.setAttribute('aria-hidden', 'true');
 				c.setAttribute('data-clone', '');
 				$$('img', c).forEach(function (im) { im.alt = ''; im.loading = 'eager'; });
-				mqT.appendChild(c);
+				track.appendChild(c);
 			}
-			mqT.style.setProperty('--mq-w', gw.toFixed(2) + 'px');
-			mqT.style.setProperty('--mq-d', (gw / (+mq.getAttribute('data-speed') || 42)).toFixed(2) + 's');
-			mq.classList.add('is-run');
+			track.style.setProperty('--mq-w', gw.toFixed(2) + 'px');
+			track.style.setProperty('--mq-d', (gw / (+mq.getAttribute('data-speed') || 24)).toFixed(2) + 's');
+			mq.classList.add('is-run', mq.getAttribute('data-dir') === 'right' ? 'to-r' : 'to-l');
 		};
-		var mqTimer = 0;
-		window.addEventListener('resize', function () { clearTimeout(mqTimer); mqTimer = setTimeout(mqBuild, 200); }, { passive: true });
-		$$('img', mqG).forEach(function (im) { if (!im.complete) im.addEventListener('load', function () { mqW = 0; mqBuild(); }, { once: true }); });
-		mqBuild();
-		if ('IntersectionObserver' in window) {
-			new IntersectionObserver(function (l) { mq.classList.toggle('is-off', !l[l.length - 1].isIntersecting); }).observe(mq);
-		}
+		var rt = 0;
+		window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { build(false); }, 200); }, { passive: true });
+		$$('img', grp).forEach(function (im) { if (!im.complete) im.addEventListener('load', function () { build(true); }, { once: true }); });
+		if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { build(true); });
+		build(true);
+		// Touch screens have no hover: holding a finger on a strip stops it so it can be read.
+		var rel = 0;
+		var up = function () { clearTimeout(rel); rel = setTimeout(function () { mq.classList.remove('is-hold'); }, 1200); };
+		mq.addEventListener('touchstart', function () { clearTimeout(rel); mq.classList.add('is-hold'); }, { passive: true });
+		mq.addEventListener('touchend', up, { passive: true });
+		mq.addEventListener('touchcancel', up, { passive: true });
+	});
+	if (pf && 'IntersectionObserver' in window) {
+		// Save battery: nothing in this section animates while it is off screen.
+		new IntersectionObserver(function (l) { pf.classList.toggle('is-off', !l[l.length - 1].isIntersecting); }).observe(pf);
 	}
-
-	/* ---------------- customer quotes: one at a time, auto every N seconds ---------------- */
-	var qz = $('.yl-qz');
-	if (qz) {
-		var qS = $$('.yl-qz-s', qz), qD = $$('[data-qz-go]', qz), qN = qS.length, qCur = 0;
-		var qPause = $('[data-qz-pause]', qz);
-		var qHold = { hover: false, focus: false, user: RM, view: false, tab: !document.hidden };
-		qz.style.setProperty('--qz-ms', (C.proofMs || 5000) + 'ms');
-		var qPlay = function () {
-			var run = qN > 1 && !qHold.hover && !qHold.focus && !qHold.user && qHold.view && qHold.tab;
-			qz.classList.toggle('is-play', run);
-		};
-		var qGo = function (n) {
-			if (qN < 2) return;
-			qCur = (n + qN) % qN;
-			qS.forEach(function (s, i) {
-				var on = i === qCur;
-				s.classList.toggle('is-on', on);
-				if (on) s.removeAttribute('aria-hidden'); else s.setAttribute('aria-hidden', 'true');
-			});
-			qD.forEach(function (d, i) {
-				var on = i === qCur;
-				// Re-create the bar so its 5-second fill starts from zero.
-				var bar = d.firstElementChild, fresh = document.createElement('i');
-				if (bar) d.replaceChild(fresh, bar); else d.appendChild(fresh);
-				d.classList.toggle('is-on', on);
-				if (on) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
-				if (on) fresh.addEventListener('animationend', function () { qGo(qCur + 1); });
-			});
-		};
-		if (qN > 1) {
-			qGo(0);
-			qz.addEventListener('click', function (e) {
-				var b = e.target.closest && e.target.closest('button');
-				if (!b || !qz.contains(b)) return;
-				if (b.hasAttribute('data-qz')) return qGo(qCur + (+b.getAttribute('data-qz')));
-				if (b.hasAttribute('data-qz-go')) return qGo(+b.getAttribute('data-qz-go'));
-				if (b.hasAttribute('data-qz-pause')) {
-					qHold.user = !qHold.user;
-					b.setAttribute('aria-pressed', qHold.user ? 'true' : 'false');
-					b.setAttribute('aria-label', qHold.user ? 'ادامه‌ی جابه‌جایی خودکار' : 'توقف جابه‌جایی خودکار');
-					qPlay();
-				}
-			});
-			if (qPause && qHold.user) { qPause.setAttribute('aria-pressed', 'true'); qPause.setAttribute('aria-label', 'ادامه‌ی جابه‌جایی خودکار'); }
-			var qCard = $('.yl-qz-c', qz);
-			qCard.addEventListener('mouseenter', function () { qHold.hover = true; qPlay(); });
-			qCard.addEventListener('mouseleave', function () { qHold.hover = false; qPlay(); });
-			qz.addEventListener('focusin', function (e) {
-				var kb = true;
-				try { kb = e.target.matches(':focus-visible'); } catch (x) {}
-				qHold.focus = kb && !e.target.hasAttribute('data-qz-pause');
-				qPlay();
-			});
-			qz.addEventListener('focusout', function () { qHold.focus = false; qPlay(); });
-			document.addEventListener('visibilitychange', function () { qHold.tab = !document.hidden; qPlay(); });
-			// Swipe on touch screens (RTL: swipe right = next).
-			var qX = null, qY = 0;
-			qCard.addEventListener('touchstart', function (e) { qX = e.touches[0].clientX; qY = e.touches[0].clientY; }, { passive: true });
-			qCard.addEventListener('touchend', function (e) {
-				if (qX === null) return;
-				var dx = e.changedTouches[0].clientX - qX, dy = e.changedTouches[0].clientY - qY;
-				qX = null;
-				if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) qGo(qCur + (dx > 0 ? 1 : -1));
-			}, { passive: true });
-			if ('IntersectionObserver' in window) {
-				new IntersectionObserver(function (l) { qHold.view = l[l.length - 1].isIntersecting; qPlay(); }, { threshold: 0.35 }).observe(qz);
-			} else {
-				qHold.view = true;
-			}
-			qPlay();
-		}
+	var pfStop = pf && $('[data-pf-stop]', pf);
+	if (pfStop) {
+		if (RM) pfStop.parentNode.hidden = true;
+		pfStop.addEventListener('click', function () {
+			var stop = !pf.classList.contains('is-stop');
+			pf.classList.toggle('is-stop', stop);
+			pfStop.setAttribute('aria-pressed', stop ? 'true' : 'false');
+			$('[data-pf-l]', pfStop).textContent = stop ? 'ادامه‌ی حرکت' : 'توقف حرکت';
+		});
 	}
 
 	/* ---------------- clicks ---------------- */
