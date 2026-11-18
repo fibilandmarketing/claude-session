@@ -259,6 +259,15 @@ class TDL_Frontend {
 		echo '<link rel="preload" href="' . esc_url( TDL_URL . 'assets/fonts/alibaba-var.woff2' ) . '" as="font" type="font/woff2" crossorigin>' . "\n";
 		echo '<meta name="theme-color" content="#EAF2F8">' . "\n";
 
+		// Hero animation is the first thing people see: fetch the original file at top priority.
+		$hero = tdl_opt( 'hero' );
+		if ( self::is_landing() && ! empty( $hero['enabled'] ) ) {
+			$anim = tdl_img_original( $hero['image'] )[0];
+			if ( $anim ) {
+				echo '<link rel="preload" as="image" href="' . esc_url( $anim ) . '" fetchpriority="high">' . "\n";
+			}
+		}
+
 		$seo_plugin = defined( 'WPSEO_VERSION' ) || class_exists( 'RankMath' ) || defined( 'AIOSEO_VERSION' ) || defined( 'SEOPRESS_VERSION' );
 		$desc       = trim( (string) tdl_opt( 'general', 'meta_description', '' ) );
 		if ( self::is_landing() && ! $seo_plugin && '' !== $desc ) {

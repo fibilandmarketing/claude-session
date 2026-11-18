@@ -161,7 +161,11 @@ html.tdl-lock,html.tdl-lock body{overflow:hidden}
 .vt-hero-vis .vt-ped-wrap{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .8s var(--vt-ease)}
 .vt-ped-wrap{position:relative;display:flex;flex-direction:column;align-items:center}
 .vt-ped-light{position:absolute;left:50%;top:-6%;width:76%;height:88%;transform:translateX(-50%);pointer-events:none;background:linear-gradient(180deg,rgba(214,230,242,0),rgba(214,230,242,.55) 60%,rgba(214,230,242,0));clip-path:polygon(36% 0,64% 0,100% 100%,0 100%);filter:blur(26px);animation:vtBreath 6s ease-in-out infinite}
-.vt-hero-gif{position:relative;z-index:3;width:96%;height:auto;display:block;margin-top:clamp(40px,6cqi,90px);filter:drop-shadow(0 18px 14px rgba(20,32,51,.18));animation:vtHeroIn 1.2s var(--vt-ease) both .15s}
+.vt-hero-media{position:relative;z-index:3;width:96%;margin-top:clamp(40px,6cqi,90px);filter:drop-shadow(0 18px 14px rgba(20,32,51,.18));animation:vtHeroIn 1.2s var(--vt-ease) both .15s}
+.vt-hero-media img{display:block;width:100%;height:auto;max-width:none}
+.vt-hero-gif{position:relative}
+.vt-hero-poster{position:absolute;inset:0;transition:opacity .35s ease}
+.vt-hero-media.is-ready .vt-hero-poster{opacity:0;visibility:hidden}
 .vt-ped{position:relative;width:86%;margin-top:-7%}
 .vt-ped-top{position:relative;z-index:2;width:100%;aspect-ratio:6.4/1;border-radius:50%;background:radial-gradient(ellipse at 50% 40%,#FFFFFF 0%,#F2F8FC 38%,#D9E9F5 70%,#BCD6EA 100%);box-shadow:inset 0 -3px 6px rgba(47,95,138,.18),inset 0 2px 2px #FFFFFF,0 0 0 1px rgba(255,255,255,.9);overflow:hidden}
 .vt-ped-top::after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(100deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.9) 48%,rgba(255,255,255,0) 62%);background-size:260% 100%;animation:vtSweep 6.5s cubic-bezier(.5,0,.3,1) infinite}
@@ -497,7 +501,7 @@ p.vt-only-sm{display:block!important}
 .vt-burger{display:flex!important}
 .vt-hero{padding:14px 18px 8px}
 .vt-hero-vis{order:-1}
-.vt-hero-gif{margin-top:24px;width:100%}
+.vt-hero-media{margin-top:24px;width:100%}
 .vt-hero-text{align-items:center;text-align:center;gap:14px;flex-basis:100%}
 .vt-hero-text>div{align-self:stretch}
 .vt-h1{font-size:32px;line-height:1.4}

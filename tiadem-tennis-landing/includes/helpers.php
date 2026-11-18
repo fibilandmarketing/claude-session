@@ -208,6 +208,36 @@ function tdl_img_url( $value, $size = 'full' ) {
 }
 
 /**
+ * Original, untouched file for an image value (needed for animated GIF/WebP:
+ * WordPress' resized sub-sizes are static single frames).
+ *
+ * @param mixed $value Stored value.
+ * @return array url, width, height
+ */
+function tdl_img_original( $value ) {
+	if ( is_numeric( $value ) && (int) $value > 0 ) {
+		$id   = (int) $value;
+		$url  = function_exists( 'wp_get_original_image_url' ) ? wp_get_original_image_url( $id ) : '';
+		$url  = $url ? $url : wp_get_attachment_url( $id );
+		$meta = wp_get_attachment_metadata( $id );
+		$w    = isset( $meta['width'] ) ? (int) $meta['width'] : 0;
+		$h    = isset( $meta['height'] ) ? (int) $meta['height'] : 0;
+		return array( (string) $url, $w, $h );
+	}
+	$value = (string) $value;
+	if ( 0 === strpos( $value, 'asset:' ) ) {
+		$name  = substr( $value, 6 );
+		$sizes = tdl_asset_sizes();
+		return array(
+			TDL_URL . 'assets/img/' . rawurlencode( $name ),
+			isset( $sizes[ $name ] ) ? $sizes[ $name ][0] : 0,
+			isset( $sizes[ $name ] ) ? $sizes[ $name ][1] : 0,
+		);
+	}
+	return array( preg_match( '#^https?://#', $value ) ? $value : '', 0, 0 );
+}
+
+/**
  * Build an <img> tag for an image value.
  *
  * @param mixed $value Stored value.

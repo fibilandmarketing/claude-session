@@ -2,14 +2,18 @@
 /**
  * Hero with glass pedestal.
  *
+ * The animated image (GIF / animated WebP) is always served as the original,
+ * untouched file at full quality and starts playing immediately. A light
+ * first-frame poster sits underneath only until the animation has loaded.
+ *
  * @package TiademTennisLanding
  * @var array $s
  */
 
 defined( 'ABSPATH' ) || exit;
 
-$poster = $s['poster'] ? $s['poster'] : $s['image'];
-$anim   = ( $s['image'] && $s['image'] !== $poster ) ? tdl_img_url( $s['image'] ) : '';
+list( $anim_url, $anim_w, $anim_h ) = tdl_img_original( $s['image'] );
+$poster_url = ( $s['poster'] && $s['poster'] !== $s['image'] ) ? tdl_img_original( $s['poster'] )[0] : '';
 ?>
 <section id="top" class="vt-hero vt-sec">
 	<div class="vt-hero-in">
@@ -28,20 +32,14 @@ $anim   = ( $s['image'] && $s['image'] !== $poster ) ? tdl_img_url( $s['image'] 
 				<span class="vt-spark" style="top:22%;left:6%;--z:22px;animation-delay:1.6s"></span>
 				<span class="vt-spark" style="top:12%;left:46%;--z:18px;animation-delay:2.7s"></span>
 				<span class="vt-spark" style="top:40%;right:4%;--z:26px;animation-delay:3.3s"></span>
-				<?php
-				echo tdl_img( // phpcs:ignore
-					$poster,
-					array(
-						'alt'           => $s['image_alt'],
-						'class'         => 'vt-hero-gif',
-						'loading'       => 'eager',
-						'fetchpriority' => 'high',
-						'size'          => 'large',
-						'sizes'         => '(max-width: 700px) 92vw, 600px',
-						'extra'         => $anim ? 'data-tdl-anim="' . esc_url( $anim ) . '"' : '',
-					)
-				);
-				?>
+				<?php if ( $anim_url ) : ?>
+				<div class="vt-hero-media" data-tdl-hero>
+					<?php if ( $poster_url ) : ?>
+						<img class="vt-hero-poster" src="<?php echo esc_url( $poster_url ); ?>" alt="" aria-hidden="true" loading="eager" decoding="async"<?php echo $anim_w ? ' width="' . (int) $anim_w . '" height="' . (int) $anim_h . '"' : ''; ?>>
+					<?php endif; ?>
+					<img class="vt-hero-gif" src="<?php echo esc_url( $anim_url ); ?>" alt="<?php echo esc_attr( $s['image_alt'] ); ?>" loading="eager" fetchpriority="high"<?php echo $anim_w ? ' width="' . (int) $anim_w . '" height="' . (int) $anim_h . '"' : ''; ?> onload="this.parentNode.classList.add('is-ready')">
+				</div>
+				<?php endif; ?>
 				<?php if ( $s['pedestal'] ) : ?>
 				<div class="vt-ped">
 					<div class="vt-ped-glow"></div>

@@ -3,7 +3,7 @@
  * Plugin Name:       Tiadem Tennis Landing — لندینگ تنیسی تیادم
  * Plugin URI:        https://tiadem.ir
  * Description:       لندینگ اختصاصی محصولات تنیسی تیادم؛ کاملاً سازگار با ووکامرس، با پنل مدیریت محتوای هر سکشن، افزودن به سبد AJAX، انتخاب سریع محصولات متغیر و انیمیشن‌های سبک.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Requires Plugins:  woocommerce
@@ -19,7 +19,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'TDL_VERSION', '1.0.0' );
+define( 'TDL_VERSION', '1.0.1' );
 define( 'TDL_FILE', __FILE__ );
 define( 'TDL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TDL_URL', plugin_dir_url( __FILE__ ) );

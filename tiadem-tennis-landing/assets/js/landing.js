@@ -562,29 +562,11 @@
 		});
 	});
 
-	/* ---------------- hero: animated image swap + tilt ---------------- */
-	var heroImg = qs('[data-tdl-anim]', root);
-	function swapHero() {
-		if (!heroImg) { return; }
-		var conn = navigator.connection || {};
-		if (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || '') || reduce) { return; }
-		var src = heroImg.getAttribute('data-tdl-anim');
-		var pre = new Image();
-		pre.onload = function () { heroImg.removeAttribute('srcset'); heroImg.src = src; };
-		pre.src = src;
-	}
-	// Swap after the first interaction (LCP is final by then) so the heavy animation never delays LCP; idle fallback after 8s.
-	var swapped = false;
-	function swapOnce(e) {
-		if (swapped || (e && e.type === 'scroll' && (window.pageYOffset || 0) < 120)) { return; }
-		swapped = true;
-		['scroll', 'pointerdown', 'mousemove', 'touchstart', 'keydown', 'wheel'].forEach(function (ev) { window.removeEventListener(ev, swapOnce, true); });
-		if (d.readyState === 'complete') { swapHero(); } else { on(window, 'load', swapHero); }
-	}
-	if (heroImg) {
-		['scroll', 'pointerdown', 'mousemove', 'touchstart', 'keydown', 'wheel'].forEach(function (ev) { window.addEventListener(ev, swapOnce, { capture: true, passive: true }); });
-		on(window, 'load', function () { setTimeout(function () { swapOnce(); }, 8000); });
-	}
+	/* ---------------- hero: full-quality animation (plays immediately) + tilt ---------------- */
+	var heroMedia = qs('[data-tdl-hero]', root);
+	var heroGif = heroMedia ? qs('.vt-hero-gif', heroMedia) : null;
+	if (heroGif && heroGif.complete && heroGif.naturalWidth) { heroMedia.classList.add('is-ready'); }
+	else if (heroGif) { on(heroGif, 'load', function () { heroMedia.classList.add('is-ready'); }); }
 
 	var tilt = qs('[data-tdl-tilt]', root);
 	if (tilt && !reduce && window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
