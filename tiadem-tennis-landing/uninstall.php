@@ -10,6 +10,7 @@ defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 delete_option( 'tdl_settings' );
 delete_option( 'tdl_cache_ver' );
 delete_option( 'tdl_page_id' );
+delete_option( 'tdl_settings_backup' );
 delete_transient( 'tdl_activated' );
 
 global $wpdb;

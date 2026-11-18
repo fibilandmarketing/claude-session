@@ -80,6 +80,10 @@ textarea.tdl-in{line-height:1.9}
 .tdl-ok{color:#17663a;font-weight:700}
 .tdl-bad{color:#8a2424;font-weight:700}
 .tdl-tools{margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+.tdl-danger-zone{margin-top:18px;padding:14px 16px;border:1px dashed #e0b4b4;border-radius:14px;background:#fffafa}
+.tdl-danger-zone h3{margin-top:0}
+.tdl-admin .tdl-btn-danger{color:#8a2424;border-color:#d9a3a3}
+.tdl-admin .tdl-btn-danger:hover{color:#fff;background:#a33b3b;border-color:#a33b3b}
 .tdl-savebar{position:sticky;bottom:0;z-index:5;display:flex;justify-content:flex-end;align-items:center;gap:14px;margin-top:16px;padding:12px 16px;border-radius:16px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border:1px solid var(--line)}
 .tdl-dirty{color:#8a5a00;font-weight:700}
 .tdl-ph-notice code{direction:rtl}

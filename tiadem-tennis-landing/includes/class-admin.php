@@ -15,6 +15,8 @@ class TDL_Admin {
 	const CAP  = 'manage_woocommerce';
 	const SLUG = 'tdl-landing';
 
+	const BACKUP = 'tdl_settings_backup';
+
 	/**
 	 * Cached product_cat options.
 	 *
@@ -153,6 +155,9 @@ class TDL_Admin {
 			'imported' => 'تنظیمات وارد شد.',
 			'badjson'  => 'فایل/متن تنظیمات معتبر نیست.',
 			'page'     => 'صفحه لندینگ ساخته شد.',
+			'resetall' => 'همه تنظیمات به پیش‌فرض اولیه افزونه برگشت (اتصال دسته‌های ووکامرس حفظ شد). نسخه پشتیبان قبلی ذخیره شده و از تب «پیشرفته و سرعت» قابل بازگردانی است.',
+			'undone'   => 'تنظیمات قبل از ریست بازگردانی شد.',
+			'nobackup' => 'نسخه پشتیبانی برای بازگردانی وجود ندارد.',
 		);
 		?>
 		<div class="wrap tdl-admin" dir="rtl">
@@ -176,7 +181,11 @@ class TDL_Admin {
 			</div>
 
 			<?php if ( $notice && isset( $messages[ $notice ] ) ) : ?>
-				<div class="notice <?php echo in_array( $notice, array( 'badjson', 'nomap' ), true ) ? 'notice-warning' : 'notice-success'; ?> is-dismissible"><p><?php echo esc_html( $messages[ $notice ] ); ?></p></div>
+				<div class="notice <?php echo in_array( $notice, array( 'badjson', 'nomap', 'nobackup' ), true ) ? 'notice-warning' : 'notice-success'; ?> is-dismissible"><p><?php echo esc_html( $messages[ $notice ] ); ?>
+					<?php if ( 'resetall' === $notice && get_option( self::BACKUP ) ) : ?>
+						<a class="button button-small tdl-undo" href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=tdl_tool&do=undoreset' ), 'tdl_tool' ) ); ?>">بازگشت از ریست</a>
+					<?php endif; ?>
+				</p></div>
 			<?php endif; ?>
 			<?php if ( $placeholders ) : ?>
 				<div class="notice notice-info tdl-ph-notice"><p>چند متن هنوز عبارت‌های جایگزین طرح مثل <code>[شرایط ارسال…]</code> دارند. تب‌های علامت‌دار <span class="tdl-dot"></span> را بررسی و تکمیل کنید.</p></div>
@@ -277,7 +286,19 @@ class TDL_Admin {
 		echo $tool( 'cache', 'پاک کردن کش محصولات', 'dashicons-update' ); // phpcs:ignore
 		echo $tool( 'export', 'دریافت خروجی تنظیمات (JSON)', 'dashicons-download' ); // phpcs:ignore
 		echo $tool( 'page', 'ساخت/بازیابی صفحه لندینگ', 'dashicons-admin-page' ); // phpcs:ignore
-		echo '</p><h3>ورود تنظیمات</h3><p class="description">متن فایل JSON خروجی را اینجا قرار دهید و دکمه را بزنید.</p>';
+		echo '</p>';
+
+		$backup = get_option( self::BACKUP, array() );
+		echo '<div class="tdl-danger-zone"><h3>بازگشت به تنظیمات پیش‌فرض</h3>';
+		echo '<p class="description">همه متن‌ها، تصاویر، آیتم‌ها، ترتیب سکشن‌ها و تنظیمات پیشرفته به حالت اولیه طرح برمی‌گردند. <strong>اتصال دسته‌های ووکامرس حفظ می‌شود.</strong> پیش از ریست، یک نسخه پشتیبان خودکار ذخیره می‌شود.</p>';
+		echo '<p><a class="button tdl-btn-danger" href="' . esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=tdl_tool&do=resetall' ), 'tdl_tool' ) ) . '" data-confirm="همه تنظیمات لندینگ به پیش‌فرض اولیه افزونه برگردد؟ (اتصال دسته‌های ووکامرس حفظ می‌شود و نسخه پشتیبان ذخیره می‌شود)"><span class="dashicons dashicons-image-rotate"></span> بازگشت کامل به تنظیمات پیش‌فرض</a> ';
+		if ( ! empty( $backup['settings'] ) ) {
+			$when = ! empty( $backup['time'] ) ? TDL_Jalali::format( (int) $backup['time'] ) : '';
+			echo '<a class="button" href="' . esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=tdl_tool&do=undoreset' ), 'tdl_tool' ) ) . '" data-confirm="تنظیمات به حالت قبل از ریست (' . esc_attr( $when ) . ') بازگردانی شود؟"><span class="dashicons dashicons-backup"></span> بازگشت از ریست (' . esc_html( $when ) . ')</a>';
+		}
+		echo '</p></div>';
+
+		echo '<h3>ورود تنظیمات</h3><p class="description">متن فایل JSON خروجی را اینجا قرار دهید و دکمه را بزنید.</p>';
 		echo '<textarea class="large-text code" rows="4" dir="ltr" data-tdl-import></textarea>';
 		echo '<p><button type="button" class="button" data-tdl-import-btn data-url="' . esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=tdl_tool&do=import' ), 'tdl_tool' ) ) . '">ورود تنظیمات</button></p></div>';
 	}
@@ -554,6 +575,40 @@ class TDL_Admin {
 				}
 				$tab = $section;
 				$msg = 'reset';
+				break;
+
+			case 'resetall':
+				$stored = get_option( TDL_OPTION, array() );
+				update_option(
+					self::BACKUP,
+					array(
+						'time'     => time(),
+						'settings' => is_array( $stored ) ? $stored : array(),
+					),
+					false
+				);
+				$keep  = array( 'scope_cats', 'eco_cat', 'master_cat', 'clasp_mode', 'clasp_book_cat', 'clasp_cuban_cat', 'clasp_attr' );
+				$woo   = TDL_Settings::get()['woo'];
+				$fresh = array(
+					'woo'      => array_intersect_key( $woo, array_flip( $keep ) ),
+					'festival' => array( 'end_ts' => time() + 7 * DAY_IN_SECONDS ),
+				);
+				TDL_Settings::save( $fresh );
+				// Re-link default chips / category cards to the (kept) WooCommerce categories.
+				TDL_Installer::auto_map();
+				$tab = 'layout';
+				$msg = 'resetall';
+				break;
+
+			case 'undoreset':
+				$backup = get_option( self::BACKUP, array() );
+				if ( empty( $backup['settings'] ) || ! is_array( $backup['settings'] ) ) {
+					$msg = 'nobackup';
+					break;
+				}
+				TDL_Settings::save( $backup['settings'] );
+				delete_option( self::BACKUP );
+				$msg = 'undone';
 				break;
 
 			case 'automap':

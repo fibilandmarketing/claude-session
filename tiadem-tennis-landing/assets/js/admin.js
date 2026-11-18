@@ -159,7 +159,7 @@
 
 	/* ---------- confirms & import ---------- */
 	$(document).on('click', '[data-confirm]', function (e) {
-		if (!window.confirm(A.confirmReset)) { e.preventDefault(); }
+		if (!window.confirm($(this).attr('data-confirm') || A.confirmReset)) { e.preventDefault(); }
 	});
 	$(document).on('click', '[data-tdl-import-btn]', function () {
 		var json = $('[data-tdl-import]').val();
